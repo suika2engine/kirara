@@ -12,10 +12,11 @@
     "license": "ISC",
     "devDependencies": {
         "electron": "^22.0.0",
-        "electron-builder": "^22.10.3"
+        "electron-builder": "^23.0.2"
     },
     "build": {
         "appId": "com.suika2.kirara",
+	"afterSign": "scripts/notarize.js",
         "directories": {
             "output": "dist"
         },
@@ -27,10 +28,12 @@
         ],
         "mac": {
             "icon": "assets/mac/suika.icns",
-            "target": [
-                "dmg"
-            ]
-        },
+	    "hardenedRuntime": true,
+	    "gatekeeperAssess": false,
+	    "entitlements": "build/entitlements.plist",
+	    "entitlementsInherit": "build/entitlements.plist",
+	    "target": "dmg"
+	},
         "win": {
             "icon": "assets/win/suika.ico",
             "target": "nsis",
@@ -40,5 +43,9 @@
             "oneClick": false,
             "allowToChangeInstallationDirectory": true
         }
+    },
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "electron-notarize": "^1.2.2"
     }
 }

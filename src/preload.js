@@ -1,6 +1,11 @@
-const electron = require('electron');
+const { contextBridge, ipcRenderer } = require('electron')
 
-process.once('loaded', () => {
-    global.ipcRenderer = electron.ipcRenderer;
-    global.app = electron.remote.app;
-});
+contextBridge.exposeInMainWorld('api', {
+    openModel: async (data) => await ipcRenderer.invoke('openModel', data),
+    getBaseUrl: async () => await ipcRenderer.invoke('getBaseUrl'),
+    getTxtList: async () => await ipcRenderer.invoke('getTxtList'),
+    getBgList: async () => await ipcRenderer.invoke('getBgList'),
+    getChList: async () => await ipcRenderer.invoke('getChList'),
+    getBgmList: async () => await ipcRenderer.invoke('getBgmList'),
+    getSeList: async () => await ipcRenderer.invoke('getSeList')
+})

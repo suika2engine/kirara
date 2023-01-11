@@ -1,0 +1,140 @@
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Yu Gothic UI;
+}
+
+/*
+ * 左右の分割
+ */
+
+.split {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+.split-left {
+	display: table-cell;
+	background: #f0fff0;
+	color: black;
+	width: 380px;
+	position: relative;
+}
+
+.split-right {
+	display: table-cell;
+	background: #f0f0ee;
+	color: #fff;
+}
+
+.split-left-inner {
+	width: 380px;
+	height: 100%;
+	position: fixed;
+}
+
+.split-right-inner{
+	height: 8000px;
+}
+
+/*
+ * 上下の分割
+ */
+
+.grid-area {
+	display: grid;
+	height: 100vh;
+	grid-template-rows: 60% 40%;
+	grid-template-columns: 100%;
+}
+
+
+.top-area {
+	grid-row: 1;
+	grid-column: 1;
+}
+
+.bottom-area {
+	grid-row: 2;
+	grid-column: 1;
+}
+
+/*
+ * 左ペインのタブ
+ */
+
+..left-tab-wrap { width:500px; height: 100%; margin:10px auto; }
+.left-tab-wrap { height: 100%; }
+input[type="radio"] { display:none; }
+.left-tab-area { font-size:0; margin:0 10px; }
+.left-tab-area label { width:40px; margin:0 2px; display:inline-block; padding:2px 0; color:#999; background:#ddd; text-align:center; font-size:12px; cursor:pointer; transition:ease 0.2s opacity; }
+.left-tab-area label:hover { opacity:0.5; }
+.left-tab-panel-area { background:#fff; height:100%; }
+.left-tab-panel { width:100%; height:100%; padding:0; display:none; overflow:auto; }
+
+#left-tab-palette:checked ~ .left-tab-area .left-tab-palette-label {background:#fff; color:#000; }
+#left-tab-palette:checked ~ .left-tab-panel-area #left-tab-panel-palette { display:block; }
+#left-tab-txt:checked ~ .left-tab-area .left-tab-txt-label {background:#fff; color:#000; }
+#left-tab-txt:checked ~ .left-tab-panel-area #left-tab-panel-txt { display:block; }
+#left-tab-bg:checked ~ .left-tab-area .left-tab-bg-label {background:#fff; color:#000; }
+#left-tab-bg:checked ~ .left-tab-panel-area #left-tab-panel-bg { display:block; }
+#left-tab-ch:checked ~ .left-tab-area .left-tab-ch-label {background:#fff; color:#000; }
+#left-tab-ch:checked ~ .left-tab-panel-area #left-tab-panel-ch { display:block; }
+#left-tab-bgm:checked ~ .left-tab-area .left-tab-bgm-label {background:#fff; color:#000; }
+#left-tab-bgm:checked ~ .left-tab-panel-area #left-tab-panel-bgm { display:block; }
+#left-tab-se:checked ~ .left-tab-area .left-tab-se-label {background:#fff; color:#000; }
+#left-tab-se:checked ~ .left-tab-panel-area #left-tab-panel-se { display:block; }
+
+/*
+ * パレット/素材のリスト
+ */
+
+.left-tab-list-holder {
+	padding: 0;
+	position: relative;
+}
+
+.left-tab-list-item {
+	color: #2d8fdd;
+	border-left: solid 6px #2d8fdd;
+	background: #f1f8ff;
+	margin-bottom: 3px;
+	border-radius: 0 15px 15px 0;
+	line-height: 1.5;
+	padding: 0.5em;
+	list-style-type: none!important;
+}
+
+.left-tab-list-item-sel {
+	color: #f1f8ff;
+	border-left: solid 6px #f1f8ff;
+	background: #2d8fdd;
+	margin-bottom: 3px;
+	border-radius: 0 15px 15px 0;
+	line-height: 1.5;
+	padding: 0.5em;
+	list-style-type: none!important;
+}
+
+/*
+ * 左下のサムネイル
+ */
+
+.thumbnail-picture {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+/*
+ * ドラッグ可能なリスト
+ */
+
+.drag-list li {
+	line-height: 3em;
+	border: 1px solid #cccccc;
+	cursor: pointer;
+}
+

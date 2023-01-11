@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>Suika2 Kirara</title>
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+
+	<!-- 左右の分割 -->
+	<div class="split">
+		<!-- 左 -->
+		<div class="split-left">
+			<div class="split-left-inner">
+
+				<!-- 上下の分割 -->
+				<div class="grid-area">
+					<!-- 上 -->
+					<div class="top-area">
+						<!-- タブ -->
+						<div class="left-tab-wrap">
+							<input id="left-tab-palette" type="radio" name="left-tab-btn" checked>
+							<input id="left-tab-txt" type="radio" name="left-tab-btn">
+							<input id="left-tab-bg" type="radio" name="left-tab-btn">
+							<input id="left-tab-ch" type="radio" name="left-tab-btn">
+							<input id="left-tab-bgm" type="radio" name="left-tab-btn">
+							<input id="left-tab-se" type="radio" name="left-tab-btn">
+
+							<div class="left-tab-area">
+								<label class="left-tab-palette-label" for="left-tab-palette">演出</label>
+								<label class="left-tab-txt-label" for="left-tab-txt">脚本</label>
+								<label class="left-tab-bg-label" for="left-tab-bg">背景</label>
+								<label class="left-tab-ch-label" for="left-tab-ch">キャラ</label>
+								<label class="left-tab-bgm-label" for="left-tab-bgm">音楽</label>
+								<label class="left-tab-se-label" for="left-tab-se">効果音</label>
+							</div>
+							<div class="left-tab-panel-area">
+								<div id="left-tab-panel-palette" class="left-tab-panel">
+									<p>パレット</p>
+								</div>
+								<div id="left-tab-panel-txt" class="left-tab-panel">
+									<ul id="txt-list" class="left-tab-list-holder">
+									</ul>
+								</div>
+								<div id="left-tab-panel-bg" class="left-tab-panel">
+									<ul id="bg-list" class="left-tab-list-holder">
+									</ul>
+								</div>
+								<div id="left-tab-panel-ch" class="left-tab-panel">
+									<ul id="ch-list" class="left-tab-list-holder">
+									</ul>
+								</div>
+								<div id="left-tab-panel-bgm" class="left-tab-panel">
+									<ul id="bgm-list" class="left-tab-list-holder">
+									</ul>
+								</div>
+								<div id="left-tab-panel-se" class="left-tab-panel">
+									<ul id="se-list" class="left-tab-list-holder">
+									</ul>
+								</div>
+							</div>
+						</div><!-- タブ -->
+
+					</div><!-- 上 -->
+
+					<!-- 下 -->
+					<div class="bottom-area">
+						<img id="thumbnail-picture" class="thumbnail-picture">
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<!-- 右 -->
+		<div class="split-right">
+			<div class="split-right-inner">
+
+				<!-- ドラッグ可能なリスト -->
+				<ul class="drag-list">
+					<li id="item1" draggable="false">開始終了</li>
+					<li id="item2" draggable="true">リスト要素1</li>
+					<li id="item3" draggable="true">リスト要素2</li>
+					<li id="item4" draggable="false">終了</li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+
+  <script src="../js/index.js"></script>
+</body>
+</html>

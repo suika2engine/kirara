@@ -1,25 +1,9 @@
-window.addEventListener('load', async () => {
-    //
-    // パレットの要素にイベントリスナを追加する
-    //
-    Array.from(document.getElementById("palette").childNodes).forEach(function (a) {
-        a.addEventListener("click", () => {
-            Array.from(document.getElementById("palette").childNodes).forEach(function (b) {
-                if(b.className == "left-tab-list-item" || b.className == "left-tab-list-item-sel") {
-                    if(b === event.srcElement) {
-                        b.className = "left-tab-list-item-sel";
-                    } else {
-                        b.className = "left-tab-list-item";
-                    }
-                }
-            });
-            document.getElementById("thumbnail-picture").src = "";
-        });
-    });
+async function refreshTxt() {
+    var element = document.getElementById("txt-list");
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
 
-    //
-    // txtフォルダの中身を取得してリスト要素を追加する
-    //
     const txt = await window.api.getTxtList();
     txt.forEach(function(file) {
         var elem = document.createElement('li');
@@ -40,10 +24,14 @@ window.addEventListener('load', async () => {
         });
         document.getElementById("txt-list").appendChild(elem);
     });
+}
 
-    //
-    // bgフォルダの中身を取得してリスト要素を追加する
-    //
+async function refreshBg() {
+    var element = document.getElementById("bg-list");
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+
     const bg = await window.api.getBgList();
     bg.forEach(function(file) {
         var elem = document.createElement('li');
@@ -63,6 +51,76 @@ window.addEventListener('load', async () => {
             document.getElementById("thumbnail-picture").src = await window.api.getBaseUrl() + "bg/" + file;
         });
         document.getElementById("bg-list").appendChild(elem);
+    });
+}
+
+window.addEventListener('load', async () => {
+    //
+    // パレットの要素にイベントリスナを追加する
+    //
+    Array.from(document.getElementById("palette").childNodes).forEach(function (a) {
+        a.addEventListener("click", () => {
+            Array.from(document.getElementById("palette").childNodes).forEach(function (b) {
+                if(b.className == "left-tab-list-item" || b.className == "left-tab-list-item-sel") {
+                    if(b === event.srcElement) {
+                        b.className = "left-tab-list-item-sel";
+                    } else {
+                        b.className = "left-tab-list-item";
+                    }
+                }
+            });
+            document.getElementById("thumbnail-picture").src = "";
+        });
+    });
+
+    //
+    // txtフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
+    //
+    refreshTxt();
+    var txtPanel = document.getElementById("left-tab-panel-txt");
+    txtPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("left-tab-panel-txt").classList.add('dragover');
+    });
+    txtPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("left-tab-panel-txt").classList.remove('dragover');
+    });
+    txtPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("left-tab-panel-txt").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addTxtFile(file.path);
+        }
+        refreshTxt();
+    });
+
+    //
+    // bgフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
+    //
+    refreshBg();
+    var bgPanel = document.getElementById("left-tab-panel-bg");
+    bgPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("left-tab-panel-bg").classList.add('dragover');
+    });
+    bgPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("left-tab-panel-bg").classList.remove('dragover');
+    });
+    bgPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("left-tab-panel-bg").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addBgFile(file.path);
+        }
+        refreshBg();
     });
 
     //

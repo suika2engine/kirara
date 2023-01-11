@@ -9,5 +9,7 @@ contextBridge.exposeInMainWorld('api', {
     getBgList: async () => await ipcRenderer.invoke('getBgList'),
     getChList: async () => await ipcRenderer.invoke('getChList'),
     getBgmList: async () => await ipcRenderer.invoke('getBgmList'),
-    getSeList: async () => await ipcRenderer.invoke('getSeList')
+    getSeList: async () => await ipcRenderer.invoke('getSeList'),
+    addTxtFile: async (filePath) => await ipcRenderer.invoke('addTxtFile', filePath),
+    addBgFile: async (filePath) => await ipcRenderer.invoke('addBgFile', filePath)
 })

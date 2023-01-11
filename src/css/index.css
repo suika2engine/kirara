@@ -115,6 +115,11 @@ input[type="radio"] { display:none; }
 	list-style-type: none!important;
 }
 
+.dragover {
+	border: 4px dash #ccc;
+	background: rgba(240, 240, 240, 0.6);
+}
+
 /*
  * 左下のサムネイル
  */

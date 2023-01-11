@@ -221,3 +221,41 @@ ipcMain.handle('getBgmList', (event) => {
 ipcMain.handle('getSeList', (event) => {
     return Model.inst.se;
 })
+
+//
+// txtファイルを追加する
+//
+ipcMain.handle('addTxtFile', (event, srcFilePath) => {
+    if(path.extname(srcFilePath).toLowerCase() !== ".txt") {
+        return true;
+    }
+
+    var srcFileName = path.basename(srcFilePath);
+    var dstFileName = srcFileName.replace(/[^\x00-\x7F]/g, "_").replace(/ /g, "_");
+    var dstPath = Model.inst.dir + "/txt/" + dstFileName;
+    fs.writeFileSync(dstPath, fs.readFileSync(srcFilePath));
+    if(!Model.inst.txt.includes(dstFileName)) {
+        Model.inst.txt.push(dstFileName);
+    }
+    return true;
+})
+
+//
+// bgファイルを追加する
+//
+ipcMain.handle('addBgFile', (event, srcFilePath) => {
+    if(path.extname(srcFilePath).toLowerCase() !== ".png" &&
+       path.extname(srcFilePath).toLowerCase() !== ".jpg" &&
+       path.extname(srcFilePath).toLowerCase() !== ".jpeg") {
+        return true;
+    }
+
+    var srcFileName = path.basename(srcFilePath);
+    var dstFileName = srcFileName.replace(/[^\x00-\x7F]/g, "_").replace(/ /g, "_");
+    var dstPath = Model.inst.dir + "/bg/" + dstFileName;
+    fs.writeFileSync(dstPath, fs.readFileSync(srcFilePath));
+    if(!Model.inst.bg.includes(dstFileName)) {
+        Model.inst.bg.push(dstFileName);
+    }
+    return true;
+})

@@ -37,7 +37,20 @@
 							</div>
 							<div class="left-tab-panel-area">
 								<div id="left-tab-panel-palette" class="left-tab-panel">
-									<p>パレット</p>
+									<ul id="palette" class="left-tab-list-holder">
+										<li class="left-tab-list-item" id="cmd-message">文章</li>
+										<li class="left-tab-list-item" id="cmd-serif">セリフ</li>
+										<li class="left-tab-list-item" id="cmd-choose">選択肢</li>
+										<li class="left-tab-list-item" id="cmd-vol">音量</li>
+										<li class="left-tab-list-item" id="cmd-cha">キャラ移動</li>
+										<li class="left-tab-list-item" id="cmd-label">目印を付ける</li>
+										<li class="left-tab-list-item" id="cmd-goto">目印にジャンプ</li>
+										<li class="left-tab-list-item" id="cmd-set">フラグを立てる</li>
+										<li class="left-tab-list-item" id="cmd-if">フラグでジャンプ</li>
+										<li class="left-tab-list-item" id="cmd-chapter">章タイトル</li>
+										<li class="left-tab-list-item" id="cmd-wait">時間待ち</li>
+										<li class="left-tab-list-item" id="cmd-load">シナリオを移動</li>
+									</ul>
 								</div>
 								<div id="left-tab-panel-txt" class="left-tab-panel">
 									<ul id="txt-list" class="left-tab-list-holder">
@@ -66,7 +79,9 @@
 
 					<!-- 下 -->
 					<div class="bottom-area">
-						<img id="thumbnail-picture" class="thumbnail-picture">
+						<div class="thumbnail-holder">
+							<img id="thumbnail-picture" class="thumbnail-picture">
+						</div>
 					</div>
 
 				</div>
@@ -80,10 +95,9 @@
 
 				<!-- ドラッグ可能なリスト -->
 				<ul class="drag-list">
-					<li id="item1" draggable="false">開始終了</li>
-					<li id="item2" draggable="true">リスト要素1</li>
-					<li id="item3" draggable="true">リスト要素2</li>
-					<li id="item4" draggable="false">終了</li>
+					<li id="start-item" draggable="false">開始</li>
+					<li draggable="false">背景</li>
+					<li id="end-item" draggable="false">終了</li>
 				</ul>
 
 			</div>

@@ -16,7 +16,6 @@ body {
 
 .split-left {
 	display: table-cell;
-	background: #f0fff0;
 	color: black;
 	width: 380px;
 	position: relative;
@@ -24,13 +23,12 @@ body {
 
 .split-right {
 	display: table-cell;
-	background: #f0f0ee;
-	color: #fff;
+	background: white;
+	color: black;
 }
 
 .split-left-inner {
 	width: 380px;
-	height: 100%;
 	position: fixed;
 }
 
@@ -64,13 +62,13 @@ body {
  * 左ペインのタブ
  */
 
-..left-tab-wrap { width:500px; height: 100%; margin:10px auto; }
+..left-tab-wrap { width:500px; height: 100%; margin: 0; }
 .left-tab-wrap { height: 100%; }
 input[type="radio"] { display:none; }
 .left-tab-area { font-size:0; margin:0 10px; }
-.left-tab-area label { width:40px; margin:0 2px; display:inline-block; padding:2px 0; color:#999; background:#ddd; text-align:center; font-size:12px; cursor:pointer; transition:ease 0.2s opacity; }
+.left-tab-area label { width:50px; height: 60px; margin:0 2px; display:inline-block; padding:2px 0; color:#999; background:#ddd; text-align:center; font-size:14px; cursor:pointer; transition:ease 0.2s opacity; }
 .left-tab-area label:hover { opacity:0.5; }
-.left-tab-panel-area { background:#fff; height:100%; }
+.left-tab-panel-area { background:#fff; height: calc(100% - 64px);}
 .left-tab-panel { width:100%; height:100%; padding:0; display:none; overflow:auto; }
 
 #left-tab-palette:checked ~ .left-tab-area .left-tab-palette-label {background:#fff; color:#000; }
@@ -121,20 +119,41 @@ input[type="radio"] { display:none; }
  * 左下のサムネイル
  */
 
+.thumbnail-holder {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	background: #e0e0e0;
+	background-image: linear-gradient(45deg, #9e9e9e 25%, transparent 0),
+					  linear-gradient(45deg, transparent 75%, #9E9E9E 0),
+					  linear-gradient(45deg, #9e9e9e 25%, transparent 0),
+					  linear-gradient(45deg, transparent 75%, #9E9E9E 0);
+	background-size: 30px 30px;
+	background-position: 0 0, 15px 15px, 15px 15px, 30px 30px;
+}
+
 .thumbnail-picture {
 	width: auto;
 	height: auto;
 	max-width: 100%;
 	max-height: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
+	-webkit- transform: translateY(-50%) translateX(-50%);
 }
 
 /*
- * ドラッグ可能なリスト
+ * メインリスト(ドラッグ可能)
  */
 
 .drag-list li {
 	line-height: 3em;
 	border: 1px solid #cccccc;
+	padding-left: 10px;
+	margin-bottom: 10px;
+	border-radius: 10px;
 	cursor: pointer;
+	list-style-type: none!important;
 }
-

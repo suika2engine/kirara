@@ -28,13 +28,13 @@
         ],
         "mac": {
             "icon": "assets/mac/suika.icns",
-	    "hardenedRuntime": true,
-	    "gatekeeperAssess": false,
-	    "entitlements": "build/entitlements.plist",
-	    "entitlementsInherit": "build/entitlements.plist",
-	    "target": "dmg"
-	},
-        "win": {
+            "hardenedRuntime": true,
+            "gatekeeperAssess": false,
+            "entitlements": "build/entitlements.plist",
+            "entitlementsInherit": "build/entitlements.plist",
+            "target": "dmg"
+        },
+       "win": {
             "icon": "assets/win/suika.ico",
             "target": "nsis",
             "publisherName": "Open Source Developer, Keiichi Tabata"

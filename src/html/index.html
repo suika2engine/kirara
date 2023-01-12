@@ -8,94 +8,77 @@
 </head>
 <body>
 
-	<!-- 左右の分割 -->
-	<div class="split">
-		<!-- 左 -->
-		<div class="split-left">
-			<div class="split-left-inner">
-
-				<!-- 上下の分割 -->
-				<div class="grid-area">
-					<!-- 上 -->
-					<div class="top-area">
-						<!-- タブ -->
-						<div class="left-tab-wrap">
-							<input id="left-tab-palette" type="radio" name="left-tab-btn" checked>
-							<input id="left-tab-txt" type="radio" name="left-tab-btn">
-							<input id="left-tab-bg" type="radio" name="left-tab-btn">
-							<input id="left-tab-ch" type="radio" name="left-tab-btn">
-							<input id="left-tab-bgm" type="radio" name="left-tab-btn">
-							<input id="left-tab-se" type="radio" name="left-tab-btn">
-
-							<div class="left-tab-area">
-								<label class="left-tab-palette-label" for="left-tab-palette">演出</label>
-								<label class="left-tab-txt-label" for="left-tab-txt">脚本</label>
-								<label class="left-tab-bg-label" for="left-tab-bg">背景</label>
-								<label class="left-tab-ch-label" for="left-tab-ch">キャラ</label>
-								<label class="left-tab-bgm-label" for="left-tab-bgm">音楽</label>
-								<label class="left-tab-se-label" for="left-tab-se">効果音</label>
-							</div>
-							<div class="left-tab-panel-area">
-								<div id="left-tab-panel-palette" class="left-tab-panel">
-									<ul id="palette" class="left-tab-list-holder">
-										<li class="left-tab-list-item" draggable="true" id="cmd-message">文章</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-serif">セリフ</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-choose">選択肢</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-vol">音量</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-label">目印を付ける</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
-										<li class="left-tab-list-item" draggable="true" id="cmd-wait">時間待ち</li>
-									</ul>
-								</div>
-								<div id="left-tab-panel-txt" class="left-tab-panel">
-									<ul id="txt-list" class="left-tab-list-holder">
-									</ul>
-								</div>
-								<div id="left-tab-panel-bg" class="left-tab-panel">
-									<ul id="bg-list" class="left-tab-list-holder">
-									</ul>
-								</div>
-								<div id="left-tab-panel-ch" class="left-tab-panel">
-									<ul id="ch-list" class="left-tab-list-holder">
-									</ul>
-								</div>
-								<div id="left-tab-panel-bgm" class="left-tab-panel">
-									<ul id="bgm-list" class="left-tab-list-holder">
-									</ul>
-								</div>
-								<div id="left-tab-panel-se" class="left-tab-panel">
-									<ul id="se-list" class="left-tab-list-holder">
-									</ul>
-								</div>
-							</div>
-						</div><!-- タブ -->
-
-					</div><!-- 上 -->
-
-					<!-- 下 -->
-					<div class="bottom-area">
-						<div class="thumbnail-holder">
-							<img id="thumbnail-picture" class="thumbnail-picture">
-						</div>
-					</div>
-
+	<div class="vertical-grid-area">
+		<div class="vertical-grid-area-top">
+			<div class="top-horizontal-grid-area">
+				<div class="top-horizontal-grid-area-left">
+					<ul id="scenario" class="scenario-list">
+					</ul>
 				</div>
-
+				<div class="top-horizontal-grid-area-right">
+					<div class="palette-panel">
+						<ul id="palette" class="palette-list-holder">
+							<li class="palette-list-item" draggable="true" id="cmd-message">文章</li>
+							<li class="palette-list-item" draggable="true" id="cmd-serif">セリフ</li>
+							<li class="palette-list-item" draggable="true" id="cmd-choose">選択肢</li>
+							<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
+							<li class="palette-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
+							<li class="palette-list-item" draggable="true" id="cmd-label">目印を付ける</li>
+							<li class="palette-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
+							<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
+							<li class="palette-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
+							<li class="palette-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
+							<li class="palette-list-item" draggable="true" id="cmd-wait">時間待ち</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<!-- 右 -->
-		<div class="split-right">
-			<div class="split-right-inner">
-
-				<!-- ドラッグ可能なリスト -->
-				<ul id="scenario">
-				</ul>
-
+		<div class="vertical-grid-area-bottom">
+			<div class="bottom-horizontal-grid-area">
+				<div class="bottom-horizontal-grid-area-left">
+					<div class="thumbnail-holder">
+						<img id="thumbnail-picture" class="thumbnail-picture">
+					</div>
+				</div>
+				<div class="bottom-horizontal-grid-area-right">
+					<div class="tab-wrap">
+						<input id="tab-txt" type="radio" name="tab-btn">
+						<input id="tab-bg" type="radio" name="tab-btn" checked>
+						<input id="tab-ch" type="radio" name="tab-btn">
+						<input id="tab-bgm" type="radio" name="tab-btn">
+						<input id="tab-se" type="radio" name="tab-btn">
+						<div class="tab-area">
+							<label class="tab-txt-label" for="tab-txt">脚本</label>
+							<label class="tab-bg-label" for="tab-bg">背景</label>
+							<label class="tab-ch-label" for="tab-ch">キャラ</label>
+							<label class="tab-bgm-label" for="tab-bgm">音楽</label>
+							<label class="tab-se-label" for="tab-se">効果音</label>
+						</div>
+						<div class="tab-panel-area">
+							<div id="tab-panel-txt" class="tab-panel">
+								<ul id="txt-list" class="tab-list-holder">
+								</ul>
+							</div>
+							<div id="tab-panel-bg" class="tab-panel">
+								<ul id="bg-list" class="tab-list-holder">
+								</ul>
+							</div>
+							<div id="tab-panel-ch" class="tab-panel">
+								<ul id="ch-list" class="tab-list-holder">
+								</ul>
+							</div>
+							<div id="tab-panel-bgm" class="tab-panel">
+								<ul id="bgm-list" class="tab-list-holder">
+								</ul>
+							</div>
+							<div id="tab-panel-se" class="tab-panel">
+								<ul id="se-list" class="tab-list-holder">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

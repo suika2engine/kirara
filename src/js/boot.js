@@ -1,11 +1,12 @@
-window.addEventListener('load', async () => {
-    var gameList = await window.api.listGames();
+window.addEventListener("load", async () => {
+    var gameList = await window.api.getGameList();
     gameList.forEach(game => {
-        var e = document.createElement('li');
+        var e = document.createElement("li");
         e.textContent = game;
         e.addEventListener("click", async () => {
             await window.api.openGame(event.srcElement.textContent);
-            window.location.href = 'index.html';
+            await window.api.openScenario("init.txt");
+            window.location.href = "index.html";
         });
         document.getElementById("game-list").appendChild(e);
     });
@@ -14,7 +15,7 @@ window.addEventListener('load', async () => {
         if(! await window.api.createGame("new-game")) {
             alert("ゲームフォルダの作成に失敗しました。");
         }
-        window.location.href = 'boot.html';
+        window.location.href = "boot.html";
     });
 });
 

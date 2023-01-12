@@ -25,95 +25,27 @@ app.on('window-all-closed', () => {
 });
 
 //
-// [モデル]
+// モデル操作
 //
 
 const fs = require("fs");
 const path = require("path");
 
 class Model {
-    static inst;
-    dir;
-    txt;
-    bg;
-    ch;
-    bgm;
-    se;
-    static createInstance(dir) {
-        if(!fs.existsSync(dir + "/txt/init.txt")) {
-            return null;
-        }
-
-        Model.inst = new Model();
-        Model.inst.dir = dir;
-
-        Model.inst.refreshFileList();
-    }
-
-    refreshFileList() {
-        // txtフォルダのファイルのリストを作成する
-        this.txt = [];
-        fs.readdir(this.dir + "/txt", (err, files) => {
-            files.forEach(file => {
-                if(file.toLowerCase().endsWith(".txt")) {
-                    Model.inst.txt.push(file);
-                }
-            });
-        });
-        this.txt.sort();
-
-        // bgフォルダのファイルのリストを作成する
-        this.bg = [];
-        fs.readdir(this.dir + "/bg", (err, files) => {
-            files.forEach(file => {
-                var fn = file.toLowerCase();
-                if(fn.endsWith(".png") || fn.endsWith(".jpg") || fn.endsWith(".jpeg")) {
-                    Model.inst.bg.push(file);
-                }
-            });
-        });
-        this.bg.sort();
-
-        // chフォルダのファイルのリストを作成する
-        this.ch = [];
-        fs.readdir(this.dir + "/ch", (err, files) => {
-            files.forEach(file => {
-                var fn = file.toLowerCase();
-                if(fn.endsWith(".png") || fn.endsWith(".jpg") || fn.endsWith(".jpeg")) {
-                    Model.inst.ch.push(file);
-                }
-            });
-        });
-        this.ch.sort();
-
-        // bgmフォルダのファイルのリストを作成する
-        this.bgm = [];
-        fs.readdir(this.dir + "/bgm", (err, files) => {
-            files.forEach(file => {
-                if(file.toLowerCase().endsWith(".ogg")) {
-                    Model.inst.bgm.push(file);
-                }
-            });
-        });
-        this.bgm.sort();
-
-        // seフォルダのファイルのリストを作成する
-        this.se = [];
-        fs.readdir(this.dir + "/se", (err, files) => {
-            files.forEach(file => {
-                if(file.toLowerCase().endsWith(".ogg")) {
-                    Model.inst.se.push(file);
-                }
-            });
-        });
-        this.se.sort();
-    }
+    static dir = "";
+    static txt = [];
+    static bg = [];
+    static ch = [];
+    static bgm = [];
+    static se = [];
+    static scenarioFile = "";
+    static scenarioData = [""];
 }
 
 //
 // ゲームの一覧を取得する
 //
-ipcMain.handle('listGames', (event) => {
+ipcMain.handle('getGameList', (event) => {
     // ユーザのドキュメントフォルダにSuika2フォルダがない場合
     var path = app.getPath("documents") + "/Suika2";
     if(!fs.existsSync(path)) {
@@ -144,15 +76,11 @@ ipcMain.handle('createGame', (event, dir) => {
 })
 
 function copyTemplateFiles(src, dst, top) {
-    console.log("going to copy");
-    console.log(app.getAppPath() + "/" + src);
     if(!fs.existsSync(app.getAppPath() + "/" + src)) {
         return;
     }
-    console.log("found template");
     if(top) {
         fs.readdirSync(app.getAppPath() + "/" + src).forEach(function (fname) {
-            console.log("copy!");
             copyTemplateFiles(src + "/" + fname, dst + "/" + fname, false);
         });
         return;
@@ -176,86 +104,160 @@ function copyTemplateFiles(src, dst, top) {
 //
 ipcMain.handle('openGame', (event, dir) => {
     var path = app.getPath("documents") + "/Suika2/" + dir;
-    Model.createInstance(path);
-    return Model.inst !== null;
+    if(!fs.existsSync(path + "/txt/init.txt")) {
+        return false;
+    }
+
+    Model.dir = path;
+    refreshFiles("txt", Model.txt, ['.txt']);
+    refreshFiles("bg", Model.bg, ['.png', '.jpg', '.jpeg']);
+    refreshFiles("ch", Model.ch, ['.png', '.jpg', '.jpeg']);
+    refreshFiles("bgm", Model.bgm, ['.ogg']);
+    refreshFiles("se", Model.se, ['.ogg']);
+})
+
+function refreshFiles(subDir, list, allowExts) {
+    list.length = 0;
+    fs.readdirSync(Model.dir + "/" + subDir).forEach(function (file) {
+        var ext = path.extname(file).toLowerCase();
+        if(allowExts.includes(ext)) {
+            list.push(file);
+        }
+    });
+    list.sort();
+}
+
+//
+// シナリオを開く
+//
+ipcMain.handle('openScenario', (event, file) => {
+    var filePath = Model.dir + "/txt/" + file;
+    var rawData = fs.readFileSync(filePath, { encoding: 'utf8' });
+
+    Model.scenarioFile = file;
+    Model.scenarioData = rawData.split(/\r\n|\n/);
+
+    if(Model.scenarioData.length > 0) {
+        if(Model.scenarioData[Model.scenarioData.length - 1] === "") {
+            Model.scenarioData.pop();
+        }
+    }
+})
+
+//
+// シナリオファイル名を取得する
+//
+ipcMain.handle('getScenarioName', (event) => {
+    return Model.scenarioFile;
+})
+
+//
+// シナリオデータを取得する
+//
+ipcMain.handle('getScenarioData', (event) => {
+    return Model.scenarioData;
+})
+
+//
+// シナリオデータを保存する
+//
+ipcMain.handle('setScenarioData', (event, data) => {
+    Model.scenarioData = data;
+
+    var filePath = Model.dir + "/txt/" + Model.scenarioFile;
+    fs.writeFileSync(filePath, data.join("\n"));
 })
 
 //
 // ゲームフォルダのURLを取得する
 //
 ipcMain.handle('getBaseUrl', (event) => {
-    return "file:///" + Model.inst.dir + "/";
+    return "file:///" + Model.dir + "/";
 })
 
 //
 // txtフォルダのファイルのリストを取得する
 //
 ipcMain.handle('getTxtList', (event) => {
-    return Model.inst.txt;
+    refreshFiles("txt", Model.txt, ['.txt']);
+    return Model.txt;
 })
 
 //
 // bgフォルダのファイルのリストを取得する
 //
 ipcMain.handle('getBgList', (event) => {
-    return Model.inst.bg;
+    refreshFiles("bg", Model.bg, ['.png', '.jpg', '.jpeg']);
+    return Model.bg;
 })
 
 //
 // chフォルダのファイルのリストを取得する
 //
 ipcMain.handle('getChList', (event) => {
-    return Model.inst.ch;
+    refreshFiles("ch", Model.ch, ['.png', '.jpg', '.jpeg']);
+    return Model.ch;
 })
 
 //
 // bgmフォルダのファイルのリストを取得する
 //
 ipcMain.handle('getBgmList', (event) => {
-    return Model.inst.bgm;
+    refreshFiles("bgm", Model.bgm, ['.ogg']);
+    return Model.bgm;
 })
 
 //
 // seフォルダのファイルのリストを取得する
 //
 ipcMain.handle('getSeList', (event) => {
-    return Model.inst.se;
+    refreshFiles("se", Model.se, ['.ogg']);
+    return Model.se;
 })
 
 //
 // txtファイルを追加する
 //
 ipcMain.handle('addTxtFile', (event, srcFilePath) => {
-    if(path.extname(srcFilePath).toLowerCase() !== ".txt") {
-        return true;
-    }
+    return copyAsset(srcFilePath, ['.txt'], "txt");
+})
 
+function copyAsset(srcFilePath, allowExts, subDir) {
+    if(!allowExts.includes(path.extname(srcFilePath).toLowerCase())) {
+        return false;
+    }
+      
     var srcFileName = path.basename(srcFilePath);
     var dstFileName = srcFileName.replace(/[^\x00-\x7F]/g, "_").replace(/ /g, "_");
-    var dstPath = Model.inst.dir + "/txt/" + dstFileName;
+    var dstPath = Model.dir + "/" + subDir + "/" + dstFileName;
     fs.writeFileSync(dstPath, fs.readFileSync(srcFilePath));
-    if(!Model.inst.txt.includes(dstFileName)) {
-        Model.inst.txt.push(dstFileName);
-    }
     return true;
-})
+}
 
 //
 // bgファイルを追加する
 //
 ipcMain.handle('addBgFile', (event, srcFilePath) => {
-    if(path.extname(srcFilePath).toLowerCase() !== ".png" &&
-       path.extname(srcFilePath).toLowerCase() !== ".jpg" &&
-       path.extname(srcFilePath).toLowerCase() !== ".jpeg") {
-        return true;
-    }
+    return copyAsset(srcFilePath, ['.png', '.jpg', '.jpeg'], "bg");
+})
 
-    var srcFileName = path.basename(srcFilePath);
-    var dstFileName = srcFileName.replace(/[^\x00-\x7F]/g, "_").replace(/ /g, "_");
-    var dstPath = Model.inst.dir + "/bg/" + dstFileName;
-    fs.writeFileSync(dstPath, fs.readFileSync(srcFilePath));
-    if(!Model.inst.bg.includes(dstFileName)) {
-        Model.inst.bg.push(dstFileName);
-    }
-    return true;
+//
+// chファイルを追加する
+//
+ipcMain.handle('addChFile', (event, srcFilePath) => {
+    return copyAsset(srcFilePath, ['.png', '.jpg', '.jpeg'], "ch");
+})
+
+//
+// bgmファイルを追加する
+//
+ipcMain.handle('addBgmFile', (event, srcFilePath) => {
+    return copyAsset(srcFilePath, ['.ogg'], "bgm");
+})
+
+//
+// seファイルを追加する
+//
+ipcMain.handle('addSeFile', (event, srcFilePath) => {
+    return copyAsset(srcFilePath, ['.ogg'], "se");
 })

@@ -19,8 +19,15 @@ function createCommandElement(command) {
             }
         });
         document.getElementById("thumbnail-picture").src = "";
+        commitProps();
+        changeElement(event.srcElement);
+        showProps();
     });
-    if (command.match(/^\*.+\*.+$/)) {
+    if(command === "") {
+        // FIXME: 空行をどうする？
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-etc");
+    } else if(command.match(/^\*.+\*.+$/)) {
         var sp = command.split("*");
         newElem.textContent = sp[0] + "「" + sp[1] + "」";
         newElem.classList.add("drag-list-item-serif");
@@ -57,6 +64,8 @@ function onScenarioDragLeave(event) {
 }
 
 function onScenarioDrop(event) {
+    commitProps();
+
     event.preventDefault();
     this.style.borderTop = "";
 
@@ -96,6 +105,84 @@ async function refreshScenario() {
         elem.addEventListener("drop", onScenarioDrop);
         document.getElementById("scenario").appendChild(elem);
     });
+}
+
+/*
+ * プロパティビュー
+ */
+
+var elementInEdit = null;
+
+function changeElement(elem) {
+    elementInEdit = elem;
+}
+
+function showProps() {
+    // すべてのプロパティペインを非表示にする
+    Array.from(document.getElementById("prop-container").childNodes).forEach(function (e) {
+        if(e.style != null) {
+            e.style.display = "none";
+        }
+    });
+    if(elementInEdit == null) {
+        return;
+    }
+
+    // アクティブになるプロパティペインを表示し、要素に値を入れる
+    cmd = elementInEdit.cmd;
+    if(cmd === "") {
+        // 何もしない
+    } else if(cmd.match(/^\*.+\*.+$/)) {
+        // セリフ(ボイスなし)
+        var sp = cmd.split("*");
+        var name = sp[0];
+        var msg = sp[1];
+    } else if(cmd.match(/^\*.+\*.+\*+.$/)) {
+        // セリフ(ボイスあり)
+        var sp = cmd.split("*");
+        var name = sp[0];
+        var voice = sp[1];
+        var msg = sp[2];
+    } else if(cmd.match(/^.+「.*」$/)) {
+        // セリフ(かぎカッコ)
+        var name = cmd.split("「")[0];
+        var msg = cmd.split("「")[1].split("」")[0];
+    } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
+        // @bg
+        document.getElementById("prop-bg").style.display = "block";
+        tokens = cmd.split(" ");
+        if(tokens.length >= 1) {
+            if(tokens[1].startsWith("file:")) {
+                document.getElementById("prop-bg-file").value = tokens[1].substring(5);
+            } else if(tokens[1].startsWith("ファイル:")) {
+                document.getElementById("prop-bg-file").value = tokens[1].substring(5);
+            } else {
+                document.getElementById("prop-bg-file").value = tokens[1];
+            }
+        }
+        // TODO: ここで画像を表示する
+    } else if(!cmd.startsWith(":") && !cmd.startsWith("#")) {
+        // 暫定: その他
+        document.getElementById("prop-msg").style.display = "block";
+        document.getElementById("prop-msg-text").value = cmd;
+    }
+}
+
+function commitProps() {
+    if(elementInEdit == null) {
+        return;
+    }
+
+    cmd = elementInEdit.cmd;
+    if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#") && cmd.indexOf("「") == -1) {
+        var msg = document.getElementById("prop-msg-text").value;
+        if(msg === "") {
+            msg = "文章が空白です";
+        }
+        msg = msg.replace(/\n/g, "\\n");
+        elementInEdit.cmd = msg;
+        elementInEdit.textContent = msg;
+    }
 }
 
 /*

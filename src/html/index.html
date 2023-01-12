@@ -12,24 +12,36 @@
 		<div class="vertical-grid-area-top">
 			<div class="top-horizontal-grid-area">
 				<div class="top-horizontal-grid-area-left">
-					<ul id="scenario" class="scenario-list">
-					</ul>
+					<div class="scenario-container">
+						<ul id="scenario" class="scenario-list">
+						</ul>
+					</div>
 				</div>
 				<div class="top-horizontal-grid-area-right">
-					<div class="palette-panel">
-						<ul id="palette" class="palette-list-holder">
-							<li class="palette-list-item" draggable="true" id="cmd-message">文章</li>
-							<li class="palette-list-item" draggable="true" id="cmd-serif">セリフ</li>
-							<li class="palette-list-item" draggable="true" id="cmd-choose">選択肢</li>
-							<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
-							<li class="palette-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
-							<li class="palette-list-item" draggable="true" id="cmd-label">目印を付ける</li>
-							<li class="palette-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
-							<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
-							<li class="palette-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
-							<li class="palette-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
-							<li class="palette-list-item" draggable="true" id="cmd-wait">時間待ち</li>
-						</ul>
+					<div class="top-right-vertical-grid-area">
+						<div id="prop-container" class="top-right-vertical-grid-area-top">
+							<div id="prop-msg" class="prop-pane">
+								文章:
+								<textarea id="prop-msg-text" class="prop-textmulti"></textarea>
+							</div>
+						</div>
+						<div class="top-right-vertical-grid-area-bottom">
+							<div class="palette-panel">
+								<ul id="palette" class="palette-list-holder">
+									<li class="palette-list-item" draggable="true" id="cmd-message">文章</li>
+									<li class="palette-list-item" draggable="true" id="cmd-serif">セリフ</li>
+									<li class="palette-list-item" draggable="true" id="cmd-choose">選択肢</li>
+									<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
+									<li class="palette-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
+									<li class="palette-list-item" draggable="true" id="cmd-label">目印を付ける</li>
+									<li class="palette-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
+									<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
+									<li class="palette-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
+									<li class="palette-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
+									<li class="palette-list-item" draggable="true" id="cmd-wait">時間待ち</li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

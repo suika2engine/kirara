@@ -150,9 +150,10 @@ input[type="radio"] { display:none; }
 }
 
 /*
- * メインリスト(ドラッグ可能)
+ * シナリオビュー
  */
 
+/* メインリスト */
 .drag-list li {
 	line-height: 3em;
 	border: 1px solid #cccccc;
@@ -161,4 +162,30 @@ input[type="radio"] { display:none; }
 	border-radius: 10px;
 	cursor: pointer;
 	list-style-type: none!important;
+}
+
+/* 選択中の項目 */
+.drag-list-sel {
+	background: #2d8fdd;
+	color: #ffffff;
+}
+
+.drag-list-item-msg {
+	border-left: 5px solid blue;
+	padding-left: 10px;
+}
+
+.drag-list-item-serif {
+	border-left: 5px solid green;
+	padding-left: 10px;
+}
+
+.drag-list-item-bg {
+	border-left: 5px solid orange;
+	padding-left: 10px;
+}
+
+.drag-list-item-etc {
+	border-left: 5px solid gray;
+	padding-left: 10px;
 }

@@ -1,7 +1,3 @@
-function makeId() {
-    return new Date().getTime().toString(16) + Math.floor(1000 * Math.random()).toString(16);
-}
-
 /*
  * txtビュー
  */
@@ -22,23 +18,27 @@ async function refreshTxt() {
         elem.template = true;
         elem.cmd = "@load " + file;
         elem.addEventListener("click", () => {
-            Array.from(document.getElementById("txt-list").childNodes).forEach(function (a) {
-                if(a.className == "left-tab-list-item" || a.className == "left-tab-list-item-sel") {
-                    if(a === event.srcElement) {
-                        a.className = "left-tab-list-item-sel";
+            Array.from(document.getElementById("txt-list").childNodes).forEach(function (e) {
+                if(e.className == "left-tab-list-item" || e.className == "left-tab-list-item-sel") {
+                    if(e === event.srcElement) {
+                        e.className = "left-tab-list-item-sel";
                     } else {
-                        a.className = "left-tab-list-item";
+                        e.className = "left-tab-list-item";
                     }
                 }
             });
             document.getElementById("thumbnail-picture").src = "";
         });
-        elem.ondragstart = (event) => {
+        elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
             return true;
-        }
+        });
         document.getElementById("txt-list").appendChild(elem);
     });
+}
+
+function makeId() {
+    return new Date().getTime().toString(16) + Math.floor(1000 * Math.random()).toString(16);
 }
 
 /*
@@ -61,21 +61,21 @@ async function refreshBg() {
         elem.template = true;
         elem.cmd = "@bg " + file + " 1.0";
         elem.addEventListener("click", async () => {
-            Array.from(document.getElementById("bg-list").childNodes).forEach(function (a) {
-                if(a.className == "left-tab-list-item" || a.className == "left-tab-list-item-sel") {
-                    if(a === event.srcElement) {
-                        a.className = "left-tab-list-item-sel";
+            Array.from(document.getElementById("bg-list").childNodes).forEach(function (e) {
+                if(e.className == "left-tab-list-item" || e.className == "left-tab-list-item-sel") {
+                    if(e === event.srcElement) {
+                        e.className = "left-tab-list-item-sel";
                     } else {
-                        a.className = "left-tab-list-item";
+                        e.className = "left-tab-list-item";
                     }
                 }
             });
             document.getElementById("thumbnail-picture").src = await window.api.getBaseUrl() + "bg/" + file;
         });
-        elem.ondragstart = (event) => {
+        elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
             return true;
-        }
+        });
         document.getElementById("bg-list").appendChild(elem);
     });
 }
@@ -100,21 +100,21 @@ async function refreshCh() {
         elem.template = true;
         elem.cmd = "@ch center " + file + " 1.0";
         elem.addEventListener("click", async () => {
-            Array.from(document.getElementById("ch-list").childNodes).forEach(function (a) {
-                if(a.className == "left-tab-list-item" || a.className == "left-tab-list-item-sel") {
-                    if(a === event.srcElement) {
-                        a.className = "left-tab-list-item-sel";
+            Array.from(document.getElementById("ch-list").childNodes).forEach(function (e) {
+                if(e.className == "left-tab-list-item" || e.className == "left-tab-list-item-sel") {
+                    if(e === event.srcElement) {
+                        e.className = "left-tab-list-item-sel";
                     } else {
-                        a.className = "left-tab-list-item";
+                        e.className = "left-tab-list-item";
                     }
                 }
             });
             document.getElementById("thumbnail-picture").src = await window.api.getBaseUrl() + "ch/" + file;
         });
-        elem.ondragstart = (event) => {
+        elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
             return true;
-        }
+        });
         document.getElementById("ch-list").appendChild(elem);
     });
 }
@@ -139,21 +139,21 @@ async function refreshBgm() {
         elem.template = true;
         elem.cmd = "@bgm " + file;
         elem.addEventListener("click", async () => {
-            Array.from(document.getElementById("bgm-list").childNodes).forEach(function (a) {
-                if(a.className == "left-tab-list-item" || a.className == "left-tab-list-item-sel") {
-                    if(a === event.srcElement) {
-                        a.className = "left-tab-list-item-sel";
+            Array.from(document.getElementById("bgm-list").childNodes).forEach(function (e) {
+                if(e.className == "left-tab-list-item" || e.className == "left-tab-list-item-sel") {
+                    if(e === event.srcElement) {
+                        e.className = "left-tab-list-item-sel";
                     } else {
-                        a.className = "left-tab-list-item";
+                        e.className = "left-tab-list-item";
                     }
                 }
             });
             document.getElementById("thumbnail-picture").src = "";
         });
-        elem.ondragstart = (event) => {
+        elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
             return true;
-        }
+        });
         document.getElementById("bgm-list").appendChild(elem);
     });
 }
@@ -178,21 +178,21 @@ async function refreshSe() {
         elem.template = true;
         elem.cmd = "@se " + file;
         elem.addEventListener("click", async () => {
-            Array.from(document.getElementById("se-list").childNodes).forEach(function (a) {
-                if(a.className == "left-tab-list-item" || a.className == "left-tab-list-item-sel") {
-                    if(a === event.srcElement) {
-                        a.className = "left-tab-list-item-sel";
+            Array.from(document.getElementById("se-list").childNodes).forEach(function (e) {
+                if(e.className == "left-tab-list-item" || e.className == "left-tab-list-item-sel") {
+                    if(e === event.srcElement) {
+                        e.className = "left-tab-list-item-sel";
                     } else {
-                        a.className = "left-tab-list-item";
+                        e.className = "left-tab-list-item";
                     }
                 }
             });
             document.getElementById("thumbnail-picture").src = "";
         });
-        elem.ondragstart = (event) => {
+        elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
             return true;
-        }
+        });
         document.getElementById("se-list").appendChild(elem);
     });
 }
@@ -204,9 +204,39 @@ async function refreshSe() {
 function createCommandElement(command) {
     var newElem = document.createElement("li");
     newElem.id = makeId();
-    newElem.textContent = elemDrag.cmd;
     newElem.draggable = "true";
-    newElem.cmd = elemDrag.cmd;
+    newElem.cmd = command;
+    newElem.addEventListener("click", async () => {
+        Array.from(document.getElementById("scenario").childNodes).forEach(function (e) {
+            if(e.className.startsWith("drag-list-item-")) {
+                if(e === event.srcElement) {
+                    e.classList.add("drag-list-sel");
+                } else {
+                    e.classList.remove("drag-list-sel");
+                }
+            }
+        });
+        document.getElementById("thumbnail-picture").src = "";
+    });
+    if (command.match(/^\*.+\*.+$/)) {
+        var sp = command.split("*");
+        newElem.textContent = sp[0] + "「" + sp[1] + "」";
+        newElem.classList.add("drag-list-item-serif");
+    } else if(command.match(/^\*.+\*.+\*+.$/)) {
+        var sp = command.split("*");
+        newElem.textContent = sp[0] + "「" + sp[2] + "」";
+        newElem.classList.add("drag-list-item-serif");
+    } else if(command.match(/^.+「.*」$/)) {
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-serif");
+    } else if (command.startsWith("@bg ") || command.startsWith("@背景 ")) {
+        newElem.textContent = "背景";
+        newElem.classList.add("drag-list-item-bg");
+    } else {
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-etc");
+    }
+    return newElem;
 }
 
 function onScenarioDragStart(event) {
@@ -238,15 +268,11 @@ function onScenarioDrop(event) {
     }
 
     // パレット/素材の挿入
-    var newElem = document.createElement("li");
-    newElem.id = makeId();
-    newElem.textContent = elemDrag.cmd;
-    newElem.draggable = "true";
-    newElem.cmd = elemDrag.cmd;
-    newElem.ondragstart = onScenarioDragStart;
-    newElem.ondragover = onScenarioDragOver;
-    newElem.ondragleave = onScenarioDragLeave;
-    newElem.ondrop = onScenarioDrop;
+    var newElem = createCommandElement(elemDrag.cmd);
+    newElem.addEventListener("dragstart", onScenarioDragStart);
+    newElem.addEventListener("dragover", onScenarioDragOver);
+    newElem.addEventListener("dragleave", onScenarioDragLeave);
+    newElem.addEventListener("drop", onScenarioDrop);
     this.parentNode.insertBefore(newElem, this);
 }
 
@@ -260,16 +286,12 @@ async function refreshScenario() {
 
     // シナリオデータを取得してビューに追加する
     var arr = await window.api.getScenarioData();
-    arr.forEach(function(line) {
-        var elem = document.createElement('li');
-        elem.id = makeId();
-        elem.textContent = line;
-        elem.draggable = "true";
-        elem.setAttribute("cmd", line);
-        elem.ondragstart = onScenarioDragStart;
-        elem.ondragover = onScenarioDragOver;
-        elem.ondragleave = onScenarioDragLeave;
-        elem.ondrop = onScenarioDrop;
+    arr.forEach(line => {
+        var elem = createCommandElement(line);
+        elem.addEventListener("dragstart", onScenarioDragStart);
+        elem.addEventListener("dragover", onScenarioDragOver);
+        elem.addEventListener("dragleave", onScenarioDragLeave);
+        elem.addEventListener("drop", onScenarioDrop);
         document.getElementById("scenario").appendChild(elem);
     });
 }
@@ -280,16 +302,43 @@ async function refreshScenario() {
 
 window.addEventListener('load', async () => {
     //
-    // パレットの要素にイベントリスナを追加する
+    // パレットの要素をセットアップしてイベントリスナを追加する
     //
-    Array.from(document.getElementById("palette").childNodes).forEach(function (a) {
-        a.addEventListener("click", () => {
-            Array.from(document.getElementById("palette").childNodes).forEach(function (b) {
-                if(b.className == "left-tab-list-item" || b.className == "left-tab-list-item-sel") {
-                    if(b === event.srcElement) {
-                        b.className = "left-tab-list-item-sel";
+    Array.from(document.getElementById("palette").childNodes).forEach(function (elem) {
+        if(elem.id === undefined) {
+            return;
+        }
+        switch(elem.id) {
+        case "cmd-message":
+            switch(Math.floor(Math.random() * 4)) {
+            case 0: elem.cmd = "ダブルクリックして文章を入力してください"; break;
+            case 1: elem.cmd = "ここに入力した文章がゲーム画面に表示されます"; break;
+            case 2: elem.cmd = "あのイーハトーヴォのすきとおった風"; break;
+            default: elem.cmd = "文章"; break;
+            }
+            break;
+        case "cmd-serif": elem.cmd = "キャラ「セリフ」"; break;
+        case "cmd-choose": elem.cmd = "@choose L1 選択肢1 L2 選択肢2 L3 選択肢3"; break;
+        case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
+        case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
+        case "cmd-label": elem.cmd = ":目印"; break;
+        case "cmd-goto": elem.cmd = "@goto 行き先"; break;
+        case "cmd-set": elem.cmd = "@set $0 = 1"; break;
+        case "cmd-chapter": elem.cmd = "@chapter 章のタイトル"; break;
+        case "cmd-wait": elem.cmd = "@wait 1000";
+        }
+        elem.template = true;
+        elem.addEventListener("dragstart", () => {
+            event.dataTransfer.setData("text/plain", event.target.id);
+            return true;
+        });
+        elem.addEventListener("click", () => {
+            Array.from(document.getElementById("palette").childNodes).forEach(function (c) {
+                if(c.className == "left-tab-list-item" || c.className == "left-tab-list-item-sel") {
+                    if(c === event.srcElement) {
+                        c.className = "left-tab-list-item-sel";
                     } else {
-                        b.className = "left-tab-list-item";
+                        c.className = "left-tab-list-item";
                     }
                 }
             });

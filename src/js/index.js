@@ -206,13 +206,14 @@ function createCommandElement(command) {
     newElem.id = makeId();
     newElem.draggable = "true";
     newElem.cmd = command;
+    newElem.classList.add("drag-list-item");
     newElem.addEventListener("click", async () => {
         Array.from(document.getElementById("scenario").childNodes).forEach(function (e) {
-            if(e.className.startsWith("drag-list-item-")) {
+            if(e.classList.contains("drag-list-item")) {
                 if(e === event.srcElement) {
-                    e.classList.add("drag-list-sel");
+                    e.classList.add("drag-list-item-sel");
                 } else {
-                    e.classList.remove("drag-list-sel");
+                    e.classList.remove("drag-list-item-sel");
                 }
             }
         });

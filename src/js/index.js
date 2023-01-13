@@ -43,7 +43,7 @@ function createCommandElement(command) {
         newElem.classList.add("drag-list-item-bg");
     } else {
         newElem.textContent = command;
-        newElem.classList.add("drag-list-item-etc");
+        newElem.classList.add("drag-list-item-msg");
     }
     return newElem;
 }
@@ -55,7 +55,7 @@ function onScenarioDragStart(event) {
 
 function onScenarioDragOver(event) {
     event.preventDefault();
-    this.style.borderTop = "2px solid blue";
+    this.style.borderTop = "5px solid blue";
     return false;
 }
 
@@ -105,6 +105,16 @@ async function refreshScenario() {
         elem.addEventListener("drop", onScenarioDrop);
         document.getElementById("scenario").appendChild(elem);
     });
+    var endElem = document.createElement("li");
+    endElem.id = "end-mark";
+    endElem.classList.add("drag-list-item");
+    endElem.textContent = "ゲーム終了";
+    endElem.addEventListener("dragover", onScenarioDragOver);
+    endElem.addEventListener("dragleave", onScenarioDragLeave);
+    endElem.addEventListener("drop", onScenarioDrop);
+    endElem.classList.add("drag-list-item-end");
+    endElem.style.cursor = "";
+    document.getElementById("scenario").appendChild(endElem);
 }
 
 /*
@@ -136,17 +146,29 @@ function showProps() {
         // セリフ(ボイスなし)
         var sp = cmd.split("*");
         var name = sp[0];
-        var msg = sp[1];
+        var text = sp[1];
+        document.getElementById("prop-serif-name").value = name;
+        document.getElementById("prop-serif-voice").value = "";
+        document.getElementById("prop-serif-text").value = text;
+        document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.match(/^\*.+\*.+\*+.$/)) {
         // セリフ(ボイスあり)
         var sp = cmd.split("*");
         var name = sp[0];
         var voice = sp[1];
-        var msg = sp[2];
+        var text = sp[2];
+        document.getElementById("prop-serif-name").value = name;
+        document.getElementById("prop-serif-voice").value = voice;
+        document.getElementById("prop-serif-text").value = text;
+        document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.match(/^.+「.*」$/)) {
         // セリフ(かぎカッコ)
         var name = cmd.split("「")[0];
-        var msg = cmd.split("「")[1].split("」")[0];
+        var text = cmd.split("「")[1].split("」")[0];
+        document.getElementById("prop-serif-name").value = name;
+        document.getElementById("prop-serif-voice").value = "";
+        document.getElementById("prop-serif-text").value = text;
+        document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
         // @bg
         document.getElementById("prop-bg").style.display = "block";
@@ -163,8 +185,8 @@ function showProps() {
         // TODO: ここで画像を表示する
     } else if(!cmd.startsWith(":") && !cmd.startsWith("#")) {
         // 暫定: その他
-        document.getElementById("prop-msg").style.display = "block";
         document.getElementById("prop-msg-text").value = cmd;
+        document.getElementById("prop-msg").style.display = "block";
     }
 }
 
@@ -174,10 +196,28 @@ function commitProps() {
     }
 
     cmd = elementInEdit.cmd;
-    if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#") && cmd.indexOf("「") == -1) {
+    if(cmd.match(/^\*.+\*.+$/) ||
+       cmd.match(/^\*.+\*.+\*+.$/) ||
+       cmd.match(/^.+「.*」$/)) {
+        var name = document.getElementById("prop-serif-name").value;
+        var voice = document.getElementById("prop-serif-voice").value;
+        var text = document.getElementById("prop-serif-text").value;
+        if(name === "") {
+            name = "名前を入力してください";
+        }
+        if(text === "") {
+            text = "セリフを入力してください"
+        }
+        if(voice === "") {
+            elementInEdit.cmd = "*" + name + "*" + text;
+        } else {
+            elementInEdit.cmd = "*" + name + "*" + voice + "*" + text;
+        }
+        elementInEdit.textContent = name + "「" + text + "」";
+    } else if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#")) {
         var msg = document.getElementById("prop-msg-text").value;
         if(msg === "") {
-            msg = "文章が空白です";
+            msg = "文章を入力してください";
         }
         msg = msg.replace(/\n/g, "\\n");
         elementInEdit.cmd = msg;

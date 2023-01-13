@@ -324,25 +324,31 @@ input[type="radio"] {
 }
 
 .tab-list-item {
-	color: #2d8fdd;
-	border-left: solid 6px #2d8fdd;
-	background: #f1f8ff;
+	color: #2ddd8f;
+	border-left: solid 6px #2ddd8f;
+	background: #f1f8f0;
 	margin-bottom: 3px;
 	border-radius: 0 15px 15px 0;
 	line-height: 1.5;
 	padding: 0.5em;
 	list-style-type: none!important;
+
+	width: 15em;
+	display: inline-block;
 }
 
 .tab-list-item-sel {
-	color: #f1f8ff;
-	border-left: solid 6px #f1f8ff;
-	background: #2d8fdd;
+	color: #f1fff8;
+	border-left: solid 6px #f1fff8;
+	background: #2ddd8f;
 	margin-bottom: 3px;
 	border-radius: 0 15px 15px 0;
 	line-height: 1.5;
 	padding: 0.5em;
 	list-style-type: none!important;
+
+	width: 15em;
+	display: inline-block;
 }
 
 .dragover {

@@ -1,3 +1,5 @@
+var baseUrl;
+
 /*
  * シナリオビュー
  */
@@ -39,8 +41,11 @@ function createCommandElement(command) {
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-serif");
     } else if (command.startsWith("@bg ") || command.startsWith("@背景 ")) {
+	var cl = normalizeBg(command);
         newElem.textContent = "背景";
         newElem.classList.add("drag-list-item-bg");
+	newElem.style.backgroundImage = "url(\"" + baseUrl + "bg/" + cl[1] + "\")";
+	newElem.style.backgroundSize = "cover";
     } else {
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-msg");
@@ -171,58 +176,12 @@ async function showProps() {
         document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
         // @bg
+	var cl = normalizeBg(cmd);
         document.getElementById("prop-bg").style.display = "block";
-        tokens = cmd.split(" ");
-	var file = "";
-        if(tokens.length >= 1) {
-            if(tokens[1].startsWith("file:")) {
-		file = tokens[1].substring(5);
-            } else if(tokens[1].startsWith("ファイル:")) {
-                file = tokens[1].substring(5);
-            } else {
-                file = tokens[1];
-            }
-            document.getElementById("prop-bg-file").value = file;
-            document.getElementById("thumbnail-picture").src = await window.api.getBaseUrl() + "bg/" + file;
-        }
-        if(tokens.length >= 2) {
-            if(tokens[2].startsWith("duration:")) {
-                document.getElementById("prop-bg-duration").value = tokens[2].substring(9);
-            } else if(tokens[2].startsWith("秒:")) {
-                document.getElementById("prop-bg-duration").value = tokens[2].substring(2);
-            } else {
-                document.getElementById("prop-bg-duration").value = tokens[2];
-            }
-        }
-	var effect = "";
-	if(tokens.lenght < 3) {
-	    effect = "標準";
-	} else {
-            if(tokens[3].startsWith("effect:")) {
-                effect = tokens[3].substring(7);
-            } else if(tokens[3].startsWith("エフェクト:")) {
-                effect = tokens[3].substring(6);
-            } else {
-		effect = tokens[3];
-            }
-	    switch(effect) {
-	    case "標準":            effect = "標準"; break;
-	    case "normal":          effect = "標準"; break;
-	    case "n":               effect = "標準"; break;
-	    case "右カーテン":      effect = "右カーテン"; break;
-	    case "c":               effect = "右カーテン"; break;
-	    case "curtain":         effect = "右カーテン"; break;
-	    case "curtain-right":   effect = "右カーテン"; break;
-	    case "左カーテン":      effect = "左カーテン"; break;
-	    case "curtain-left":    effect = "左カーテン"; break;
-	    case "上カーテン":      effect = "上カーテン"; break;
-	    case "curtain-up":      effect = "上カーテン"; break;
-	    case "下カーテン":      effect = "下カーテン"; break;
-	    case "curtain-down":    effect = "下カーテン"; break;
-	    default:                effect = "標準"; break;
-	    }
-        }
-        document.getElementById("prop-bg-effect").value = effect;
+        document.getElementById("prop-bg-file").value = cl[1];
+        document.getElementById("prop-bg-duration").value = cl[2];
+        document.getElementById("prop-bg-effect").value = japanizeEffect(cl[3]);
+        document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
     } else if(!cmd.startsWith(":") && !cmd.startsWith("#")) {
         // 暫定: その他
         document.getElementById("prop-msg-text").value = cmd;
@@ -265,8 +224,7 @@ function commitProps() {
 	    effect = "標準";
 	}
         elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
-        elementInEdit.textContent = "背景 " + file;
-    }  else if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#")) {
+    } else if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#")) {
         var msg = document.getElementById("prop-msg-text").value;
         if(msg === "") {
             msg = "文章を入力してください";
@@ -336,7 +294,7 @@ async function refreshBg() {
     bg.forEach(function(file) {
         var elem = document.createElement('li');
         elem.id = makeId();
-        elem.textContent = file;
+        elem.textContent = "背景";
         elem.draggable = "true";
         elem.className = "tab-list-item";
         elem.template = true;
@@ -487,10 +445,98 @@ async function refreshSe() {
 }
 
 /*
+ * コマンドの正規化
+ */
+
+function normalizeBg(command) {
+    var op = "@bg";
+    var file = "ファイルを指定してください";
+    var duration = "0";
+    var effect = "標準";
+
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        if(tokens[1].startsWith("file:")) {
+	    file = tokens[1].substring(5);
+        } else if(tokens[1].startsWith("ファイル:")) {
+            file = tokens[1].substring(5);
+        } else {
+            file = tokens[1];
+        }
+    }
+    if(tokens.length >= 3) {
+        if(tokens[2].startsWith("duration:")) {
+            duration = tokens[2].substring(9);
+        } else if(tokens[2].startsWith("秒:")) {
+            duration = tokens[2].substring(2);
+        } else {
+            duration = tokens[2];
+        }
+    }
+    if(tokens.length >= 4) {
+        if(tokens[3].startsWith("effect:")) {
+            effect = tokens[3].substring(7);
+        } else if(tokens[3].startsWith("エフェクト:")) {
+            effect = tokens[3].substring(6);
+        } else {
+	    effect = tokens[3];
+        }
+	effect = normalizeEffect(effect);
+    }
+
+    return [op, file, duration, effect];
+}
+
+function normalizeEffect(effect) {
+    switch(effect) {
+    case "標準":            return "normal";
+    case "normal":          return "normal";
+    case "n":               return "normal";
+    case "右カーテン":      return "curtain-right";
+    case "c":               return "curtain-right";
+    case "curtain":         return "curtain-right";
+    case "curtain-right":   return "curtain-right";
+    case "左カーテン":      return "curtain-left";
+    case "curtain-left":    return "curtain-left";
+    case "上カーテン":      return "curtain-up";
+    case "curtain-up":      return "curtain-up";
+    case "下カーテン":      return "curtain-down";
+    case "curtain-down":    return "curtain-down";
+    default:                break;
+    }
+    return "normal";
+}
+
+function japanizeEffect(effect) {
+    switch(effect) {
+    case "標準":            return "標準";
+    case "normal":          return "標準";
+    case "n":               return "標準";
+    case "右カーテン":      return "右カーテン";
+    case "c":               return "右カーテン";
+    case "curtain":         return "右カーテン";
+    case "curtain-right":   return "右カーテン";
+    case "左カーテン":      return "左カーテン";
+    case "curtain-left":    return "左カーテン";
+    case "上カーテン":      return "上カーテン";
+    case "curtain-up":      return "上カーテン";
+    case "下カーテン":      return "下カーテン";
+    case "curtain-down":    return "下カーテン";
+    default:                break;
+    }
+    return "標準";
+}
+
+/*
  * ロード時
  */
 
 window.addEventListener('load', async () => {
+    //
+    // ゲームのベースURLを取得する
+    //
+    baseUrl = await window.api.getBaseUrl();
+
     //
     // パレットの要素をセットアップしてイベントリスナを追加する
     //

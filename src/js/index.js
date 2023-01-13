@@ -4,7 +4,37 @@ var baseUrl;
  * シナリオビュー
  */
 
+async function refreshScenario() {
+    // シナリオビューのアイテムをすべて削除する
+    var element = document.getElementById("scenario");
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+
+    // シナリオデータを取得してビューに追加する
+    var arr = await window.api.getScenarioData();
+    arr.forEach(line => {
+        var elem = createCommandElement(line);
+        elem.addEventListener("dragstart", onScenarioDragStart);
+        elem.addEventListener("dragover", onScenarioDragOver);
+        elem.addEventListener("dragleave", onScenarioDragLeave);
+        elem.addEventListener("drop", onScenarioDrop);
+        document.getElementById("scenario").appendChild(elem);
+    });
+    var endElem = document.createElement("li");
+    endElem.id = "end-mark";
+    endElem.classList.add("drag-list-item");
+    endElem.textContent = "ゲーム終了";
+    endElem.addEventListener("dragover", onScenarioDragOver);
+    endElem.addEventListener("dragleave", onScenarioDragLeave);
+    endElem.addEventListener("drop", onScenarioDrop);
+    endElem.classList.add("drag-list-item-end");
+    endElem.style.cursor = "";
+    document.getElementById("scenario").appendChild(endElem);
+}
+
 function createCommandElement(command) {
+    // 要素を作成する
     var newElem = document.createElement("li");
     newElem.id = makeId();
     newElem.draggable = "true";
@@ -25,28 +55,50 @@ function createCommandElement(command) {
         changeElement(event.srcElement);
         showProps();
     });
-    if(command === "") {
-        // FIXME: 空行をどうする？
-        newElem.textContent = command;
-        newElem.classList.add("drag-list-item-etc");
-    } else if(command.match(/^\*.+\*.+$/)) {
-        var sp = command.split("*");
-        newElem.textContent = sp[0] + "「" + sp[1] + "」";
-        newElem.classList.add("drag-list-item-serif");
-    } else if(command.match(/^\*.+\*.+\*+.$/)) {
-        var sp = command.split("*");
-        newElem.textContent = sp[0] + "「" + sp[2] + "」";
-        newElem.classList.add("drag-list-item-serif");
-    } else if(command.match(/^.+「.*」$/)) {
-        newElem.textContent = command;
-        newElem.classList.add("drag-list-item-serif");
-    } else if (command.startsWith("@bg ") || command.startsWith("@背景 ")) {
-	var cl = normalizeBg(command);
+
+    // コマンドの種類ごとに要素の設定を行う
+    if (command.startsWith("@bg ") || command.startsWith("@背景 ")) {
+        // @bg
+        var cl = normalizeBg(command);
         newElem.textContent = "背景";
         newElem.classList.add("drag-list-item-bg");
-	newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "bg/" + cl[1] + "\")";
-	newElem.style.backgroundSize = "cover";
+        newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "bg/" + cl[1] + "\")";
+        newElem.style.backgroundSize = "cover";
+    } else if (command.startsWith("@ch ") || command.startsWith("@キャラ ")) {
+        // @ch
+        var cl = normalizeCh(command);
+        newElem.textContent = "キャラ";
+        newElem.classList.add("drag-list-item-ch");
+        newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "ch/" + cl[2] + "\")";
+        newElem.style.backgroundSize = "contain";
+    } else if(command.startsWith("@")) {
+        // Kiraraで未対応のコマンド
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-etc");
+    } else if(command.startsWith(":")) {
+        // FIXME: ラベル
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-etc"); // etcになっている
+    } else if(command.match(/^\*[^\*]+\*[^\*]+$/)) {
+        // セリフ(*キャラ名*セリフ)
+        var sp = command.split("*");
+        newElem.textContent = sp[1] + "「" + sp[2] + "」";
+        newElem.classList.add("drag-list-item-serif");
+    } else if(command.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/)) {
+        // セリフ(*キャラ名*ボイス*セリフ)
+        var sp = command.split("*");
+        newElem.textContent = sp[1] + "「" + sp[3] + "」";
+        newElem.classList.add("drag-list-item-serif");
+    } else if(command.match(/^.+「.*」$/)) {
+        // セリフ(「」)
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-serif");
+    } else if(command === "") {
+        // FIXME: 空行
+        newElem.textContent = command;
+        newElem.classList.add("drag-list-item-etc"); // etcになっている
     } else {
+        // メッセージ
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-msg");
     }
@@ -92,36 +144,6 @@ function onScenarioDrop(event) {
     this.parentNode.insertBefore(newElem, this);
 }
 
-// シナリオビューをリフレッシュする
-async function refreshScenario() {
-    // シナリオビューのアイテムをすべて削除する
-    var element = document.getElementById("scenario");
-    while (element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
-
-    // シナリオデータを取得してビューに追加する
-    var arr = await window.api.getScenarioData();
-    arr.forEach(line => {
-        var elem = createCommandElement(line);
-        elem.addEventListener("dragstart", onScenarioDragStart);
-        elem.addEventListener("dragover", onScenarioDragOver);
-        elem.addEventListener("dragleave", onScenarioDragLeave);
-        elem.addEventListener("drop", onScenarioDrop);
-        document.getElementById("scenario").appendChild(elem);
-    });
-    var endElem = document.createElement("li");
-    endElem.id = "end-mark";
-    endElem.classList.add("drag-list-item");
-    endElem.textContent = "ゲーム終了";
-    endElem.addEventListener("dragover", onScenarioDragOver);
-    endElem.addEventListener("dragleave", onScenarioDragLeave);
-    endElem.addEventListener("drop", onScenarioDrop);
-    endElem.classList.add("drag-list-item-end");
-    endElem.style.cursor = "";
-    document.getElementById("scenario").appendChild(endElem);
-}
-
 /*
  * プロパティビュー
  */
@@ -145,8 +167,32 @@ async function showProps() {
 
     // アクティブになるプロパティペインを表示し、要素に値を入れる
     cmd = elementInEdit.cmd;
-    if(cmd === "") {
-        // 何もしない
+    if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
+        // @bg
+        var cl = normalizeBg(cmd);
+        document.getElementById("prop-bg-file").value = cl[1];
+        document.getElementById("prop-bg-duration").value = cl[2];
+        document.getElementById("prop-bg-effect").value = normalizeEffect(cl[3]);
+        document.getElementById("prop-bg").style.display = "block";
+        document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
+    } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
+        // @ch
+        var cl = normalizeCh(cmd);
+        document.getElementById("prop-ch-position").value = cl[1];
+        document.getElementById("prop-ch-file").value = cl[2];
+        document.getElementById("prop-ch-duration").value = cl[3];
+        document.getElementById("prop-ch-effect").value = normalizeEffect(cl[4]);
+        document.getElementById("prop-ch-xshift").value = cl[5];
+        document.getElementById("prop-ch-yshift").value = cl[6];
+        document.getElementById("prop-ch-alpha").value = cl[7];
+        document.getElementById("prop-ch").style.display = "block";
+        document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
+    } else if(cmd.startsWith("@")) {
+        // その他のコマンド
+    } else if(cmd.startsWith(":")) {
+        // ラベル
+    } else if(cmd.startsWith("#")) {
+        // コメント
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/)) {
         // セリフ(ボイスなし)
         var sp = cmd.split("*");
@@ -174,16 +220,10 @@ async function showProps() {
         document.getElementById("prop-serif-text").value = text;
         document.getElementById("prop-serif-voice").value = "";
         document.getElementById("prop-serif").style.display = "block";
-    } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
-        // @bg
-	var cl = normalizeBg(cmd);
-        document.getElementById("prop-bg").style.display = "block";
-        document.getElementById("prop-bg-file").value = cl[1];
-        document.getElementById("prop-bg-duration").value = cl[2];
-        document.getElementById("prop-bg-effect").value = japanizeEffect(cl[3]);
-        document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
-    } else if(!cmd.startsWith(":") && !cmd.startsWith("#")) {
-        // 暫定: その他
+    } else if(cmd === "") {
+        // FIXME: 何もしない
+    } else {
+        // メッセージ
         document.getElementById("prop-msg-text").value = cmd;
         document.getElementById("prop-msg").style.display = "block";
     }
@@ -451,33 +491,33 @@ async function refreshSe() {
 function normalizeBg(command) {
     var op = "@bg";
     var file = "ファイルを指定してください";
-    var duration = "0";
+    var duration = "1.0";
     var effect = "標準";
 
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
         if(tokens[1].startsWith("file:")) {
-	    file = tokens[1].substring(5);
+	    file = tokens[1].substring("file:".length);
         } else if(tokens[1].startsWith("ファイル:")) {
-            file = tokens[1].substring(5);
+            file = tokens[1].substring("ファイル:".length);
         } else {
             file = tokens[1];
         }
     }
     if(tokens.length >= 3) {
         if(tokens[2].startsWith("duration:")) {
-            duration = tokens[2].substring(9);
+            duration = tokens[2].substring("duration:".length);
         } else if(tokens[2].startsWith("秒:")) {
-            duration = tokens[2].substring(2);
+            duration = tokens[2].substring("秒:".length);
         } else {
             duration = tokens[2];
         }
     }
     if(tokens.length >= 4) {
         if(tokens[3].startsWith("effect:")) {
-            effect = tokens[3].substring(7);
+            effect = tokens[3].substring("effect:".length);
         } else if(tokens[3].startsWith("エフェクト:")) {
-            effect = tokens[3].substring(6);
+            effect = tokens[3].substring("エフェクト:".length);
         } else {
 	    effect = tokens[3];
         }
@@ -525,6 +565,85 @@ function japanizeEffect(effect) {
     default:                break;
     }
     return "標準";
+}
+
+function normalizeCh(command) {
+    var op = "@ch";
+    var position = "中央";
+    var file = "ファイルを指定してください";
+    var duration = 1.0;
+    var effect = "標準";
+    var xshift = 0;
+    var yshift = 0;
+    var alpha = 255;
+
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        if(tokens[1].startsWith("position:")) {
+            position = tokens[1].substring("position:".length);
+        } else if(tokens[1].startsWith("位置:")) {
+            position = tokens[1].substring("位置:".length);
+        } else {
+            position = tokens[1];
+        }
+    }
+    if(tokens.length >= 3) {
+        if(tokens[2].startsWith("file:")) {
+            file = tokens[2].substring("file:".length);
+        } else if(tokens[2].startsWith("ファイル:")) {
+            file = tokens[2].substring("ファイル:".length);
+        } else {
+            file = tokens[2];
+        }
+    }
+    if(tokens.length >= 4) {
+        if(tokens[3].startsWith("duration:")) {
+            duration = tokens[3].substring("duration:".length);
+        } else if(tokens[3].startsWith("秒:")) {
+            duration = tokens[3].substring("秒:".length);
+        } else {
+            duration = tokens[3];
+        }
+    }
+    if(tokens.length >= 5) {
+        if(tokens[4].startsWith("effect:")) {
+            effect = tokens[4].substring("effect:");
+        } else if(tokens[4].startsWith("エフェクト:")) {
+            effect = tokens[4].substring("エフェクト:".length);
+        } else {
+            effect = tokens[4];
+        }
+        effect = normalizeEffect(effect);
+    }
+    if(tokens.length >= 6) {
+        if(tokens[5].startsWith("right:")) {
+            xshift = tokens[5].substring("right:");
+        } else if(tokens[5].startsWith("右:")) {
+            xshift = tokens[5].substring("右:".length);
+        } else {
+            xshift = tokens[5];
+        }
+    }
+    if(tokens.length >= 7) {
+        if(tokens[6].startsWith("down:")) {
+            xshift = tokens[6].substring("down:");
+        } else if(tokens[6].startsWith("下:")) {
+            xshift = tokens[6].substring("下:".length);
+        } else {
+            xshift = tokens[6];
+        }
+    }
+    if(tokens.length >= 8) {
+        if(tokens[7].startsWith("alpha:")) {
+            xshift = tokens[7].substring("alpha:");
+        } else if(tokens[7].startsWith("アルファ:")) {
+            xshift = tokens[7].substring("アルファ:".length);
+        } else {
+            xshift = tokens[7];
+        }
+    }
+
+    return [op, position, file, duration, effect, xshift, yshift, alpha];
 }
 
 /*

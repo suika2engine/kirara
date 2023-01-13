@@ -142,32 +142,32 @@ function showProps() {
     cmd = elementInEdit.cmd;
     if(cmd === "") {
         // 何もしない
-    } else if(cmd.match(/^\*.+\*.+$/)) {
+    } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/)) {
         // セリフ(ボイスなし)
         var sp = cmd.split("*");
-        var name = sp[0];
-        var text = sp[1];
-        document.getElementById("prop-serif-name").value = name;
-        document.getElementById("prop-serif-voice").value = "";
-        document.getElementById("prop-serif-text").value = text;
-        document.getElementById("prop-serif").style.display = "block";
-    } else if(cmd.match(/^\*.+\*.+\*+.$/)) {
-        // セリフ(ボイスあり)
-        var sp = cmd.split("*");
-        var name = sp[0];
-        var voice = sp[1];
+        var name = sp[1];
         var text = sp[2];
         document.getElementById("prop-serif-name").value = name;
-        document.getElementById("prop-serif-voice").value = voice;
         document.getElementById("prop-serif-text").value = text;
+        document.getElementById("prop-serif-voice").value = "";
+        document.getElementById("prop-serif").style.display = "block";
+    } else if(cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/)) {
+        // セリフ(ボイスあり)
+        var sp = cmd.split("*");
+        var name = sp[1];
+        var voice = sp[2];
+        var text = sp[3];
+        document.getElementById("prop-serif-name").value = name;
+        document.getElementById("prop-serif-text").value = text;
+        document.getElementById("prop-serif-voice").value = voice;
         document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.match(/^.+「.*」$/)) {
         // セリフ(かぎカッコ)
         var name = cmd.split("「")[0];
         var text = cmd.split("「")[1].split("」")[0];
         document.getElementById("prop-serif-name").value = name;
-        document.getElementById("prop-serif-voice").value = "";
         document.getElementById("prop-serif-text").value = text;
+        document.getElementById("prop-serif-voice").value = "";
         document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
         // @bg
@@ -200,8 +200,8 @@ function commitProps() {
        cmd.match(/^\*.+\*.+\*+.$/) ||
        cmd.match(/^.+「.*」$/)) {
         var name = document.getElementById("prop-serif-name").value;
-        var voice = document.getElementById("prop-serif-voice").value;
         var text = document.getElementById("prop-serif-text").value;
+        var voice = document.getElementById("prop-serif-voice").value;
         if(name === "") {
             name = "名前を入力してください";
         }

@@ -34,6 +34,22 @@
 								音声ファイル(オプション):<br>
 								<input id="prop-serif-voice" type="text" class="prop-textsingle" size="10">
 							</div>
+							<div id="prop-bg" class="prop-pane">
+								ファイル:<br>
+								<input id="prop-bg-file" type="text" class="prop-textsingle"><br>
+								<br>
+								秒:<br>
+								<input id="prop-bg-duration" type="range" name="volume" min="0" max="30" step="0.1"><br>
+								<br>
+								エフェクト:<br>
+								<select id="prop-bg-effect" name="effect">
+									<option value="normal">標準</option>
+									<option value="curtain-right">右カーテン</option>
+									<option value="curtain-right">左カーテン</option>
+									<option value="curtain-up">上カーテン</option>
+									<option value="curtain-down">下カーテン</option>
+								</select>
+							</div>
 						</div>
 						<div class="top-right-vertical-grid-area-bottom">
 							<div class="palette-panel">
@@ -41,8 +57,9 @@
 									<li class="palette-list-item" draggable="true" id="cmd-message">文章</li>
 									<li class="palette-list-item" draggable="true" id="cmd-serif">セリフ</li>
 									<li class="palette-list-item" draggable="true" id="cmd-choose">選択肢</li>
-									<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
+									<li class="palette-list-item" draggable="true" id="cmd-chs">場面転換</li>
 									<li class="palette-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
+									<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
 									<li class="palette-list-item" draggable="true" id="cmd-label">目印を付ける</li>
 									<li class="palette-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
 									<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>

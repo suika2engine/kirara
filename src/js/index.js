@@ -127,7 +127,7 @@ function changeElement(elem) {
     elementInEdit = elem;
 }
 
-function showProps() {
+async function showProps() {
     // すべてのプロパティペインを非表示にする
     Array.from(document.getElementById("prop-container").childNodes).forEach(function (e) {
         if(e.style != null) {
@@ -173,16 +173,56 @@ function showProps() {
         // @bg
         document.getElementById("prop-bg").style.display = "block";
         tokens = cmd.split(" ");
+	var file = "";
         if(tokens.length >= 1) {
             if(tokens[1].startsWith("file:")) {
-                document.getElementById("prop-bg-file").value = tokens[1].substring(5);
+		file = tokens[1].substring(5);
             } else if(tokens[1].startsWith("ファイル:")) {
-                document.getElementById("prop-bg-file").value = tokens[1].substring(5);
+                file = tokens[1].substring(5);
             } else {
-                document.getElementById("prop-bg-file").value = tokens[1];
+                file = tokens[1];
+            }
+            document.getElementById("prop-bg-file").value = file;
+            document.getElementById("thumbnail-picture").src = await window.api.getBaseUrl() + "bg/" + file;
+        }
+        if(tokens.length >= 2) {
+            if(tokens[2].startsWith("duration:")) {
+                document.getElementById("prop-bg-duration").value = tokens[2].substring(9);
+            } else if(tokens[2].startsWith("秒:")) {
+                document.getElementById("prop-bg-duration").value = tokens[2].substring(2);
+            } else {
+                document.getElementById("prop-bg-duration").value = tokens[2];
             }
         }
-        // TODO: ここで画像を表示する
+	var effect = "";
+	if(tokens.lenght < 3) {
+	    effect = "標準";
+	} else {
+            if(tokens[3].startsWith("effect:")) {
+                effect = tokens[3].substring(7);
+            } else if(tokens[3].startsWith("エフェクト:")) {
+                effect = tokens[3].substring(6);
+            } else {
+		effect = tokens[3];
+            }
+	    switch(effect) {
+	    case "標準":            effect = "標準"; break;
+	    case "normal":          effect = "標準"; break;
+	    case "n":               effect = "標準"; break;
+	    case "右カーテン":      effect = "右カーテン"; break;
+	    case "c":               effect = "右カーテン"; break;
+	    case "curtain":         effect = "右カーテン"; break;
+	    case "curtain-right":   effect = "右カーテン"; break;
+	    case "左カーテン":      effect = "左カーテン"; break;
+	    case "curtain-left":    effect = "左カーテン"; break;
+	    case "上カーテン":      effect = "上カーテン"; break;
+	    case "curtain-up":      effect = "上カーテン"; break;
+	    case "下カーテン":      effect = "下カーテン"; break;
+	    case "curtain-down":    effect = "下カーテン"; break;
+	    default:                effect = "標準"; break;
+	    }
+        }
+        document.getElementById("prop-bg-effect").value = effect;
     } else if(!cmd.startsWith(":") && !cmd.startsWith("#")) {
         // 暫定: その他
         document.getElementById("prop-msg-text").value = cmd;
@@ -214,7 +254,19 @@ function commitProps() {
             elementInEdit.cmd = "*" + name + "*" + voice + "*" + text;
         }
         elementInEdit.textContent = name + "「" + text + "」";
-    } else if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#")) {
+    } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
+        var file = document.getElementById("prop-bg-file").value;
+        var duration = document.getElementById("prop-bg-duration").value;
+        var effect = document.getElementById("prop-bg-effect").value;
+        if(file === "") {
+            file = "ファイル名を入力してください";
+        }
+	if(effect === "") {
+	    effect = "標準";
+	}
+        elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
+        elementInEdit.textContent = "背景 " + file;
+    }  else if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#")) {
         var msg = document.getElementById("prop-msg-text").value;
         if(msg === "") {
             msg = "文章を入力してください";

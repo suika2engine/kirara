@@ -112,7 +112,7 @@ body {
 /* メインリスト */
 .scenario-list {
 	margin: 0;
-	padding 0;
+	padding: 0;
 	padding-inline-start: 0;
 }
 
@@ -180,8 +180,8 @@ body {
 /* プロパティペイン */
 .prop-pane {
 	font-size: 12px;
-	width: 100%;
-	height: 100%;
+	width: calc(100% - 10px);
+	height: calc(100% - 10px);
 	padding: 5px;
 	background: lightgray;
 	overflow: auto;
@@ -191,13 +191,15 @@ body {
 /* テキストエリア(複数行) */
 .prop-textmulti {
 	padding: 0;
-	width: calc(95% - 1em - 10px);
+	width: calc(100% - 10px);
 	height: 3em;
+	resize: none;
+	font-family: inherit;
 }
 
 /* テキストエリア(単一行) */
 .prop-textsingle {
-	width: calc(100% - 1em - 10px);
+	width: calc(100% - 10px);
 }
 
 /*
@@ -273,17 +275,13 @@ body {
  * 素材のタブ
  */
 
-..tab-wrap {
+.tab-wrap {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 }
 
-.tab-wrap {
-	height: 100%;
-}
-
-input[type="radio"] {
+input[name="tab-btn"] {
 	display:none;
 }
 

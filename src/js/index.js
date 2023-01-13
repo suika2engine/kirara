@@ -44,7 +44,7 @@ function createCommandElement(command) {
 	var cl = normalizeBg(command);
         newElem.textContent = "背景";
         newElem.classList.add("drag-list-item-bg");
-	newElem.style.backgroundImage = "url(\"" + baseUrl + "bg/" + cl[1] + "\")";
+	newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "bg/" + cl[1] + "\")";
 	newElem.style.backgroundSize = "cover";
     } else {
         newElem.textContent = command;
@@ -294,7 +294,7 @@ async function refreshBg() {
     bg.forEach(function(file) {
         var elem = document.createElement('li');
         elem.id = makeId();
-        elem.textContent = "背景";
+        elem.textContent = file;
         elem.draggable = "true";
         elem.className = "tab-list-item";
         elem.template = true;

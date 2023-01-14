@@ -12,11 +12,12 @@
     "license": "ISC",
     "devDependencies": {
         "electron": "^22.0.0",
-        "electron-builder": "^23.6.0"
+        "electron-builder": "^23.6.0",
+        "unzipper": "^0.10.11"
     },
     "build": {
         "appId": "com.suika2.kirara",
-	"afterSign": "scripts/notarize.js",
+        "afterSign": "scripts/notarize.js",
         "directories": {
             "output": "dist"
         },
@@ -35,7 +36,7 @@
             "entitlementsInherit": "build/entitlements.plist",
             "target": "dmg"
         },
-       "win": {
+        "win": {
             "icon": "assets/win/suika.ico",
             "target": "nsis",
             "publisherName": "Open Source Developer, Keiichi Tabata"

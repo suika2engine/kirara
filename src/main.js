@@ -72,6 +72,16 @@ ipcMain.handle('createGame', (event, dir) => {
 
     // テンプレートをコピーする
     copyTemplateFiles("template", path, true);
+
+    // 実行ファイルをコピーする
+    if(process.platform === "win32") {
+        fs.writeFileSync(path + "/suika.exe", fs.readFileSync(app.getAppPath() + "/apps/suika.exe"));
+        fs.writeFileSync(path + "/suika-pro.exe", fs.readFileSync(app.getAppPath() + "/apps/suika-pro.exe"));
+    } else if(process.platform === "darwin") {
+        fs.writeFileSync(path + "/mac.zip", fs.readFileSync(app.getAppPath() + "/apps/mac.zip"));
+        exec("cd " + path + " && unzip " + path + "/mac.zip");
+    }
+
     return true;
 })
 
@@ -291,7 +301,7 @@ ipcMain.handle('debugGame', (event, lineIndex) => {
         var command = "cd " + Model.dir + " && suika-pro.exe " + Model.scenarioFile + " " + lineIndex;
         exec(command);
     } else if(process.platform === "darwin") {
-        var command = "open " + Model.dir + "/suika-pro.app --args " + Model.scenarioFile + " " + lineIndex;
+        var command = "open " + Model.dir + "/suika-pro.app --args scenario-file=" + Model.scenarioFile + " scenario-line=" + lineIndex;
         exec(command);
     }
 })

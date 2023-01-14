@@ -273,8 +273,13 @@ ipcMain.handle('playGame', (event) => {
     fs.rmSync(Model.dir + "/sav", { recursive: true, force: true });
 
     // プレーヤを実行する
-    var command = "cd " + Model.dir + " && " + "suika.exe";
-    exec(command);
+    if(process.platform === "win32") {
+        var command = "cd " + Model.dir + " && " + "suika.exe";
+        exec(command);
+    } else if(process.platform === "darwin") {
+        var command = "open " + Model.dir + "/suika.app";
+        exec(command);
+    }
 })
 
 ipcMain.handle('debugGame', (event, lineIndex) => {
@@ -282,6 +287,11 @@ ipcMain.handle('debugGame', (event, lineIndex) => {
     fs.rmSync(Model.dir + "/sav", { recursive: true, force: true });
 
     // デバッガを実行する
-    var command = "cd " + Model.dir + " && " + "suika-pro.exe" + " " + Model.scenarioFile + " " + lineIndex;
-    exec(command);
+    if(process.platform === "win32") {
+        var command = "cd " + Model.dir + " && suika-pro.exe " + Model.scenarioFile + " " + lineIndex;
+        exec(command);
+    } else if(process.platform === "darwin") {
+        var command = "open " + Model.dir + "/suika-pro.app --args " + Model.scenarioFile + " " + lineIndex;
+        exec(command);
+    }
 })

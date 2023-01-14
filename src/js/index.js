@@ -70,7 +70,11 @@ function createCommandElement(command) {
         newElem.textContent = "キャラ";
         newElem.classList.add("drag-list-item-ch");
         newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "ch/" + cl[2] + "\")";
+        newElem.style.backgroundRepeat = "no-repeat";
         newElem.style.backgroundSize = "contain";
+    //
+    // ここに未実装のcommand to elementを書いていく
+    //
     } else if(command.startsWith("@")) {
         // Kiraraで未対応のコマンド
         newElem.textContent = command;
@@ -178,7 +182,7 @@ async function showProps() {
     } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
         // @ch
         var cl = normalizeCh(cmd);
-        document.getElementById("prop-ch-position").value = cl[1];
+        document.getElementById("prop-ch-position").value = normalizePosition(cl[1]);
         document.getElementById("prop-ch-file").value = cl[2];
         document.getElementById("prop-ch-duration").value = cl[3];
         document.getElementById("prop-ch-effect").value = normalizeEffect(cl[4]);
@@ -186,9 +190,9 @@ async function showProps() {
         document.getElementById("prop-ch-yshift").value = cl[6];
         document.getElementById("prop-ch-alpha").value = cl[7];
         document.getElementById("prop-ch").style.display = "block";
-        document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
+        document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + cl[2];
     } else if(cmd.startsWith("@")) {
-        // その他のコマンド
+        // 未対応のコマンド
     } else if(cmd.startsWith(":")) {
         // ラベル
     } else if(cmd.startsWith("#")) {
@@ -235,9 +239,35 @@ function commitProps() {
     }
 
     cmd = elementInEdit.cmd;
-    if(cmd.match(/^\*.+\*.+$/) ||
-       cmd.match(/^\*.+\*.+\*+.$/) ||
-       cmd.match(/^.+「.*」$/)) {
+    if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
+        // @bg
+        var file = document.getElementById("prop-bg-file").value;
+        var duration = document.getElementById("prop-bg-duration").value;
+        var effect = normalizeEffect(document.getElementById("prop-bg-effect").value);
+        elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
+    } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
+        // @ch
+        var position = normalizePosition(document.getElementById("prop-ch-position").value);
+        var file = document.getElementById("prop-ch-file").value;
+        var duration = document.getElementById("prop-ch-duration").value;
+        var effect = normalizeEffect(document.getElementById("prop-ch-effect").value);
+        var xshift = document.getElementById("prop-ch-xshift").value;
+        var yshift = document.getElementById("prop-ch-yshift").value;
+        var alpha = document.getElementById("prop-ch-alpha").value;
+        elementInEdit.cmd = "@ch " + position + " " + file + " " + duration + " " + effect + " " + xshift + " " + yshift + " " + alpha;
+    //
+    // ここに未実装のprop to commandを書いていく
+    //
+    } else if (cmd.startsWith("@")) {
+        // 未対応のコマンド
+    } else if (cmd.startsWith(":")) {
+        // TODO: ラベル
+    } else if(cmd.startsWith("#")) {
+        // TODO: コメント
+    } else if(cmd.length === 0) {
+        // TODO: 空行
+    } if(cmd.match(/^\*[^\*]+\*[^\*]+$/) || cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/) || cmd.match(/^.+「.*」$/)) {
+        // セリフ
         var name = document.getElementById("prop-serif-name").value;
         var text = document.getElementById("prop-serif-text").value;
         var voice = document.getElementById("prop-serif-voice").value;
@@ -253,18 +283,8 @@ function commitProps() {
             elementInEdit.cmd = "*" + name + "*" + voice + "*" + text;
         }
         elementInEdit.textContent = name + "「" + text + "」";
-    } else if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
-        var file = document.getElementById("prop-bg-file").value;
-        var duration = document.getElementById("prop-bg-duration").value;
-        var effect = document.getElementById("prop-bg-effect").value;
-        if(file === "") {
-            file = "ファイル名を入力してください";
-        }
-	if(effect === "") {
-	    effect = "標準";
-	}
-        elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
-    } else if(!cmd.startsWith("@") && !cmd.startsWith(":") && !cmd.startsWith("#")) {
+    } else {
+        // メッセージ
         var msg = document.getElementById("prop-msg-text").value;
         if(msg === "") {
             msg = "文章を入力してください";
@@ -392,7 +412,7 @@ async function refreshCh() {
                     }
                 }
             });
-            document.getElementById("thumbnail-picture").src = await window.api.getBaseUrl() + "ch/" + file;
+            document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + file;
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
@@ -644,6 +664,23 @@ function normalizeCh(command) {
     }
 
     return [op, position, file, duration, effect, xshift, yshift, alpha];
+}
+
+function normalizePosition(pos) {
+    switch(pos) {
+    case "中央":            return "center";
+    case "center":          return "center";
+    case "右":              return "right";
+    case "right":           return "right";
+    case "左":              return "left";
+    case "left":            return "left";
+    case "中央背面":        return "back";
+    case "back":            return "back";
+    case "顔":              return "face";
+    case "face":            return "face";
+    default:                break;
+    }
+    return "center";
 }
 
 /*

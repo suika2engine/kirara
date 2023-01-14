@@ -1,5 +1,5 @@
 usage:
-	@echo "Targets: setup run build-win build-mac"
+	@echo "Targets: setup run win mac"
 
 setup:
 	npm install
@@ -7,12 +7,11 @@ setup:
 run:
 	npm start
 
-build-win:
-	npx electron-builder --dir --win --x64
+win:
+	npx electron-builder --win --x64
 
-build-mac:
-	npx electron-builder --dir --mac --x64
-	npx electron-builder --dir --mac --arm64
+mac:
+	npx electron-builder --mac --x64
 
 clean:
 	rm -rf dist logs node_modules *~ src/*~

@@ -25,6 +25,7 @@
             "assets",
             "src",
             "template",
+            "apps",
             "package.json",
             "package-lock.json"
         ],

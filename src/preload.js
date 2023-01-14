@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('api', {
     openScenario: async (file) => await ipcRenderer.invoke('openScenario', file),
     getScenarioName: async () => await ipcRenderer.invoke('getScenarioName'),
     getScenarioData: async () => await ipcRenderer.invoke('getScenarioData'),
+    setScenarioData: async (data) => await ipcRenderer.invoke('setScenarioData', data),
     getBaseUrl: async () => await ipcRenderer.invoke('getBaseUrl'),
     getTxtList: async () => await ipcRenderer.invoke('getTxtList'),
     getBgList: async () => await ipcRenderer.invoke('getBgList'),
@@ -17,5 +18,7 @@ contextBridge.exposeInMainWorld('api', {
     addBgFile: async (filePath) => await ipcRenderer.invoke('addBgFile', filePath),
     addChFile: async (filePath) => await ipcRenderer.invoke('addChFile', filePath),
     addBgmFile: async (filePath) => await ipcRenderer.invoke('addBgmFile', filePath),
-    addSeFile: async (filePath) => await ipcRenderer.invoke('addSeFile', filePath)
+    addSeFile: async (filePath) => await ipcRenderer.invoke('addSeFile', filePath),
+    playGame: async () => await ipcRenderer.invoke('playGame'),
+    debugGame: async (lineIndex) => await ipcRenderer.invoke('debugGame', lineIndex)
 })

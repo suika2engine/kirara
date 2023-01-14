@@ -55,6 +55,15 @@ function createCommandElement(command) {
         changeElement(event.srcElement);
         showProps();
     });
+    newElem.addEventListener("dblclick", async () => {
+        // 保存する
+        saveScenario();
+
+        // デバッグを開始する
+        var scenarioArray = [].slice.call(document.querySelectorAll("#scenario li"));
+        var lineIndex = scenarioArray.indexOf(elementInEdit);
+        window.api.debugGame(lineIndex);
+    });
 
     // コマンドの種類ごとに要素の設定を行う
     if (command.startsWith("@bg ") || command.startsWith("@背景 ")) {
@@ -109,6 +118,16 @@ function createCommandElement(command) {
     return newElem;
 }
 
+async function saveScenario() {
+    var data = [];
+    Array.from(document.getElementById("scenario").childNodes).forEach(function (e) {
+        if(e.cmd !== undefined && e.cmd != null) {
+            data.push(e.cmd);
+        }
+    });
+    await window.api.setScenarioData(data);
+}
+
 function onScenarioDragStart(event) {
     event.dataTransfer.setData("text/plain", event.target.id);
     return true;
@@ -158,7 +177,8 @@ function changeElement(elem) {
     elementInEdit = elem;
 }
 
-async function showProps() {
+// 編集を開始する
+function showProps() {
     // すべてのプロパティペインを非表示にする
     Array.from(document.getElementById("prop-container").childNodes).forEach(function (e) {
         if(e.style != null) {
@@ -169,7 +189,7 @@ async function showProps() {
         return;
     }
 
-    // アクティブになるプロパティペインを表示し、要素に値を入れる
+    // コマンドの種類ごとに、要素に値を入れ、ペインを表示する
     cmd = elementInEdit.cmd;
     if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
         // @bg
@@ -233,11 +253,13 @@ async function showProps() {
     }
 }
 
+// 変更を保存する
 function commitProps() {
     if(elementInEdit == null) {
         return;
     }
 
+    // コマンドの種類ごとに、要素から値を出し、シナリオ要素に反映する
     cmd = elementInEdit.cmd;
     if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
         // @bg
@@ -266,7 +288,7 @@ function commitProps() {
         // TODO: コメント
     } else if(cmd.length === 0) {
         // TODO: 空行
-    } if(cmd.match(/^\*[^\*]+\*[^\*]+$/) || cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/) || cmd.match(/^.+「.*」$/)) {
+    } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/) || cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/) || cmd.match(/^.+「.*」$/)) {
         // セリフ
         var name = document.getElementById("prop-serif-name").value;
         var text = document.getElementById("prop-serif-text").value;
@@ -646,20 +668,20 @@ function normalizeCh(command) {
     }
     if(tokens.length >= 7) {
         if(tokens[6].startsWith("down:")) {
-            xshift = tokens[6].substring("down:");
+            yshift = tokens[6].substring("down:");
         } else if(tokens[6].startsWith("下:")) {
-            xshift = tokens[6].substring("下:".length);
+            yshift = tokens[6].substring("下:".length);
         } else {
-            xshift = tokens[6];
+            yshift = tokens[6];
         }
     }
     if(tokens.length >= 8) {
         if(tokens[7].startsWith("alpha:")) {
-            xshift = tokens[7].substring("alpha:");
+            alpha = tokens[7].substring("alpha:");
         } else if(tokens[7].startsWith("アルファ:")) {
-            xshift = tokens[7].substring("アルファ:".length);
+            alpha = tokens[7].substring("アルファ:".length);
         } else {
-            xshift = tokens[7];
+            alpha = tokens[7];
         }
     }
 

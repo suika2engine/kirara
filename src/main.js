@@ -261,3 +261,27 @@ ipcMain.handle('addBgmFile', (event, srcFilePath) => {
 ipcMain.handle('addSeFile', (event, srcFilePath) => {
     return copyAsset(srcFilePath, ['.ogg'], "se");
 })
+
+//
+// ゲーム実行
+//
+
+const exec = require('child_process').exec;
+
+ipcMain.handle('playGame', (event) => {
+    // セーブデータをクリアする
+    fs.rmSync(Model.dir + "/sav", { recursive: true, force: true });
+
+    // プレーヤを実行する
+    var command = "cd " + Model.dir + " && " + "suika.exe";
+    exec(command);
+})
+
+ipcMain.handle('debugGame', (event, lineIndex) => {
+    // セーブデータをクリアする
+    fs.rmSync(Model.dir + "/sav", { recursive: true, force: true });
+
+    // デバッガを実行する
+    var command = "cd " + Model.dir + " && " + "suika-pro.exe" + " " + Model.scenarioFile + " " + lineIndex;
+    exec(command);
+})

@@ -209,16 +209,16 @@ function showProps() {
         var cl = normalizeBg(cmd);
         document.getElementById("prop-bg-file").value = cl[1];
         document.getElementById("prop-bg-duration").value = cl[2];
-        document.getElementById("prop-bg-effect").value = normalizeEffect(cl[3]);
+        document.getElementById("prop-bg-effect").value = normalizeBgEffect(cl[3]);
         document.getElementById("prop-bg").style.display = "block";
         document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
     } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
         // @ch
         var cl = normalizeCh(cmd);
-        document.getElementById("prop-ch-position").value = normalizePosition(cl[1]);
+        document.getElementById("prop-ch-position").value = normalizeChPosition(cl[1]);
         document.getElementById("prop-ch-file").value = cl[2];
         document.getElementById("prop-ch-duration").value = cl[3];
-        document.getElementById("prop-ch-effect").value = normalizeEffect(cl[4]);
+        document.getElementById("prop-ch-effect").value = normalizeBgEffect(cl[4]);
         document.getElementById("prop-ch-xshift").value = cl[5];
         document.getElementById("prop-ch-yshift").value = cl[6];
         document.getElementById("prop-ch-alpha").value = cl[7];
@@ -229,12 +229,102 @@ function showProps() {
         var cl = normalizeBgm(cmd);
         document.getElementById("prop-bgm-file").value = cl[1];
         document.getElementById("prop-bgm-once").checked = (cl[2] === "once");
+    } else if(cmd.startsWith("@se ") || cmd.startsWith("@効果音 ")) {
+        // @se
+        var cl = normalizeSe(cmd);
+        document.getElementById("prop-se-file").value = cl[1];
+        document.getElementById("prop-file-loop").checked = (cl[2] === "loop");
+        document.getElementById("prop-file-voice").checked = (cl[2] === "voice");
+    } else if(cmd.startsWith("@vol ") || cmd.startsWith("@音量 ")) {
+        // @vol
+        var cl = normalizeVol(cmd);
+        document.getElementById("prop-vol-track").value = cl[1];
+        document.getElementById("prop-vol-volume").value = cl[2];
+        document.getElementById("prop-vol-duration").value = cl[3];
+    } else if(cmd.startsWith("@choose ") || cmd.startsWith("@選択肢 ")) {
+        // @choose
+        var cl = normalizeChoose(cmd);
+        for(let i = 1; i <= 8; i++) {
+            document.getElementById("prop-choose-label" + i).value = cl[1 + (i - 1) * 2];
+            document.getElementById("prop-choose-text" + i).value = cl[1 + (i - 1) * 2 + 1];
+        }
+    } else if(cmd.startsWith(":")) {
+        // @vol
+        var label = cmd.substring(1);
+        document.getElementById("prop-label-label").value = label;
+    } else if(cmd.startsWith("@cha ") || cmd.startsWith("@キャラ移動 ")) {
+        // @cha
+        var cl = normalizeCha(cmd);
+        document.getElementById("prop-cha-position").value = cl[1];
+        document.getElementById("prop-cha-duration").value = cl[2];
+        document.getElementById("prop-cha-acceleration").value = cl[3];
+        document.getElementById("prop-cha-xoffset").value = cl[4];
+        document.getElementById("prop-cha-yoffset").value = cl[5];
+        document.getElementById("prop-cha-alpha").value = cl[6];
+    } else if(cmd.startsWith("@chs ") || cmd.startsWith("@場面転換 ")) {
+        // @chs
+        var cl = normalizeChs(cmd);
+        document.getElementById("prop-cha-center").value = cl[1];
+        document.getElementById("prop-cha-right").value = cl[2];
+        document.getElementById("prop-cha-left").value = cl[3];
+        document.getElementById("prop-cha-back").value = cl[4];
+        document.getElementById("prop-chs-duration").value = cl[5];
+        document.getElementById("prop-cha-background").value = cl[6];
+        document.getElementById("prop-chs-effect").value = cl[7];
+    } else if(cmd.startsWith("@shake ") || cmd.startsWith("@振動 ")) {
+        // @shake
+        var cl = normalizeShake(cmd);
+        document.getElementById("prop-shake-direction").value = cl[1];
+        document.getElementById("prop-shake-duration").value = cl[2];
+        document.getElementById("prop-shake-times").value = cl[3];
+        document.getElementById("prop-shake-amplitude").value = cl[4];
+    } else if(cmd.startsWith("@wait ") || cmd.startsWith("@時間待ち ")) {
+        // @wait
+        var cl = normalizeWait(cmd);
+        document.getElementById("prop-wait-duration").value = cl[1];
+    } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
+        // @skip
+        var cl = normalizeSkip(cmd);
+        document.getElementById("prop-skip-opt").checked = (cl[1] === "enable") ? true : false;;
+    } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
+        // @goto
+        var cl = normalizeGoto(cmd);
+        document.getElementById("prop-goto-label").value = cl[1];
+    } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
+        // @set
+        var cl = normalizeSet(cmd);
+        document.getElementById("prop-set-variable").value = cl[1];
+        document.getElementById("prop-set-operator").value = cl[2];
+        document.getElementById("prop-set-value").value = cl[3];
+    } else if(cmd.startsWith("@if ") || cmd.startsWith("@フラグでジャンプ ")) {
+        // @set
+        var cl = normalizeIf(cmd);
+        document.getElementById("prop-if-variable").value = cl[1];
+        document.getElementById("prop-if-operator").value = cl[2];
+        document.getElementById("prop-if-value").value = cl[3];
+        document.getElementById("prop-if-label").value = cl[4];
+    } else if(cmd.startsWith("@load ") || cmd.startsWith("@シナリオ ")) {
+        // @load
+        var cl = normalizeLoad(cmd);
+        document.getElementById("prop-load-file").value = cl[1];
+    } else if(cmd.startsWith("@chapter ") || cmd.startsWith("@章 ")) {
+        // @chapter
+        var cl = normalizeChapter(cmd);
+        document.getElementById("prop-chapter-title").value = cl[1];
+    } else if(cmd.startsWith("@wms ") || cmd.startsWith("@スクリプト ")) {
+        // @wms
+        var cl = normalizeWms(cmd);
+        document.getElementById("prop-wms-file").value = cl[1];
     } else if(cmd.startsWith("@")) {
         // 未対応のコマンド
     } else if(cmd.startsWith(":")) {
         // ラベル
+        document.getElementById("prop-label-label").value = cmd.substring(1);
     } else if(cmd.startsWith("#")) {
         // コメント
+        document.getElementById("prop-comment-comment").value = cmd.substring(1);
+    } else if(cmd === "") {
+        // FIXME: 何もしない
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/)) {
         // セリフ(ボイスなし)
         var sp = cmd.split("*");
@@ -262,8 +352,6 @@ function showProps() {
         document.getElementById("prop-serif-text").value = text;
         document.getElementById("prop-serif-voice").value = "";
         document.getElementById("prop-serif").style.display = "block";
-    } else if(cmd === "") {
-        // FIXME: 何もしない
     } else {
         // メッセージ
         document.getElementById("prop-msg-text").value = cmd;
@@ -283,14 +371,14 @@ function commitProps() {
         // @bg
         var file = document.getElementById("prop-bg-file").value;
         var duration = document.getElementById("prop-bg-duration").value;
-        var effect = normalizeEffect(document.getElementById("prop-bg-effect").value);
+        var effect = normalizeBgEffect(document.getElementById("prop-bg-effect").value);
         elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
     } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
         // @ch
-        var position = normalizePosition(document.getElementById("prop-ch-position").value);
+        var position = normalizeChPosition(document.getElementById("prop-ch-position").value);
         var file = document.getElementById("prop-ch-file").value;
         var duration = document.getElementById("prop-ch-duration").value;
-        var effect = normalizeEffect(document.getElementById("prop-ch-effect").value);
+        var effect = normalizeBgEffect(document.getElementById("prop-ch-effect").value);
         var xshift = document.getElementById("prop-ch-xshift").value;
         var yshift = document.getElementById("prop-ch-yshift").value;
         var alpha = document.getElementById("prop-ch-alpha").value;
@@ -299,7 +387,6 @@ function commitProps() {
         // @bgm
         var file = document.getElementById("prop-bgm-file").value;
         var once = document.getElementById("prop-bgm-once").checked;
-        var effect = normalizeEffect(document.getElementById("prop-bg-effect").value);
         if(!once) {
             elementInEdit.cmd = "@bgm " + file;
         } else {
@@ -556,54 +643,76 @@ async function refreshSe() {
 
 /*
  * コマンドの正規化
+ *  - コマンドをトークナイズし、UIで使いやすいように変換して、配列を返す
+ *  - コマンド名は英語に変換される
+ *  - 引数の名前は省略される
+ *  - UIのスライダーで調整される引数が省略された場合、省略可能でも数値に変換する
+ *  - 引数として受容できない値が指定されていれば、エラー値かデフォルト値に変換される
+ *  - 必須引数が指定されていなければエラー用の値が設定される
  */
 
+const MSG_SPECIFY_FILE = "Specify_file name"; //ファイルを指定してください";
+const MSG_SPECIFY_LABEL = "Speify_destination"; //"行き先を指定してください";
+const MSG_SPECIFY_OPTION = "Specify_option"; //"選択肢を指定してください";
+
+// @bg
 function normalizeBg(command) {
     var op = "@bg";
     var file = "";
     var duration = "";
     var effect = "";
 
+    // トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("file=")) {
-	    file = tokens[1].substring("file=".length);
-        } else if(tokens[1].startsWith("ファイル=")) {
-            file = tokens[1].substring("ファイル=".length);
-        } else {
-            file = tokens[1];
-        }
-        if(file === "") {
-            file = "ファイルを指定してください";
-        }
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
     if(tokens.length >= 3) {
-        if(tokens[2].startsWith("duration=")) {
-            duration = tokens[2].substring("duration=".length);
-        } else if(tokens[2].startsWith("秒=")) {
-            duration = tokens[2].substring("秒=".length);
-        } else {
-            duration = tokens[2];
-        }
-        if(duration === "") {
-            duration = "1.0";
-        }
+        duration = normalizeParameter(tokens[2], ["duration=", "秒="], "0");
     }
     if(tokens.length >= 4) {
-        if(tokens[3].startsWith("effect=")) {
-            effect = tokens[3].substring("effect=".length);
-        } else if(tokens[3].startsWith("エフェクト=")) {
-            effect = tokens[3].substring("エフェクト=".length);
-        } else {
-            effect = tokens[3];
-        }
-        effect = normalizeEffect(effect);
+        effect = normalizeParameter(tokens[3], ["effect=", "エフェクト="], "normal");
+        effect = normalizeBgEffect(effect);
+    }
+
+    // バリデーションする
+    if(file === "") {
+        file = MSG_SPECIFY_FILE;
+    }
+    if(duration === "") {
+        duration = "0.0";
+    }
+    if(effect === "") {
+        effect = "normal";
     }
 
     return [op, file, duration, effect];
 }
 
-function normalizeEffect(effect) {
+//
+// 引数を正規化し、引数名の引数名のないフォーマットに変換する
+//  - token: 正規化するトークン
+//  - names: 受容する引数名の配列
+//  - default: 引数名が指定されたが値が空白だった場合にフォールバックする値
+//
+function normalizeParameter(token, names, def) {
+    for(const name of names) {
+        var ret = "";
+        if(token.startsWith(name)) {
+            ret = token.substring(name.length);
+            if(ret === "") {
+                return def;
+            } else {
+                return ret;
+            }
+        } else {
+            return token;
+        }
+    }
+    return name;
+}
+
+function normalizeBgEffect(effect) {
     switch(effect) {
     case "標準":            return "normal";
     case "normal":          return "normal";
@@ -623,7 +732,7 @@ function normalizeEffect(effect) {
     return "normal";
 }
 
-function japanizeEffect(effect) {
+function japanizeBgEffect(effect) {
     switch(effect) {
     case "標準":            return "標準";
     case "normal":          return "標準";
@@ -643,102 +752,70 @@ function japanizeEffect(effect) {
     return "標準";
 }
 
+// @ch
 function normalizeCh(command) {
     var op = "@ch";
     var position = "";
     var file = "";
     var duration = "";
     var effect = "";
-    var xshift = 0;
-    var yshift = 0;
-    var alpha = 255;
+    var xshift = "";
+    var yshift = "";
+    var alpha = "";
 
+    // トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("position=")) {
-            position = tokens[1].substring("position=".length);
-        } else if(tokens[1].startsWith("位置=")) {
-            position = tokens[1].substring("位置=".length);
-        } else {
-            position = tokens[1];
-        }
-        position = normalizePosition(position);
+        position = normalizeParameter(tokens[1], ["position=", "位置"], "center");
+        position = normalizeChPosition(position);
     }
     if(tokens.length >= 3) {
-        if(tokens[2].startsWith("file=")) {
-            file = tokens[2].substring("file=".length);
-        } else if(tokens[2].startsWith("ファイル=")) {
-            file = tokens[2].substring("ファイル=".length);
-        } else {
-            file = tokens[2];
-        }
-        if(file === "") {
-            file = "ファイルを指定してください";
-        }
+        file = normalizeParameter(tokens[2], ["file=", "ファイル="], "ファイルを指定してください");
     }
     if(tokens.length >= 4) {
-        if(tokens[3].startsWith("duration=")) {
-            duration = tokens[3].substring("duration=".length);
-        } else if(tokens[3].startsWith("秒=")) {
-            duration = tokens[3].substring("秒=".length);
-        } else {
-            duration = tokens[3];
-        }
-        if(duration === "") {
-            duration = "1.0";
-        }
+        duration = normalizeParameter(tokens[3], ["duration=", "秒="], "1.0");
     }
     if(tokens.length >= 5) {
-        if(tokens[4].startsWith("effect=")) {
-            effect = tokens[4].substring("effect=");
-        } else if(tokens[4].startsWith("エフェクト=")) {
-            effect = tokens[4].substring("エフェクト=".length);
-        } else {
-            effect = tokens[4];
-        }
-        effect = normalizeEffect(effect);
+        effect = normalizeParameter(tokens[4], ["effect=", "エフェクト="], "normal");
+        effect = normalizeBgEffect(effect);
     }
     if(tokens.length >= 6) {
-        if(tokens[5].startsWith("right=")) {
-            xshift = tokens[5].substring("right=");
-        } else if(tokens[5].startsWith("右=")) {
-            xshift = tokens[5].substring("右=".length);
-        } else {
-            xshift = tokens[5];
-        }
-        if(xshift === "") {
-            xshift = "0";
-        }
+        xshift = normalizeParameter(tokens[5], ["right=", "右="], "");
     }
     if(tokens.length >= 7) {
-        if(tokens[6].startsWith("down=")) {
-            yshift = tokens[6].substring("down=");
-        } else if(tokens[6].startsWith("下=")) {
-            yshift = tokens[6].substring("下=".length);
-        } else {
-            yshift = tokens[6];
-        }
-        if(yshift === "") {
-            yshift = "0";
-        }
+        xshift = normalizeParameter(tokens[6], ["down=", "下="], "");
     }
     if(tokens.length >= 8) {
-        if(tokens[7].startsWith("alpha=")) {
-            alpha = tokens[7].substring("alpha=");
-        } else if(tokens[7].startsWith("アルファ=")) {
-            alpha = tokens[7].substring("アルファ=".length);
-        } else {
-            alpha = tokens[7];
-        }
-        if(alpha === "") {
-            alpha = "0";
-        }
+        alpha = normalizeParameter(tokens[7], ["alpha=", "アルファ="], "");
+    }
+
+    // バリデーションする
+    if(position === "") {
+        position = "center";
+    }
+    if(file === "") {
+        file = MSG_SPECIFY_FILE;
+    }
+    if(duration === "") {
+        duration = "0.0";
+    }
+    if(effect === "") {
+        effect = "normal";
+    }
+    if(xshift === "") {
+        xshift = "0";
+    }
+    if(yshift === "") {
+        yshift = "0";
+    }
+    if(alpha === "") {
+        alpha = "255";
     }
 
     return [op, position, file, duration, effect, xshift, yshift, alpha];
 }
 
-function normalizePosition(pos) {
+function normalizeChPosition(pos) {
     switch(pos) {
     case "中央":            return "center";
     case "center":          return "center";
@@ -755,106 +832,97 @@ function normalizePosition(pos) {
     return "center";
 }
 
+// @bgm
 function normalizeBgm(command) {
     var op = "@bgm";
     var file = "";
-    var once = "";
+    var opt = "";
 
+	// トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("file=")) {
-            file = tokens[1].substring("file=".length);
-        } else if(tokens[1].startsWith("ファイル=")) {
-            file = tokens[1].substring("フィイル=".length);
-        } else {
-            file = tokens[1];
-        }
-        if(file === "") {
-            file = "ファイル名を指定してください";
-        }
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
     if(tokens.length >= 3) {
         if(tokens[2] === "once") {
-            once = "once";
+            opt = "once";
         }
+    }
+
+	// バリデーションする
+    if(file === "") {
+        file = MSG_SPECIFY_FILE;
     }
 
     return [op, file, once];
 }
 
+// @se
 function normalizeSe(command) {
     var op = "@se";
     var file = "";
-    var voice = "";
+    var opt = "";
 
+	// トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("file=")) {
-            file = tokens[1].substring("file=".length);
-        } else if(tokens[1].startsWith("ファイル=")) {
-            file = tokens[1].substring("フィイル=".length);
-        } else {
-            file = tokens[1];
-        }
-        if(file === "") {
-            file = "ファイル名を指定してください";
-        }
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
     if(tokens.length >= 3) {
         if(tokens[2] === "voice") {
-            once = "voice";
-        }
+            opt = "voice";
+        } else if(tokens[2] === "loop") {
+			opt = "loop";
+		}
+    }
+
+	// バリデーションする
+    if(file === "") {
+        file = "ファイル名を指定してください";
     }
 
     return [op, file, voice];
 }
 
+// @vol
 function normalizeVol(command) {
     var op = "@vol";
-    var track = "bgm";
-    var volume = "1.0"
-    var duration = "0.0";
+    var track = "";
+    var volume = ""
+    var duration = "";
 
+    // トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("track=")) {
-            track = tokens[1].substring("track=".length);
-        } else if(tokens[1].startsWith("トラック=")) {
-            track = tokens[1].substring("トラック=".length);
-        } else {
-            track = tokens[1];
-        }
-        track = normalizeTrack(track);
+        track = normalizeParameter(tokens[1], ["track=", "トラック"], "bgm");
+        track = normalizeVolTrack(track);
     }
     if(tokens.length >= 3) {
-        if(tokens[2].startsWith("volume=")) {
-            volume = tokens[2].substring("volume=".length);
-        } else if(tokens[2].startsWith("ボリューム=")) {
-            volume = tokens[2].substring("ボリューム=".length);
-        } else {
-            volume = tokens[2];
-        }
-        if(volume === "") {
-            volume = "1.0";
-        }
+        volume = normalizeParameter(tokens[2], ["volume=", "ボリューム="], "1.0");
+        if(volume < 0)
+            volume = 0;
+        if(volume > 1)
+            volume = 1;
     }
     if(tokens.length >= 4) {
-        if(tokens[3].startsWith("duration=")) {
-            duration = tokens[3].substring("duration=".length);
-        } else if(tokens[3].startsWith("秒=")) {
-            duration = tokens[3].substring("秒=".length);
-        } else {
-            duration = tokens[3];
-        }
-        if(duration === "") {
-            duration = "0.0";
-        }
+        duration = normalizeParameter(tokens[3], ["duration=", "秒="], "0.0");
+    }
+
+	// バリデーションする
+    if(track === "") {
+        track = "bgm";
+    }
+    if(volume === "") {
+        volume = "1.0";
+    }
+    if(duration === "") {
+        duration = "0.0";
     }
 
     return [op, track, volume, duration];
 }
 
-function normalizeTrack(track) {
+function normalizeVolTrack(track) {
     switch(track) {
     case "bgm":    return "bgm";
     case "音楽":   return "bgm";
@@ -871,42 +939,29 @@ function normalizeTrack(track) {
     return "bgm";
 }
 
+// @choose
 function normalizeChoose(command) {
     var op = "@choose";
-    var label = [];
-    var text = [];
+    var label = ["", "", "", "", "", "", "", ""];
+    var text = ["", "", "", "", "", "", "", ""];
 
     var tokens = command.split(" ");
     for(let i = 0; i < 8; i++) {
+        if(tokens.length < i + 3) {
+            break;
+        }
         if(tokens.length >= i + 2) {
-            if(tokens[i + 1].startsWith("destination" + i + "=")) {
-                label[i] = tokens[i + 1].substring(("destination" + i + "=").length);
-            } else if(tokens[i + 1].startsWith("行き先" + i + "=")) {
-                label[i] = tokens[i + 1].substring(("行き先" + i + "=").length);
-            } else {
-                label[i] = tokens[i + 1];
-            }
-            if(label[i] === "") {
-                label[i] = "行き先を指定してください";
-            }
+            label[i] = normalizeParameter(tokens[i + 1], ["destination" + i + "=", "行き先" + i + "="], MSG_SPECIFY_LABEL);
         }
         if(tokens.length >= i + 3) {
-            if(tokens[i + 2].startsWith("option" + i + "=")) {
-                text[i] = tokens[i + 2].substring(("option" + i + "=").length);
-            } else if(tokens[i + 2].startsWith("選択肢" + i + "=")) {
-                text[i] = tokens[i + 2].substring(("選択肢" + i + "=").length);
-            } else {
-                text[i] = tokens[i + 2];
-            }
-            if(text[i] === "") {
-                text[i] = "選択肢を指定してください";
-            }
+            text[i] = normalizeParameter(tokens[i + 2], ["option" + i + "=", "選択肢" + i + "="], MSG_SPECIFY_OPTION);
         }
     }
 
     return [op, label[0], text[0], label[1], text[1], label[2], text[2], label[3], text[3], label[4], text[4], label[5], text[5], label[6], text[6], label[7], text[7]];
 }
 
+// @cha
 function normalizeCha(command) {
     var op = "@cha";
     var position = "";
@@ -916,76 +971,53 @@ function normalizeCha(command) {
     var yoffset = "";
     var alpha = "";
 
+	// トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("position=")) {
-            position = tokens[1].substring("position=".length);
-        } else if(tokens[1].startsWith("位置=")) {
-            position = tokens[1].substring("位置=".length);
-        } else {
-            position = tokens[1];
-        }
-        position = normalizePosition(position);
+        position = normalizeParameter(tokens[1], ["position=", "位置="], "center");
+        position = normalizeChPosition(position);
     }
     if(tokens.length >= 3) {
-        if(tokens[2].startsWith("duration=")) {
-            duration = tokens[2].substring("duration=".length);
-        } else if(tokens[2].startsWith("秒=")) {
-            duration = tokens[2].substring("秒=".length);
-        } else {
-            duration = tokens[2];
-        }
-        if(volume === "") {
-            duration = "1.0";
-        }
+        duration = normalizeParameter(tokens[2], ["duration=", "秒="], "0.0");
     }
     if(tokens.length >= 4) {
-        if(tokens[3].startsWith("acceleration=")) {
-            acceleration = tokens[3].substring("acceleration=".length);
-        } else if(tokens[3].startsWith("加速=")) {
-            acceleration = tokens[3].substring("加速=".length);
-        } else {
-            acceleration = tokens[3];
-        }
-        acceleration = normalizeAcceleration(acceleration);
+        acceleration = normalizeParameter(tokens[3], ["acceleration=", "加速="], "move");
+        acceleration = normalizeChaAcceleration(acceleration);
     }
     if(tokens.length >= 5) {
-        if(tokens[4].startsWith("x=")) {
-            xoffset = tokens[4].substring("x=".length);
-        } else {
-            xoffset = tokens[4];
-        }
-        if(xoffset === "") {
-            xoffset = "0";
-        }
+        xoffset = normalizeParameter(tokens[4], ["x="], "0");
     }
     if(tokens.length >= 6) {
-        if(tokens[5].startsWith("y=")) {
-            yoffset = tokens[5].substring("y=".length);
-        } else {
-            yoffset = tokens[5];
-        }
-        if(yoffset === "") {
-            yoffset = "0";
-        }
+        yoffset = normalizeParameter(tokens[5], ["y="], "0");
     }
     if(tokens.length >= 7) {
-        if(tokens[6].startsWith("alpha=")) {
-            alpha = tokens[6].substring("alpha=".length);
-        } else if(tokens[6].startsWith("アルファ=")) {
-            alpha = tokens[6].substring("アルファ=".length);
-        } else {
-            alpha = tokens[6];
-        }
-        if(alpha === "") {
-            alpha = "255";
-        }
+        alpha = normalizeParameter(tokens[6], ["alpha=", "アルファ="], "255");
+    }
+
+	// バリデーションする
+    if(position === "") {
+        position = "center";
+    }
+    if(duration === "") {
+        duration = "0.0";
+    }
+    if(acceleration === "") {
+        acceleration = "move";
+    }
+    if(xoffset === "") {
+        xoffset = "0";
+    }
+    if(yoffset === "") {
+        yoffset = "0";
+    }
+    if(alpha === "") {
+        alpha = "255";
     }
 
     return [op, position, duration, acceleration, xoffset, yoffset, alpha];
 }
 
-function normalizeAcceleration(acc) {
+function normalizeChaAcceleration(acc) {
     switch(acc) {
     case "move":    return "move";
     case "なし":    return "move";
@@ -999,6 +1031,7 @@ function normalizeAcceleration(acc) {
     return "move";
 }        
 
+// @chs
 function normalizeChs(command) {
     var op = "@chs";
     var center = "";
@@ -1009,80 +1042,56 @@ function normalizeChs(command) {
     var background = "";
     var effect = "";
 
+	// トークナイズする
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-        if(tokens[1].startsWith("center=")) {
-            center = tokens[1].substring("center=".length);
-        } else if(tokens[1].startsWith("中央=")) {
-            center = tokens[1].substring("中央=".length);
-        } else {
-            center = tokens[1];
-        }
+        center = normalizeParameter(tokens[1], ["center=", "中央="], MSG_SPECIFY_FILE);
         center = normalizeChsFile(center);
     }
     if(tokens.length >= 3) {
-        if(tokens[2].startsWith("right=")) {
-            right = tokens[2].substring("right=".length);
-        } else if(tokens[2].startsWith("右=")) {
-            right = tokens[2].substring("右=".length);
-        } else {
-            right = tokens[2];
-        }
+        right = normalizeParameter(tokens[2], ["right=", "右="], MSG_SPECIFY_FILE);
         right = normalizeChsFile(right);
     }
     if(tokens.length >= 4) {
-        if(tokens[3].startsWith("left=")) {
-            left = tokens[3].substring("left=".length);
-        } else if(tokens[3].startsWith("左=")) {
-            left = tokens[3].substring("左=".length);
-        } else {
-            left = tokens[3];
-        }
+        left = normalizeParameter(tokens[3], ["right=", "右="], MSG_SPECIFY_FILE);
         left = normalizeChsFile(left);
     }
     if(tokens.length >= 5) {
-        if(tokens[4].startsWith("back=")) {
-            back = tokens[4].substring("back=".length);
-        } else if(tokens[4].startsWith("背面=")) {
-            back = tokens[4].substring("背面=".length);
-        } else {
-            back = tokens[4];
-        }
+        back = normalizeParameter(tokens[4], ["back=", "背面="], MSG_SPECIFY_FILE);
         back = normalizeChsFile(back);
     }
     if(tokens.length >= 6) {
-        if(tokens[5].startsWith("duration=")) {
-            duration = tokens[5].substring("duration=".length);
-        } else if(tokens[5].startsWith("秒=")) {
-            duration = tokens[5].substring("秒=".length);
-        } else {
-            duration = tokens[5];
-        }
-        if(duration === "") {
-            duration = "1.0";
-        }
+        duration = normalizeParameter(tokens[5], ["duration=", "秒="], "0.0");
     }
     if(tokens.length >= 7) {
-        if(tokens[6].startsWith("background=")) {
-            background = tokens[6].substring("background=".length);
-        } else if(tokens[6].startsWith("背景=")) {
-            background = tokens[6].substring("背景=".length);
-        } else {
-            background = tokens[6];
-        }
-        if(background === "") {
-            background = "ファイルを指定してください";
-        }
+        background = normalizeParameter(tokens[6], ["background=", "背景="], MSG_SPECIFY_FILE);
     }
     if(tokens.length >= 8) {
-        if(tokens[7].startsWith("effect=")) {
-            effect = tokens[7].substring("effect=".length);
-        } else if(tokens[7].startsWith("エフェクト=")) {
-            effect = tokens[7].substring("エフェクト=".length);
-        } else {
-            effect = tokens[7];
-        }
-        effect = normalizeEffect(effect);
+        effect = normalizeParameter(tokens[7], ["effect=", "エフェクト="], "normal");
+        effect = normalizeBgEffect(effect);
+    }
+
+	// バリデーション
+    if(center === "") {
+        center = "stay";
+    }
+    if(right === "") {
+        right = "stay";
+    }
+    if(left === "") {
+        left = "stay";
+    }
+    if(back === "") {
+        back = "stay";
+    }
+    if(duration === "") {
+        duration = "0.0";
+    }
+    if(background === "") {
+        // nothing to do
+    }
+    if(effect === "") {
+        effect = "normal";
     }
 
     return [op, center, right, left, back, duration, background, effect];
@@ -1101,9 +1110,261 @@ function normalizeChsFile(file) {
     return file;
 }
 
+// @shake
 function normalizeShake(command) {
-    
-@shake <direction> <duration> <times> <amplitude>
+    var op = "@shake";
+	var direction = "";
+	var duration = "";
+	var times = "";
+	var amplitude = "";
+
+	// トークナイズ
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        direction = normalizeParameter(tokens[1], ["direction=", "方向="], "horizontal");
+        direction = normalizeShakeDirection(direction);
+    }
+    if(tokens.length >= 3) {
+        duration = normalizeParameter(tokens[2], ["duration=", "秒="], "1.0");
+    }
+    if(tokens.length >= 4) {
+        times = normalizeParameter(tokens[3], ["times=", "回数="], "1");
+    }
+    if(tokens.length >= 5) {
+        amplitude = normalizeParameter(tokens[4], ["amplitude=", "大きさ="], "100");
+    }
+
+	// バリデーション
+    if(direction === "") {
+        direction = "horizontal";
+    }
+    if(duration === "") {
+		dration = "1.0";
+	}
+    if(times === "") {
+		times = "1";
+	}
+    if(amplitude === "") {
+		amplitude = "100";
+	}
+
+	return [op, direction, duration, times, amplitude];
+}
+
+function normalizeShakeDirection(dir) {
+	switch(dir) {
+	case "horizontal":  return "horizontal";
+	case "h":           return "horizontal";
+	case "横":          return "horizontal";
+	case "vertical":    return "vertical";
+	case "v":           return "vertical";
+	case "縦":          return "vertical";
+	default:
+        break;
+	}
+	return "horizontal";
+}
+
+// @wait
+function normalizeWait(command) {
+    var op = "@wait";
+	var duration = "";
+
+    // トークナイズする
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        duration = normalizeParameter(tokens[1], ["duration=", "秒="], "1.0");
+    }
+
+    // バリデーションする
+	if(duration === "") {
+		duration = "1.0";
+	}
+
+	return [op, duration];
+}
+
+// @skip
+function normalizeSkip(command) {
+	var op = "@skip";
+	var opt = "";
+
+    // トークナイズする
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        if(tokens[1] === "enable" || tokens[1] === "許可") {
+            opt = "enable";
+        } else if(tokens[1] === "disable" || tokens[1] === "不許可") {
+			opt = "disable";
+        } else {
+			opt = "enable";
+        }
+	}
+
+    // バリデーションする
+    if(opt === "") {
+        opt = "enable";
+    }
+
+	return [op, opt];
+}
+
+// @goto
+function normalizeGoto(command) {
+    var op = "@goto";
+    var destination = "";
+
+    // トークナイズする
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        destination = normalizeParameter(tokens[1], ["destination=", "行き先="], MSG_SPECIFY_LABEL);
+    }
+
+    // バリデーションする
+    if(destination === "") {
+        destination = MSG_SPECIFY_LABEL;
+    }
+
+	return [op, destination];
+}
+
+// @set
+function normalizeSet(command) {
+	var op = "@set";
+	var variable = "";
+	var operator = "";
+	var value = "";
+
+    // トークナイズする (引数名はない)
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+		if(variable.startsWith("$") && !variable.substring(1).isNan()) {
+			variable = token[1];
+		}
+	}
+    if(tokens.length >= 3) {
+		if(operator === "=" || operator === "+=" || operator === "-=" || operator === "*=" || operator === "/=" || operator === "%=") {
+			operator = token[2];
+		}
+	}
+    if(tokens.length >= 4) {
+		if(!token[3].isNan()) {
+			value = token[3];
+		}
+	}
+
+    // バリデーションする
+    if(variable === "") {
+        variable = "$0";
+    }
+    if(operator === "") {
+        operator = "=";
+    }
+    if(value === "") {
+        value = "0";
+    }
+
+	return [op, variable, operator, value];
+}
+
+// @if
+function normalizeIf(command) {
+	var op = "@if";
+	var variable = "";
+	var operator = "";
+	var value = "";
+	var label = "";
+
+    // トークナイズする (引数名はない)
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+		if(variable.startsWith("$") && !variable.substring(1).isNan()) {
+			variable = token[1];
+		}
+	}
+    if(tokens.length >= 3) {
+		if(operator === "==" || operator === "!=" || operator === ">" || operator === ">=" || operator === "<" || operator === "<=") {
+			operator = token[2];
+		}
+	}
+    if(tokens.length >= 4) {
+		if(!token[3].isNan()) {
+			value = token[3];
+		}
+	}
+    if(tokens.length >= 5) {
+		value = token[4];
+	}
+    if(tokens.length >= 6) {
+		label = token[5];
+	}
+
+    // バリデーションする
+    if(variable === "") {
+        variable = "$0";
+    }
+    if(operator === "") {
+        operator = "==";
+    }
+    if(value === "") {
+        value = "0";
+    }
+    if(label === "") {
+        label = MSG_SPECIFY_LABEL;
+    }
+
+	return [op, variable, operator, value, label];
+}
+
+// @load
+function normalizeLoad(command) {
+	var op = "@load";
+	var file = "";
+
+    // トークナイズする
+    if(tokens.length >= 2) {
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
+    }
+
+    // バリデーションする
+	if(file === "") {
+		file = MSG_SPECIFY_FILE;
+	}
+
+	return [op, file];
+}
+
+// @chapter
+function normalizeChapter(command) {
+	var op = "@chapter";
+	var title = "";
+
+    // トークナイズする
+    if(tokens.length >= 2) {
+        title = normalizeParameter(tokens[1], ["title=", "タイトル="], "");
+    }
+
+    // titleは""でもよい
+
+    return [op, title];
+}
+
+// @wms
+function normalizeWms(command) {
+	var op = "@wms";
+	var file = "";
+
+    // トークナイズする
+    if(tokens.length >= 2) {
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
+    }
+
+    // バリデーションする
+    if(file === "") {
+        file = MSG_SPECIFY_FILE;
+    }
+
+    return [op, file];
 }
 
 /*

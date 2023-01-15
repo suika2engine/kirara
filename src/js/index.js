@@ -91,20 +91,87 @@ function createCommandElement(command) {
     } else if (command.startsWith("@bgm ") || command.startsWith("@音楽 ")) {
         // @bgm
         var cl = normalizeBgm(command);
-        newElem.textContent = "音楽";
+        newElem.textContent = "音楽 " + cl[1];
         newElem.classList.add("drag-list-item-bgm");
-
-    //
-    // ここに未実装のcommand to elementを書いていく
-    //
+    } else if (command.startsWith("@se ") || command.startsWith("@効果音 ")) {
+        // @se
+        var cl = normalizeSe(command);
+        newElem.textContent = "効果音 " + cl[1];
+        newElem.classList.add("drag-list-item-se");
+    } else if (command.startsWith("@vol ") || command.startsWith("@音量 ")) {
+        // @vol
+        newElem.textContent = "音量";
+        newElem.classList.add("drag-list-item-vol");
+    } else if (command.startsWith("@choose ") || command.startsWith("@選択肢 ")) {
+        // @choose
+        newElem.textContent = "選択肢";
+        newElem.classList.add("drag-list-item-choose");
+    } else if (command.startsWith("@cha ") || command.startsWith("@キャラ移動 ")) {
+        // @cha
+        var cl = normalizeCha(command);
+        newElem.textContent = "キャラ移動 " + japanizeChPos(cl[1]);
+        newElem.classList.add("drag-list-item-cha");
+    } else if (command.startsWith("@chs ") || command.startsWith("@場面転換 ")) {
+        // @chs
+        var cl = normalizeChs(command);
+        newElem.textContent = "場面転換";
+        newElem.classList.add("drag-list-item-chs");
+    } else if (command.startsWith("@shake ") || command.startsWith("@振動 ")) {
+        // @shake
+        var cl = normalizeShake(command);
+        newElem.textContent = "画面を揺らす";
+        newElem.classList.add("drag-list-item-shake");
+    } else if (command.startsWith("@click ") || command.startsWith("@クリック ")) {
+        // @click
+        newElem.textContent = "クリックを待つ";
+        newElem.classList.add("drag-list-item-click");
+    } else if (command.startsWith("@wait ") || command.startsWith("@時間待ち ")) {
+        // @wait
+        var cl = normalizeWait(command);
+        newElem.textContent = "一定時間待つ " + cl[1] + "秒";
+        newElem.classList.add("drag-list-item-wait");
+    } else if (command.startsWith("@skip ") || command.startsWith("@スキップ ")) {
+        // @skip
+        var cl = normalizeSkip(command);
+        newElem.textContent = "スキップ" + (cl[1] === "enable" ? "許可" : "禁止");
+        newElem.classList.add("drag-list-item-skip");
+    } else if (command.startsWith("@goto ") || command.startsWith("@ジャンプ ")) {
+        // @goto
+        var cl = normalizeGoto(command);
+        newElem.textContent = "ジャンプ " + cl[1] + "へ";
+        newElem.classList.add("drag-list-item-goto");
+    } else if (command.startsWith("@set ") || command.startsWith("@フラグをセット ")) {
+        // @set
+        var cl = normalizeSet(command);
+        newElem.textContent = "フラグをセット";
+        newElem.classList.add("drag-list-item-set");
+    } else if (command.startsWith("@if ") || command.startsWith("@フラグでジャンプ ")) {
+        // @if
+        var cl = normalizeIf(command);
+        newElem.textContent = "フラグでジャンプ";
+        newElem.classList.add("drag-list-item-if");
+    } else if (command.startsWith("@load ") || command.startsWith("@シナリオ ")) {
+        // @load
+        var cl = normalizeLoad(command);
+        newElem.textContent = "シナリオへジャンプ";
+        newElem.classList.add("drag-list-item-load");
+    } else if (command.startsWith("@chapter ") || command.startsWith("@章 ")) {
+        // @chapter
+        var cl = normalizeChapter(command);
+        newElem.textContent = "章のタイトル " + cl[1];
+        newElem.classList.add("drag-list-item-chapter");
+    } else if (command.startsWith("@wms ") || command.startsWith("@スクリプト ")) {
+        // @wms
+        var cl = normalizeWms(command);
+        newElem.textContent = "WMSを呼び出す " + cl[1];
+        newElem.classList.add("drag-list-item-wms");
     } else if(command.startsWith("@")) {
         // Kiraraで未対応のコマンド
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-etc");
     } else if(command.startsWith(":")) {
-        // FIXME: ラベル
-        newElem.textContent = command;
-        newElem.classList.add("drag-list-item-etc"); // etcになっている
+        newElem.textContent = "目印 " + command.substring(1);
+        newElem.classList.add("drag-list-item-label");
     } else if(command.match(/^\*[^\*]+\*[^\*]+$/)) {
         // セリフ(*キャラ名*セリフ)
         var sp = command.split("*");
@@ -120,11 +187,16 @@ function createCommandElement(command) {
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-serif");
     } else if(command === "") {
-        // FIXME: 空行
-        newElem.textContent = command;
-        newElem.classList.add("drag-list-item-etc"); // etcになっている
+        // 空行はコメントに置き換える
+        newElem.cmd = "#";
+        newElem.textContent = "";
+        newElem.classList.add("drag-list-item-comment");
+    } else if(command.startsWith("#")) {
+        // コメント
+        newElem.textContent = command.substring(1);
+        newElem.classList.add("drag-list-item-comment");
     } else {
-        // メッセージ
+        // 上記に該当しなければメッセージ
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-msg");
     }
@@ -205,7 +277,7 @@ function showProps() {
     // コマンドの種類ごとに、要素に値を入れ、ペインを表示する
     cmd = elementInEdit.cmd;
     if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
-        // @bg
+        // @bg編集開始
         var cl = normalizeBg(cmd);
         document.getElementById("prop-bg-file").value = cl[1];
         document.getElementById("prop-bg-duration").value = cl[2];
@@ -213,7 +285,7 @@ function showProps() {
         document.getElementById("prop-bg").style.display = "block";
         document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
     } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
-        // @ch
+        // @ch編集開始
         var cl = normalizeCh(cmd);
         document.getElementById("prop-ch-position").value = normalizeChPosition(cl[1]);
         document.getElementById("prop-ch-file").value = cl[2];
@@ -225,27 +297,27 @@ function showProps() {
         document.getElementById("prop-ch").style.display = "block";
         document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + cl[2];
     } else if(cmd.startsWith("@bgm ") || cmd.startsWith("@音楽 ")) {
-        // @bgm
+        // @bgm編集開始
         var cl = normalizeBgm(cmd);
         document.getElementById("prop-bgm-file").value = cl[1];
         document.getElementById("prop-bgm-once").checked = (cl[2] === "once");
         document.getElementById("prop-bgm").style.display = "block";
     } else if(cmd.startsWith("@se ") || cmd.startsWith("@効果音 ")) {
-        // @se
+        // @se編集開始
         var cl = normalizeSe(cmd);
         document.getElementById("prop-se-file").value = cl[1];
         document.getElementById("prop-se-loop").checked = (cl[2] === "loop");
         document.getElementById("prop-se-voice").checked = (cl[2] === "voice");
         document.getElementById("prop-se").style.display = "block";
     } else if(cmd.startsWith("@vol ") || cmd.startsWith("@音量 ")) {
-        // @vol
+        // @vol編集開始
         var cl = normalizeVol(cmd);
         document.getElementById("prop-vol-track").value = cl[1];
         document.getElementById("prop-vol-volume").value = cl[2];
         document.getElementById("prop-vol-duration").value = cl[3];
         document.getElementById("prop-vol").style.display = "block";
     } else if(cmd.startsWith("@choose ") || cmd.startsWith("@選択肢 ")) {
-        // @choose
+        // @choose編集開始
         var cl = normalizeChoose(cmd);
         for(let i = 1; i <= 8; i++) {
             if(cl.length >= i + 2 + 1) {
@@ -258,12 +330,12 @@ function showProps() {
         }
         document.getElementById("prop-choose").style.display = "block";
     } else if(cmd.startsWith(":")) {
-        // @vol
+        // @vol編集開始
         var label = cmd.substring(1);
-        document.getElementById("prop-label-label").value = label;
+        document.getElementById("prop-label-name").value = label;
         document.getElementById("prop-label").style.display = "block";
     } else if(cmd.startsWith("@cha ") || cmd.startsWith("@キャラ移動 ")) {
-        // @cha
+        // @cha編集開始
         var cl = normalizeCha(cmd);
         document.getElementById("prop-cha-position").value = cl[1];
         document.getElementById("prop-cha-duration").value = cl[2];
@@ -273,7 +345,7 @@ function showProps() {
         document.getElementById("prop-cha-alpha").value = cl[6];
         document.getElementById("prop-cha").style.display = "block";
     } else if(cmd.startsWith("@chs ") || cmd.startsWith("@場面転換 ")) {
-        // @chs
+        // @chs編集開始
         var cl = normalizeChs(cmd);
         document.getElementById("prop-chs-center").value = cl[1];
         document.getElementById("prop-chs-right").value = cl[2];
@@ -284,7 +356,7 @@ function showProps() {
         document.getElementById("prop-chs-effect").value = cl[7];
         document.getElementById("prop-chs").style.display = "block";
     } else if(cmd.startsWith("@shake ") || cmd.startsWith("@振動 ")) {
-        // @shake
+        // @shake編集開始
         var cl = normalizeShake(cmd);
         document.getElementById("prop-shake-direction").value = cl[1];
         document.getElementById("prop-shake-duration").value = cl[2];
@@ -292,29 +364,29 @@ function showProps() {
         document.getElementById("prop-shake-amplitude").value = cl[4];
         document.getElementById("prop-shake").style.display = "block";
     } else if(cmd.startsWith("@wait ") || cmd.startsWith("@時間待ち ")) {
-        // @wait
+        // @wait編集開始
         var cl = normalizeWait(cmd);
         document.getElementById("prop-wait-duration").value = cl[1];
         document.getElementById("prop-wait").style.display = "block";
     } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
-        // @skip
+        // @skip編集開始
         var cl = normalizeSkip(cmd);
         document.getElementById("prop-skip-opt").checked = (cl[1] === "enable") ? true : false;;
         document.getElementById("prop-skip").style.display = "block";
     } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
-        // @goto
+        // @goto編集開始
         var cl = normalizeGoto(cmd);
         document.getElementById("prop-goto-label").value = cl[1];
         document.getElementById("prop-goto").style.display = "block";
     } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
-        // @set
+        // @set編集開始
         var cl = normalizeSet(cmd);
         document.getElementById("prop-set-variable").value = cl[1];
         document.getElementById("prop-set-operator").value = cl[2];
         document.getElementById("prop-set-value").value = cl[3];
         document.getElementById("prop-set").style.display = "block";
     } else if(cmd.startsWith("@if ") || cmd.startsWith("@フラグでジャンプ ")) {
-        // @set
+        // @if編集開始
         var cl = normalizeIf(cmd);
         document.getElementById("prop-if-variable").value = cl[1];
         document.getElementById("prop-if-operator").value = cl[2];
@@ -322,34 +394,34 @@ function showProps() {
         document.getElementById("prop-if-label").value = cl[4];
         document.getElementById("prop-if").style.display = "block";
     } else if(cmd.startsWith("@load ") || cmd.startsWith("@シナリオ ")) {
-        // @load
+        // @load編集開始
         var cl = normalizeLoad(cmd);
         document.getElementById("prop-load-file").value = cl[1];
         document.getElementById("prop-load").style.display = "block";
     } else if(cmd.startsWith("@chapter ") || cmd.startsWith("@章 ")) {
-        // @chapter
+        // @chapter編集開始
         var cl = normalizeChapter(cmd);
         document.getElementById("prop-chapter-title").value = cl[1];
         document.getElementById("prop-chapter").style.display = "block";
     } else if(cmd.startsWith("@wms ") || cmd.startsWith("@スクリプト ")) {
-        // @wms
+        // @wms編集開始
         var cl = normalizeWms(cmd);
         document.getElementById("prop-wms-file").value = cl[1];
         document.getElementById("prop-wms").style.display = "block";
     } else if(cmd.startsWith("@")) {
-        // 未対応のコマンド
+        // 未対応のコマンド編集開始
     } else if(cmd.startsWith(":")) {
-        // ラベル
-        document.getElementById("prop-label-label").value = cmd.substring(1);
+        // ラベル編集開始
+        document.getElementById("prop-label-name").value = cmd.substring(1);
         document.getElementById("prop-label").style.display = "block";
     } else if(cmd.startsWith("#")) {
-        // コメント
-        document.getElementById("prop-comment-comment").value = cmd.substring(1);
+        // コメント編集開始
+        document.getElementById("prop-comment-text").value = cmd.substring(1);
         document.getElementById("prop-comment").style.display = "block";
     } else if(cmd === "") {
-        // FIXME: 何もしない
+        // 空行編集開始(FIXME:なにもしない)
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/)) {
-        // セリフ(ボイスなし)
+        // セリフ(ボイスなし)編集開始
         var sp = cmd.split("*");
         var name = sp[1];
         var text = sp[2];
@@ -358,7 +430,7 @@ function showProps() {
         document.getElementById("prop-serif-voice").value = "";
         document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/)) {
-        // セリフ(ボイスあり)
+        // セリフ(ボイスあり)編集開始
         var sp = cmd.split("*");
         var name = sp[1];
         var voice = sp[2];
@@ -368,7 +440,7 @@ function showProps() {
         document.getElementById("prop-serif-voice").value = voice;
         document.getElementById("prop-serif").style.display = "block";
     } else if(cmd.match(/^.+「.*」$/)) {
-        // セリフ(かぎカッコ)
+        // セリフ(かぎカッコ)編集開始
         var name = cmd.split("「")[0];
         var text = cmd.split("「")[1].split("」")[0];
         document.getElementById("prop-serif-name").value = name;
@@ -376,7 +448,7 @@ function showProps() {
         document.getElementById("prop-serif-voice").value = "";
         document.getElementById("prop-serif").style.display = "block";
     } else {
-        // メッセージ
+        // メッセージ編集開始
         document.getElementById("prop-msg-text").value = cmd;
         document.getElementById("prop-msg").style.display = "block";
     }
@@ -391,13 +463,13 @@ function commitProps() {
     // コマンドの種類ごとに、要素から値を出し、シナリオ要素に反映する
     cmd = elementInEdit.cmd;
     if(cmd.startsWith("@bg ") || cmd.startsWith("@背景 ")) {
-        // @bg
+        // @bg保存
         var file = document.getElementById("prop-bg-file").value;
         var duration = document.getElementById("prop-bg-duration").value;
         var effect = normalizeBgEffect(document.getElementById("prop-bg-effect").value);
         elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
     } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
-        // @ch
+        // @ch保存
         var position = normalizeChPosition(document.getElementById("prop-ch-position").value);
         var file = document.getElementById("prop-ch-file").value;
         var duration = document.getElementById("prop-ch-duration").value;
@@ -407,7 +479,7 @@ function commitProps() {
         var alpha = document.getElementById("prop-ch-alpha").value;
         elementInEdit.cmd = "@ch " + position + " " + file + " " + duration + " " + effect + " " + xshift + " " + yshift + " " + alpha;
     } else if(cmd.startsWith("@bgm ") || cmd.startsWith("@音楽 ")) {
-        // @bgm
+        // @bgm保存
         var file = document.getElementById("prop-bgm-file").value;
         var once = document.getElementById("prop-bgm-once").checked;
         if(!once) {
@@ -415,19 +487,119 @@ function commitProps() {
         } else {
             elementInEdit.cmd = "@bgm " + file + " once";
         }
-    //
-    // ここに未実装のprop to commandを書いていく
-    //
+    } else if(cmd.startsWith("@se ") || cmd.startsWith("@効果音 ")) {
+        // @se保存
+        var file = document.getElementById("prop-se-file").value;
+        var loop = document.getElementById("prop-se-loop").checked;
+        var voice = document.getElementById("prop-se-voice").checked;
+        if(!loop && !voice) {
+            elementInEdit.cmd = "@se " + file;
+        } else if(loop) {
+            elementInEdit.cmd = "@se " + file + " loop";
+        } else if(voice) {
+            elementInEdit.cmd = "@se " + file + " voice";
+        }
+    } else if(cmd.startsWith("@vol ") || cmd.startsWith("@音量 ")) {
+        // @vol保存
+        var track = document.getElementById("prop-vol-track").value;
+        var volume = document.getElementById("prop-vol-volume").value;
+        var duration = document.getElementById("prop-vol-duration").value;
+        elementInEdit.cmd = "@vol " + track + " " + volume + " " + duration;
+    } else if(cmd.startsWith("@choose ") || cmd.startsWith("@選択肢 ")) {
+        // @choose保存
+        var label = [];
+        var text = [];
+        for(let i = 0; i < 8; i++) {
+            label[i] = document.getElementById("prop-choose-label" + (i+1)).value;
+            text[i] = document.getElementById("prop-choose-text" + (i+1)).value;
+        }
+        var c = "@choose";
+        for(let i = 0; i < 8; i++) {
+            if(label[i] === "" || text[i] === "") {
+                break;
+            }
+            c = c + " " + label[i] + " " + text[i];
+        }
+        elementInEdit.cmd = c;
+    } else if(cmd.startsWith("@cha ") || cmd.startsWith("@キャラ移動 ")) {
+        // @cha保存
+        var position = document.getElementById("prop-cha-position").value;
+        var duration = document.getElementById("prop-cha-duration").value;
+        var acceleration = document.getElementById("prop-cha-acceleration").value;
+        var xoffset = document.getElementById("prop-cha-xoffset").value;
+        var yoffset = document.getElementById("prop-cha-yoffset").value;
+        var alpha = document.getElementById("prop-cha-alpha").value;
+        elementInEdit.cmd = "@cha " + position + " " + duration + " " + acceleration + " " + xoffset + " " + yoffset + " " + alpha;
+    } else if(cmd.startsWith("@chs ") || cmd.startsWith("@場面転換 ")) {
+        // @chs保存
+        var center = document.getElementById("prop-chs-center").value;
+        var right = document.getElementById("prop-chs-right").value;
+        var left = document.getElementById("prop-chs-left").value;
+        var back = document.getElementById("prop-chs-back").value;
+        var duration = document.getElementById("prop-chs-duration").value;
+        var background = document.getElementById("prop-chs-background").value;
+        var effect = document.getElementById("prop-chs-effect").value;
+        elementInEdit.cmd = "@chs " + center + " " + right + " " + left + " " + back + " " + duration + " " + background + " " + effect;
+    } else if(cmd.startsWith("@shake ") || cmd.startsWith("@振動 ")) {
+        // @shake保存
+        var direction = document.getElementById("prop-shake-direction").value;
+        var duration = document.getElementById("prop-shake-duration").value;
+        var times = document.getElementById("prop-shake-times").value;
+        var amplitude = document.getElementById("prop-shake-amplitude").value;
+        elementInEdit.cmd = "@shake " + direction + " " + duration + " " + times + " " + amplitude;
+    } else if(cmd.startsWith("@wait ") || cmd.startsWith("@時間待ち ")) {
+        // @wait保存
+        var duration = document.getElementById("prop-wait-duration").value;
+        elementInEdit.cmd = "@wait " + duration;
+    } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
+        // @skip保存
+        var opt = document.getElementById("prop-skip-opt").checked ? "disable" : "enable";
+        elementInEdit.cmd = "@skip " + opt;
+    } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
+        // @goto保存
+        var label = document.getElementById("prop-goto-label").value;
+        elementInEdit.cmd = "@goto " + label;
+    } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
+        // @set保存
+        var variable = document.getElementById("prop-set-variable").value;
+        var operator = document.getElementById("prop-set-operator").value;
+        var value = document.getElementById("prop-set-value").value;
+        elementInEdit.cmd = "@set " + variable + " " + operator + " " + value;
+    } else if(cmd.startsWith("@if ") || cmd.startsWith("@フラグでジャンプ ")) {
+        // @if保存
+        var variable = document.getElementById("prop-if-variable").value;
+        var operator = document.getElementById("prop-if-operator").value;
+        var value = document.getElementById("prop-if-value").value;
+        var label = document.getElementById("prop-if-label").value;
+        elementInEdit.cmd = "@if " + variable + " " + operator + " " + value + " " + label;
+    } else if(cmd.startsWith("@load ") || cmd.startsWith("@シナリオ ")) {
+        // @load保存
+        var file = document.getElementById("prop-load-file").value;
+        elementInEdit.cmd = "@load " + file;
+    } else if(cmd.startsWith("@chapter ") || cmd.startsWith("@章 ")) {
+        // @chapter保存
+        var title = document.getElementById("prop-chapter-title").value;
+        elementInEdit.cmd = "@chapter " + title;
+    } else if(cmd.startsWith("@wms ") || cmd.startsWith("@スクリプト ")) {
+        // @wms保存
+        var file = document.getElementById("prop-wms-file").value;
+        elementInEdit.cmd = "@wms " + file;
     } else if (cmd.startsWith("@")) {
-        // 未対応のコマンド
+        // 未対応のコマンド保存
     } else if (cmd.startsWith(":")) {
-        // TODO: ラベル
+        // ラベル保存
+        var label = document.getElementById("prop-label-name").value;
+        elementInEdit.cmd = ":" + label;
     } else if(cmd.startsWith("#")) {
-        // TODO: コメント
+        // コメント保存
+        var comment = document.getElementById("prop-comment-text").value;
+        elementInEdit.cmd = "#" + comment;
+        elementInEdit.textContent = comment;
     } else if(cmd.length === 0) {
-        // TODO: 空行
+        // FIXME:ここには空行はこないはず
+        elementInEdit.cmd = "#";
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/) || cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/) || cmd.match(/^.+「.*」$/)) {
-        // セリフ
+        // セリフ保存
         var name = document.getElementById("prop-serif-name").value;
         var text = document.getElementById("prop-serif-text").value;
         var voice = document.getElementById("prop-serif-voice").value;
@@ -444,7 +616,7 @@ function commitProps() {
         }
         elementInEdit.textContent = name + "「" + text + "」";
     } else {
-        // メッセージ
+        // メッセージ保存
         var msg = document.getElementById("prop-msg-text").value;
         if(msg === "") {
             msg = "文章を入力してください";
@@ -806,7 +978,7 @@ function normalizeCh(command) {
         xshift = normalizeParameter(tokens[5], ["right=", "右="], "");
     }
     if(tokens.length >= 7) {
-        xshift = normalizeParameter(tokens[6], ["down=", "下="], "");
+        yshift = normalizeParameter(tokens[6], ["down=", "下="], "");
     }
     if(tokens.length >= 8) {
         alpha = normalizeParameter(tokens[7], ["alpha=", "アルファ="], "");
@@ -853,6 +1025,23 @@ function normalizeChPosition(pos) {
     default:                break;
     }
     return "center";
+}
+
+function japanizeChPosition(pos) {
+    switch(pos) {
+    case "中央":            return "中央";
+    case "center":          return "中央";
+    case "右":              return "右";
+    case "right":           return "右";
+    case "左":              return "左";
+    case "left":            return "左";
+    case "中央背面":        return "背面";
+    case "back":            return "背面";
+    case "顔":              return "顔";
+    case "face":            return "顔";
+    default:                break;
+    }
+    return "中央";
 }
 
 // @bgm
@@ -904,7 +1093,7 @@ function normalizeSe(command) {
         file = "ファイル名を指定してください";
     }
 
-    return [op, file, voice];
+    return [op, file, opt];
 }
 
 // @vol
@@ -1416,24 +1605,18 @@ window.addEventListener('load', async () => {
             return;
         }
         switch(elem.id) {
-        case "cmd-message":
-            switch(Math.floor(Math.random() * 4)) {
-            case 0: elem.cmd = "ダブルクリックして文章を入力してください"; break;
-            case 1: elem.cmd = "ここに入力した文章がゲーム画面に表示されます"; break;
-            case 2: elem.cmd = "あのイーハトーヴォのすきとおった風"; break;
-            default: elem.cmd = "文章"; break;
-            }
-            break;
-        case "cmd-serif": elem.cmd = "キャラ「セリフ」"; break;
-        case "cmd-choose": elem.cmd = "@choose L1 選択肢1 L2 選択肢2 L3 選択肢3"; break;
+        case "cmd-message": elem.cmd = "ここに文章を入力してください。"; break;
+        case "cmd-serif": elem.cmd = "キャラ名「セリフを入力してください」"; break;
+        case "cmd-choose": elem.cmd = "@choose 目印1 学校へ行く 目印2 海へ行く 目印3 公園へ行く"; break;
         case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
         case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
         case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
-        case "cmd-label": elem.cmd = ":目印"; break;
+        case "cmd-label": elem.cmd = ":名前を点けてください"; break;
         case "cmd-goto": elem.cmd = "@goto 行き先"; break;
         case "cmd-set": elem.cmd = "@set $0 = 1"; break;
         case "cmd-chapter": elem.cmd = "@chapter 章のタイトル"; break;
         case "cmd-wait": elem.cmd = "@wait 1000";
+        case "cmd-comment": elem.cmd = "#ここにメモを記入してください";
         }
         elem.template = true;
         elem.addEventListener("dragstart", () => {

@@ -149,18 +149,153 @@ body {
 	background: white;
 }
 
-/* 背景の項目 */
+/* @bgの項目 */
 .drag-list-item-bg {
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
 }
 
-/* BGMの項目 */
+/* @bgmの項目 */
 .drag-list-item-bgm {
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
+	background: white;
+}
+
+/* @seの項目 */
+.drag-list-item-se {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @volの項目 */
+.drag-list-item-vol {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @chooseの項目 */
+.drag-list-item-choose {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @chaの項目 */
+.drag-list-item-cha {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @chsの項目 */
+.drag-list-item-chs {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @shakeの項目 */
+.drag-list-item-shake {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @clickの項目 */
+.drag-list-item-click {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @waitの項目 */
+.drag-list-item-wait {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @skipの項目 */
+.drag-list-item-skip {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @gotoの項目 */
+.drag-list-item-goto {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @setの項目 */
+.drag-list-item-set {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @ifの項目 */
+.drag-list-item-if {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @loadの項目 */
+.drag-list-item-load {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @chapterの項目 */
+.drag-list-item-chapter {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* @wmsの項目 */
+.drag-list-item-wms {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* ラベルの項目 */
+.drag-list-item-label {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
+/* コメントの項目 */
+.drag-list-item-comment {
+	font-style: italic;
+	color: gray;
 	background: white;
 }
 
@@ -172,7 +307,7 @@ body {
 	background-image: linear-gradient(#fed6e3 0%, #ffaaaa 100%);
 }
 
-/* その他の項目 */
+/* その他の項目(未対応のコマンド) */
 .drag-list-item-etc {
 	border-left: 10px solid gray;
 	padding-left: 10px;

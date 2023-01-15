@@ -135,7 +135,6 @@ body {
 
 /* メッセージの項目 */
 .drag-list-item-msg {
-	padding-left: 10px;
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
@@ -144,7 +143,6 @@ body {
 
 /* セリフの項目 */
 .drag-list-item-serif {
-	padding-left: 10px;
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
@@ -153,15 +151,21 @@ body {
 
 /* 背景の項目 */
 .drag-list-item-bg {
-	padding-left: 10px;
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
 }
 
+/* BGMの項目 */
+.drag-list-item-bgm {
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	background: white;
+}
+
 /* 終了マーカー項目 */
 .drag-list-item-end {
-	padding-left: 10px;
 	text-decoration: none;
 	font-weight: bold;
 	color: white;

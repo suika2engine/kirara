@@ -229,29 +229,39 @@ function showProps() {
         var cl = normalizeBgm(cmd);
         document.getElementById("prop-bgm-file").value = cl[1];
         document.getElementById("prop-bgm-once").checked = (cl[2] === "once");
+        document.getElementById("prop-bgm").style.display = "block";
     } else if(cmd.startsWith("@se ") || cmd.startsWith("@効果音 ")) {
         // @se
         var cl = normalizeSe(cmd);
         document.getElementById("prop-se-file").value = cl[1];
-        document.getElementById("prop-file-loop").checked = (cl[2] === "loop");
-        document.getElementById("prop-file-voice").checked = (cl[2] === "voice");
+        document.getElementById("prop-se-loop").checked = (cl[2] === "loop");
+        document.getElementById("prop-se-voice").checked = (cl[2] === "voice");
+        document.getElementById("prop-se").style.display = "block";
     } else if(cmd.startsWith("@vol ") || cmd.startsWith("@音量 ")) {
         // @vol
         var cl = normalizeVol(cmd);
         document.getElementById("prop-vol-track").value = cl[1];
         document.getElementById("prop-vol-volume").value = cl[2];
         document.getElementById("prop-vol-duration").value = cl[3];
+        document.getElementById("prop-vol").style.display = "block";
     } else if(cmd.startsWith("@choose ") || cmd.startsWith("@選択肢 ")) {
         // @choose
         var cl = normalizeChoose(cmd);
         for(let i = 1; i <= 8; i++) {
-            document.getElementById("prop-choose-label" + i).value = cl[1 + (i - 1) * 2];
-            document.getElementById("prop-choose-text" + i).value = cl[1 + (i - 1) * 2 + 1];
+            if(cl.length >= i + 2 + 1) {
+                document.getElementById("prop-choose-label" + i).value = cl[i * 2 - 1];
+                document.getElementById("prop-choose-text" + i).value = cl[i * 2];
+            } else {
+                document.getElementById("prop-choose-label" + i).value = "";
+                document.getElementById("prop-choose-text" + i).value = "";
+            }
         }
+        document.getElementById("prop-choose").style.display = "block";
     } else if(cmd.startsWith(":")) {
         // @vol
         var label = cmd.substring(1);
         document.getElementById("prop-label-label").value = label;
+        document.getElementById("prop-label").style.display = "block";
     } else if(cmd.startsWith("@cha ") || cmd.startsWith("@キャラ移動 ")) {
         // @cha
         var cl = normalizeCha(cmd);
@@ -261,16 +271,18 @@ function showProps() {
         document.getElementById("prop-cha-xoffset").value = cl[4];
         document.getElementById("prop-cha-yoffset").value = cl[5];
         document.getElementById("prop-cha-alpha").value = cl[6];
+        document.getElementById("prop-cha").style.display = "block";
     } else if(cmd.startsWith("@chs ") || cmd.startsWith("@場面転換 ")) {
         // @chs
         var cl = normalizeChs(cmd);
-        document.getElementById("prop-cha-center").value = cl[1];
-        document.getElementById("prop-cha-right").value = cl[2];
-        document.getElementById("prop-cha-left").value = cl[3];
-        document.getElementById("prop-cha-back").value = cl[4];
+        document.getElementById("prop-chs-center").value = cl[1];
+        document.getElementById("prop-chs-right").value = cl[2];
+        document.getElementById("prop-chs-left").value = cl[3];
+        document.getElementById("prop-chs-back").value = cl[4];
         document.getElementById("prop-chs-duration").value = cl[5];
-        document.getElementById("prop-cha-background").value = cl[6];
+        document.getElementById("prop-chs-background").value = cl[6];
         document.getElementById("prop-chs-effect").value = cl[7];
+        document.getElementById("prop-chs").style.display = "block";
     } else if(cmd.startsWith("@shake ") || cmd.startsWith("@振動 ")) {
         // @shake
         var cl = normalizeShake(cmd);
@@ -278,24 +290,29 @@ function showProps() {
         document.getElementById("prop-shake-duration").value = cl[2];
         document.getElementById("prop-shake-times").value = cl[3];
         document.getElementById("prop-shake-amplitude").value = cl[4];
+        document.getElementById("prop-shake").style.display = "block";
     } else if(cmd.startsWith("@wait ") || cmd.startsWith("@時間待ち ")) {
         // @wait
         var cl = normalizeWait(cmd);
         document.getElementById("prop-wait-duration").value = cl[1];
+        document.getElementById("prop-wait").style.display = "block";
     } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
         // @skip
         var cl = normalizeSkip(cmd);
         document.getElementById("prop-skip-opt").checked = (cl[1] === "enable") ? true : false;;
+        document.getElementById("prop-skip").style.display = "block";
     } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
         // @goto
         var cl = normalizeGoto(cmd);
         document.getElementById("prop-goto-label").value = cl[1];
+        document.getElementById("prop-goto").style.display = "block";
     } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
         // @set
         var cl = normalizeSet(cmd);
         document.getElementById("prop-set-variable").value = cl[1];
         document.getElementById("prop-set-operator").value = cl[2];
         document.getElementById("prop-set-value").value = cl[3];
+        document.getElementById("prop-set").style.display = "block";
     } else if(cmd.startsWith("@if ") || cmd.startsWith("@フラグでジャンプ ")) {
         // @set
         var cl = normalizeIf(cmd);
@@ -303,26 +320,32 @@ function showProps() {
         document.getElementById("prop-if-operator").value = cl[2];
         document.getElementById("prop-if-value").value = cl[3];
         document.getElementById("prop-if-label").value = cl[4];
+        document.getElementById("prop-if").style.display = "block";
     } else if(cmd.startsWith("@load ") || cmd.startsWith("@シナリオ ")) {
         // @load
         var cl = normalizeLoad(cmd);
         document.getElementById("prop-load-file").value = cl[1];
+        document.getElementById("prop-load").style.display = "block";
     } else if(cmd.startsWith("@chapter ") || cmd.startsWith("@章 ")) {
         // @chapter
         var cl = normalizeChapter(cmd);
         document.getElementById("prop-chapter-title").value = cl[1];
+        document.getElementById("prop-chapter").style.display = "block";
     } else if(cmd.startsWith("@wms ") || cmd.startsWith("@スクリプト ")) {
         // @wms
         var cl = normalizeWms(cmd);
         document.getElementById("prop-wms-file").value = cl[1];
+        document.getElementById("prop-wms").style.display = "block";
     } else if(cmd.startsWith("@")) {
         // 未対応のコマンド
     } else if(cmd.startsWith(":")) {
         // ラベル
         document.getElementById("prop-label-label").value = cmd.substring(1);
+        document.getElementById("prop-label").style.display = "block";
     } else if(cmd.startsWith("#")) {
         // コメント
         document.getElementById("prop-comment-comment").value = cmd.substring(1);
+        document.getElementById("prop-comment").style.display = "block";
     } else if(cmd === "") {
         // FIXME: 何もしない
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/)) {
@@ -947,15 +970,11 @@ function normalizeChoose(command) {
 
     var tokens = command.split(" ");
     for(let i = 0; i < 8; i++) {
-        if(tokens.length < i + 3) {
+        if(tokens.length < i * 2 + 2) {
             break;
         }
-        if(tokens.length >= i + 2) {
-            label[i] = normalizeParameter(tokens[i + 1], ["destination" + i + "=", "行き先" + i + "="], MSG_SPECIFY_LABEL);
-        }
-        if(tokens.length >= i + 3) {
-            text[i] = normalizeParameter(tokens[i + 2], ["option" + i + "=", "選択肢" + i + "="], MSG_SPECIFY_OPTION);
-        }
+        label[i] = normalizeParameter(tokens[i * 2 + 1], ["destination" + (i+1) + "=", "行き先" + (i+1) + "="], MSG_SPECIFY_LABEL);
+        text[i] = normalizeParameter(tokens[i * 2 + 2], ["option" + (i+1) + "=", "選択肢" + (i+1) + "="], MSG_SPECIFY_OPTION);
     }
 
     return [op, label[0], text[0], label[1], text[1], label[2], text[2], label[3], text[3], label[4], text[4], label[5], text[5], label[6], text[6], label[7], text[7]];
@@ -1064,7 +1083,8 @@ function normalizeChs(command) {
         duration = normalizeParameter(tokens[5], ["duration=", "秒="], "0.0");
     }
     if(tokens.length >= 7) {
-        background = normalizeParameter(tokens[6], ["background=", "背景="], MSG_SPECIFY_FILE);
+        background = normalizeParameter(tokens[6], ["background=", "背景="], "stay");
+        background = normalizeChsBackground(background);
     }
     if(tokens.length >= 8) {
         effect = normalizeParameter(tokens[7], ["effect=", "エフェクト="], "normal");
@@ -1101,6 +1121,17 @@ function normalizeChsFile(file) {
     switch(file) {
     case "none":     return "none";
     case "消去":     return "none";
+    case "stay":     return "stay";
+    case "変更なし": return "stay";
+    case "":         return "stay";
+    default:
+        break;
+    }
+    return file;
+}
+
+function normalizeChsBackground(file) {
+    switch(file) {
     case "stay":     return "stay";
     case "変更なし": return "stay";
     case "":         return "stay";
@@ -1395,6 +1426,7 @@ window.addEventListener('load', async () => {
             break;
         case "cmd-serif": elem.cmd = "キャラ「セリフ」"; break;
         case "cmd-choose": elem.cmd = "@choose L1 選択肢1 L2 選択肢2 L3 選択肢3"; break;
+        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
         case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
         case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
         case "cmd-label": elem.cmd = ":目印"; break;

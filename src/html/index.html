@@ -239,7 +239,7 @@
 								<input id="prop-wait-duration" type="range" name="duration" min="0" max="30" step="0.2">
 							</div>
 							<div id="prop-skip" class="prop-pane">
-								スキップの無効化:<br>
+								スキップ禁止:<br>
 								<input id="prop-skip-opt" type="checkbox">
 							</div>
 							<div id="prop-goto" class="prop-pane">
@@ -287,8 +287,7 @@
 							</div>
 							<div id="prop-load" class="prop-pane">
 								シナリオファイル:<br>
-								<select id="prop-load-label" readonly name="label">
- 								</select>
+								<input id="prop-load-file" type="text" readonly class="prop-textsingle">
 							</div>
 							<div id="prop-chapter" class="prop-pane">
 								章タイトル:<br>
@@ -296,8 +295,7 @@
 							</div>
 							<div id="prop-wms" class="prop-pane">
 								WMSファイル:<br>
-								<select id="prop-wms-file" name="file">
- 								</select>
+								<input id="prop-wms-file" type="text" class="prop-textsingle">
 							</div>
 							<div id="prop-label" class="prop-pane">
 								行き先の目印:<br>
@@ -325,7 +323,11 @@
 									<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
 									<li class="palette-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
 									<li class="palette-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
+									<li class="palette-list-item" draggable="true" id="cmd-click">クリック待ち</li>
 									<li class="palette-list-item" draggable="true" id="cmd-wait">時間待ち</li>
+									<li class="palette-list-item" draggable="true" id="cmd-shake">画面を揺らす</li>
+									<li class="palette-list-item" draggable="true" id="cmd-skip">スキップの許可</li>
+									<li class="palette-list-item" draggable="true" id="cmd-wms">高機能スクリプト</li>
 									<li class="palette-list-item" draggable="true" id="cmd-comment">コメント</li>
 								</ul>
 							</div>

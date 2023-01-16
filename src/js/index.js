@@ -80,7 +80,7 @@ function createCommandElement(command) {
         newElem.classList.add("drag-list-item-bg");
         newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "bg/" + cl[1] + "\")";
         newElem.style.backgroundSize = "cover";
-    } else if (command.startsWith("@ch ") || command.startsWith("@キャラ ")) {
+    } else if(command.startsWith("@ch ") || command.startsWith("@キャラ ")) {
         // @ch
         var cl = normalizeCh(command);
         newElem.textContent = "キャラ";
@@ -88,82 +88,82 @@ function createCommandElement(command) {
         newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "ch/" + cl[2] + "\")";
         newElem.style.backgroundRepeat = "no-repeat";
         newElem.style.backgroundSize = "contain";
-    } else if (command.startsWith("@bgm ") || command.startsWith("@音楽 ")) {
+    } else if(command.startsWith("@bgm ") || command.startsWith("@音楽 ")) {
         // @bgm
         var cl = normalizeBgm(command);
         newElem.textContent = "音楽 " + cl[1];
         newElem.classList.add("drag-list-item-bgm");
-    } else if (command.startsWith("@se ") || command.startsWith("@効果音 ")) {
+    } else if(command.startsWith("@se ") || command.startsWith("@効果音 ")) {
         // @se
         var cl = normalizeSe(command);
         newElem.textContent = "効果音 " + cl[1];
         newElem.classList.add("drag-list-item-se");
-    } else if (command.startsWith("@vol ") || command.startsWith("@音量 ")) {
+    } else if(command.startsWith("@vol ") || command.startsWith("@音量 ")) {
         // @vol
         newElem.textContent = "音量";
         newElem.classList.add("drag-list-item-vol");
-    } else if (command.startsWith("@choose ") || command.startsWith("@選択肢 ")) {
+    } else if(command.startsWith("@choose ") || command.startsWith("@選択肢 ")) {
         // @choose
         newElem.textContent = "選択肢";
         newElem.classList.add("drag-list-item-choose");
-    } else if (command.startsWith("@cha ") || command.startsWith("@キャラ移動 ")) {
+    } else if(command.startsWith("@cha ") || command.startsWith("@キャラ移動 ")) {
         // @cha
         var cl = normalizeCha(command);
-        newElem.textContent = "キャラ移動 " + japanizeChPos(cl[1]);
+        newElem.textContent = "キャラ移動 " + japanizeChPosition(cl[1]);
         newElem.classList.add("drag-list-item-cha");
-    } else if (command.startsWith("@chs ") || command.startsWith("@場面転換 ")) {
+    } else if(command.startsWith("@chs ") || command.startsWith("@場面転換 ")) {
         // @chs
         var cl = normalizeChs(command);
         newElem.textContent = "場面転換";
         newElem.classList.add("drag-list-item-chs");
-    } else if (command.startsWith("@shake ") || command.startsWith("@振動 ")) {
+    } else if(command.startsWith("@shake ") || command.startsWith("@振動 ")) {
         // @shake
         var cl = normalizeShake(command);
         newElem.textContent = "画面を揺らす";
         newElem.classList.add("drag-list-item-shake");
-    } else if (command.startsWith("@click ") || command.startsWith("@クリック ")) {
+    } else if(command.startsWith("@click ") || command.startsWith("@クリック ")) {
         // @click
         newElem.textContent = "クリックを待つ";
         newElem.classList.add("drag-list-item-click");
-    } else if (command.startsWith("@wait ") || command.startsWith("@時間待ち ")) {
+    } else if(command.startsWith("@wait ") || command.startsWith("@時間待ち ")) {
         // @wait
         var cl = normalizeWait(command);
         newElem.textContent = "一定時間待つ " + cl[1] + "秒";
         newElem.classList.add("drag-list-item-wait");
-    } else if (command.startsWith("@skip ") || command.startsWith("@スキップ ")) {
+    } else if(command.startsWith("@skip ") || command.startsWith("@スキップ ")) {
         // @skip
         var cl = normalizeSkip(command);
         newElem.textContent = "スキップ" + (cl[1] === "enable" ? "許可" : "禁止");
         newElem.classList.add("drag-list-item-skip");
-    } else if (command.startsWith("@goto ") || command.startsWith("@ジャンプ ")) {
+    } else if(command.startsWith("@goto ") || command.startsWith("@ジャンプ ")) {
         // @goto
         var cl = normalizeGoto(command);
-        newElem.textContent = "ジャンプ " + cl[1] + "へ";
+        newElem.textContent = "ジャンプ \"" + cl[1] + "\"へ";
         newElem.classList.add("drag-list-item-goto");
-    } else if (command.startsWith("@set ") || command.startsWith("@フラグをセット ")) {
+    } else if(command.startsWith("@set ") || command.startsWith("@フラグをセット ")) {
         // @set
         var cl = normalizeSet(command);
         newElem.textContent = "フラグをセット";
         newElem.classList.add("drag-list-item-set");
-    } else if (command.startsWith("@if ") || command.startsWith("@フラグでジャンプ ")) {
+    } else if(command.startsWith("@if ") || command.startsWith("@フラグでジャンプ ")) {
         // @if
         var cl = normalizeIf(command);
         newElem.textContent = "フラグでジャンプ";
         newElem.classList.add("drag-list-item-if");
-    } else if (command.startsWith("@load ") || command.startsWith("@シナリオ ")) {
+    } else if(command.startsWith("@load ") || command.startsWith("@シナリオ ")) {
         // @load
         var cl = normalizeLoad(command);
         newElem.textContent = "シナリオへジャンプ";
         newElem.classList.add("drag-list-item-load");
-    } else if (command.startsWith("@chapter ") || command.startsWith("@章 ")) {
+    } else if(command.startsWith("@chapter ") || command.startsWith("@章 ")) {
         // @chapter
         var cl = normalizeChapter(command);
         newElem.textContent = "章のタイトル " + cl[1];
         newElem.classList.add("drag-list-item-chapter");
-    } else if (command.startsWith("@wms ") || command.startsWith("@スクリプト ")) {
+    } else if(command.startsWith("@wms ") || command.startsWith("@スクリプト ")) {
         // @wms
         var cl = normalizeWms(command);
-        newElem.textContent = "WMSを呼び出す " + cl[1];
+        newElem.textContent = "高機能スクリプトを呼び出す";
         newElem.classList.add("drag-list-item-wms");
     } else if(command.startsWith("@")) {
         // Kiraraで未対応のコマンド
@@ -371,9 +371,12 @@ function showProps() {
     } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
         // @skip編集開始
         var cl = normalizeSkip(cmd);
-        document.getElementById("prop-skip-opt").checked = (cl[1] === "enable") ? true : false;;
+        document.getElementById("prop-skip-opt").checked = (cl[1] === "disable") ? true : false;
         document.getElementById("prop-skip").style.display = "block";
     } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
+        // 選択肢を作成する
+        createLabelOptions("prop-goto-label");
+
         // @goto編集開始
         var cl = normalizeGoto(cmd);
         document.getElementById("prop-goto-label").value = cl[1];
@@ -386,6 +389,9 @@ function showProps() {
         document.getElementById("prop-set-value").value = cl[3];
         document.getElementById("prop-set").style.display = "block";
     } else if(cmd.startsWith("@if ") || cmd.startsWith("@フラグでジャンプ ")) {
+        // 選択肢を作成する
+        createLabelOptions("prop-if-label");
+
         // @if編集開始
         var cl = normalizeIf(cmd);
         document.getElementById("prop-if-variable").value = cl[1];
@@ -452,6 +458,24 @@ function showProps() {
         document.getElementById("prop-msg-text").value = cmd;
         document.getElementById("prop-msg").style.display = "block";
     }
+}
+
+function createLabelOptions(selectId) {
+    // 一度子要素を削除する
+    var parent = document.getElementById(selectId);
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+
+    // シナリオからラベルを集めてoptionにする
+    Array.from(document.getElementById("scenario").childNodes).forEach(function (e) {
+        if(e.cmd !== undefined && e.cmd != null && e.cmd.startsWith(":")) {
+            var option = document.createElement("option");
+            option.value = e.cmd.substring(1);
+            option.textContent = option.value;
+            document.getElementById(selectId).appendChild(option);
+        }
+    });
 }
 
 // 変更を保存する
@@ -551,14 +575,17 @@ function commitProps() {
         // @wait保存
         var duration = document.getElementById("prop-wait-duration").value;
         elementInEdit.cmd = "@wait " + duration;
+        elementInEdit.textContent = "一定時間待つ " + duration + "秒";
     } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
         // @skip保存
         var opt = document.getElementById("prop-skip-opt").checked ? "disable" : "enable";
         elementInEdit.cmd = "@skip " + opt;
+        elementInEdit.textContent = "スキップ" + (opt === "disable" ? "禁止" : "許可");
     } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
         // @goto保存
         var label = document.getElementById("prop-goto-label").value;
         elementInEdit.cmd = "@goto " + label;
+        elementInEdit.textContent = "ジャンプ \"" + label + "\"へ";
     } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
         // @set保存
         var variable = document.getElementById("prop-set-variable").value;
@@ -580,6 +607,7 @@ function commitProps() {
         // @chapter保存
         var title = document.getElementById("prop-chapter-title").value;
         elementInEdit.cmd = "@chapter " + title;
+        elementInEdit.textContent = "章のタイトル " + title;
     } else if(cmd.startsWith("@wms ") || cmd.startsWith("@スクリプト ")) {
         // @wms保存
         var file = document.getElementById("prop-wms-file").value;
@@ -590,6 +618,7 @@ function commitProps() {
         // ラベル保存
         var label = document.getElementById("prop-label-name").value;
         elementInEdit.cmd = ":" + label;
+        elementInEdit.textContent = "目印 " + label;
     } else if(cmd.startsWith("#")) {
         // コメント保存
         var comment = document.getElementById("prop-comment-text").value;
@@ -982,6 +1011,7 @@ function normalizeCh(command) {
     }
     if(tokens.length >= 8) {
         alpha = normalizeParameter(tokens[7], ["alpha=", "アルファ="], "");
+        alpha = normalizeChAlpha(alpha);
     }
 
     // バリデーションする
@@ -1042,6 +1072,22 @@ function japanizeChPosition(pos) {
     default:                break;
     }
     return "中央";
+}
+
+function normalizeChAlpha(alpha) {
+    if(alpha === "hide") {
+        return 0;
+    }
+    if(alpha === "show") {
+        return 255;
+    }
+    if(alpha < 0) {
+        return 0;
+    }
+    if(alpha > 255) {
+        return 255;
+    }
+    return alpha;
 }
 
 // @bgm
@@ -1200,6 +1246,7 @@ function normalizeCha(command) {
     }
     if(tokens.length >= 7) {
         alpha = normalizeParameter(tokens[6], ["alpha=", "アルファ="], "255");
+        alpha = normalizeChAlpha(alpha);
     }
 
 	// バリデーションする
@@ -1458,18 +1505,18 @@ function normalizeSet(command) {
     // トークナイズする (引数名はない)
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-		if(variable.startsWith("$") && !variable.substring(1).isNan()) {
-			variable = token[1];
+		if(tokens[1].startsWith("$") && !isNaN(tokens[1].substring(1))) {
+			variable = tokens[1];
 		}
 	}
     if(tokens.length >= 3) {
-		if(operator === "=" || operator === "+=" || operator === "-=" || operator === "*=" || operator === "/=" || operator === "%=") {
-			operator = token[2];
+		if(tokens[2] === "=" || tokens[2] === "+=" || tokens[2] === "-=" || tokens[2] === "*=" || tokens[2] === "/=" || tokens[2] === "%=") {
+			operator = tokens[2];
 		}
 	}
     if(tokens.length >= 4) {
-		if(!token[3].isNan()) {
-			value = token[3];
+		if(!isNaN(tokens[3])) {
+			value = tokens[3];
 		}
 	}
 
@@ -1498,25 +1545,22 @@ function normalizeIf(command) {
     // トークナイズする (引数名はない)
     var tokens = command.split(" ");
     if(tokens.length >= 2) {
-		if(variable.startsWith("$") && !variable.substring(1).isNan()) {
-			variable = token[1];
+		if(variable.startsWith("$") && !isNaN(variable.substring(1))) {
+			variable = tokens[1];
 		}
 	}
     if(tokens.length >= 3) {
 		if(operator === "==" || operator === "!=" || operator === ">" || operator === ">=" || operator === "<" || operator === "<=") {
-			operator = token[2];
+			operator = tokens[2];
 		}
 	}
     if(tokens.length >= 4) {
-		if(!token[3].isNan()) {
-			value = token[3];
+		if(!isNaN(tokens[3])) {
+			value = tokens[3];
 		}
 	}
     if(tokens.length >= 5) {
-		value = token[4];
-	}
-    if(tokens.length >= 6) {
-		label = token[5];
+		label = tokens[4];
 	}
 
     // バリデーションする
@@ -1542,6 +1586,7 @@ function normalizeLoad(command) {
 	var file = "";
 
     // トークナイズする
+    var tokens = command.split(" ");
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -1560,6 +1605,7 @@ function normalizeChapter(command) {
 	var title = "";
 
     // トークナイズする
+    var tokens = command.split(" ");
     if(tokens.length >= 2) {
         title = normalizeParameter(tokens[1], ["title=", "タイトル="], "");
     }
@@ -1575,6 +1621,7 @@ function normalizeWms(command) {
 	var file = "";
 
     // トークナイズする
+    var tokens = command.split(" ");
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -1611,12 +1658,17 @@ window.addEventListener('load', async () => {
         case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
         case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
         case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
-        case "cmd-label": elem.cmd = ":名前を点けてください"; break;
-        case "cmd-goto": elem.cmd = "@goto 行き先"; break;
+        case "cmd-label": elem.cmd = ":名前をつけてください"; break;
+        case "cmd-goto": elem.cmd = "@goto 目印を選んでください"; break;
         case "cmd-set": elem.cmd = "@set $0 = 1"; break;
+        case "cmd-if": elem.cmd = "@if $0 == 1 目印を選んでください"; break;
         case "cmd-chapter": elem.cmd = "@chapter 章のタイトル"; break;
-        case "cmd-wait": elem.cmd = "@wait 1000";
-        case "cmd-comment": elem.cmd = "#ここにメモを記入してください";
+        case "cmd-click": elem.cmd = "@click"; break;
+        case "cmd-wait": elem.cmd = "@wait 1.0"; break;
+        case "cmd-shake": elem.cmd = "@shake horizontal 3 3 100"; break;
+        case "cmd-skip": elem.cmd = "@skip enable"; break;
+        case "cmd-wms": elem.cmd = "@wms ファイルを指定してください"; break;
+        case "cmd-comment": elem.cmd = "#ここにメモを記入してください"; break;
         }
         elem.template = true;
         elem.addEventListener("dragstart", () => {

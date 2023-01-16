@@ -24,6 +24,7 @@ async function refreshScenario() {
         elem.addEventListener("dragover", onScenarioDragOver);
         elem.addEventListener("dragleave", onScenarioDragLeave);
         elem.addEventListener("drop", onScenarioDrop);
+        elem.addEventListener("dragend", onScenarioDragEnd);
         document.getElementById("scenario").appendChild(elem);
     });
 
@@ -225,7 +226,8 @@ async function saveScenario() {
 
 function onScenarioDragStart(event) {
     event.dataTransfer.setData("text/plain", event.target.id);
-    document.getElementById("thumbnail-picture").src = "../img/trash.png";
+    event.dataTransfer.setData("scenario", "");
+    document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
     return true;
 }
 
@@ -244,6 +246,7 @@ function onScenarioDrop(event) {
 
     event.preventDefault();
     this.style.borderTop = "";
+    document.getElementById("thumbnail-picture").src = "";
 
     var id = event.dataTransfer.getData("text/plain");
     var elemDrag = document.getElementById(id);
@@ -261,6 +264,10 @@ function onScenarioDrop(event) {
     newElem.addEventListener("dragleave", onScenarioDragLeave);
     newElem.addEventListener("drop", onScenarioDrop);
     this.parentNode.insertBefore(newElem, this);
+}
+
+function onScenarioDragEnd(event) {
+    document.getElementById("thumbnail-picture").src = "";
 }
 
 /*
@@ -716,6 +723,7 @@ function setupPalette() {
         elem.template = true;
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            event.dataTransfer.setData("palette", "");
             return true;
         });
         elem.addEventListener("click", () => {
@@ -770,7 +778,7 @@ async function refreshTxt() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
-            document.getElementById("thumbnail-picture").src = "../img/trash.png";
+            document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
         document.getElementById("txt-list").appendChild(elem);
@@ -784,9 +792,14 @@ function makeId() {
 function setupTxt() {
     var txtPanel = document.getElementById("tab-panel-txt");
     txtPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-txt").classList.add('dragover');
+        if(!event.dataTransfer.types.includes("scenario") &&
+           !event.dataTransfer.types.includes("palette")) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById("tab-panel-txt").classList.add('dragover');
+            return true;
+        }
+        return false;
     });
     txtPanel.addEventListener('dragleave', (e) => {
         e.preventDefault();
@@ -797,6 +810,7 @@ function setupTxt() {
         e.preventDefault();
         e.stopPropagation();
         document.getElementById("tab-panel-txt").classList.remove('dragover');
+        document.getElementById("thumbnail-picture").src = "";
         for (const file of e.dataTransfer.files) {
             await window.api.addTxtFile(file.path);
         }
@@ -839,7 +853,7 @@ async function refreshBg() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
-            document.getElementById("thumbnail-picture").src = "../img/trash.png";
+            document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
         document.getElementById("bg-list").appendChild(elem);
@@ -849,9 +863,14 @@ async function refreshBg() {
 function setupBg() {
     var bgPanel = document.getElementById("tab-panel-bg");
     bgPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bg").classList.add('dragover');
+        if(!event.dataTransfer.types.includes("scenario") &&
+           !event.dataTransfer.types.includes("palette")) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById("tab-panel-bg").classList.add('dragover');
+            return true;
+        }
+        return false;
     });
     bgPanel.addEventListener('dragleave', (e) => {
         e.preventDefault();
@@ -862,6 +881,7 @@ function setupBg() {
         e.preventDefault();
         e.stopPropagation();
         document.getElementById("tab-panel-bg").classList.remove('dragover');
+        document.getElementById("thumbnail-picture").src = "";
         for (const file of e.dataTransfer.files) {
             await window.api.addBgFile(file.path);
         }
@@ -904,7 +924,7 @@ async function refreshCh() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
-            document.getElementById("thumbnail-picture").src = "../img/trash.png";
+            document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
         document.getElementById("ch-list").appendChild(elem);
@@ -914,9 +934,14 @@ async function refreshCh() {
 function setupCh() {
     var chPanel = document.getElementById("tab-panel-ch");
     chPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-ch").classList.add('dragover');
+        if(!event.dataTransfer.types.includes("scenario") &&
+           !event.dataTransfer.types.includes("palette")) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById("tab-panel-ch").classList.add('dragover');
+            return true;
+        }
+        return false;
     });
     chPanel.addEventListener('dragleave', (e) => {
         e.preventDefault();
@@ -927,6 +952,7 @@ function setupCh() {
         e.preventDefault();
         e.stopPropagation();
         document.getElementById("tab-panel-ch").classList.remove('dragover');
+        document.getElementById("thumbnail-picture").src = "";
         for (const file of e.dataTransfer.files) {
             await window.api.addChFile(file.path);
         }
@@ -969,7 +995,7 @@ async function refreshBgm() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
-            document.getElementById("thumbnail-picture").src = "../img/trash.png";
+            document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
         document.getElementById("bgm-list").appendChild(elem);
@@ -979,9 +1005,14 @@ async function refreshBgm() {
 function setupBgm() {
     var bgmPanel = document.getElementById("tab-panel-bgm");
     bgmPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bgm").classList.add('dragover');
+        if(!event.dataTransfer.types.includes("scenario") &&
+           !event.dataTransfer.types.includes("palette")) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById("tab-panel-bgm").classList.add('dragover');
+            return true;
+        }
+        return false;
     });
     bgmPanel.addEventListener('dragleave', (e) => {
         e.preventDefault();
@@ -992,6 +1023,7 @@ function setupBgm() {
         e.preventDefault();
         e.stopPropagation();
         document.getElementById("tab-panel-bgm").classList.remove('dragover');
+        document.getElementById("thumbnail-picture").src = "";
         for (const file of e.dataTransfer.files) {
             await window.api.addBgmFile(file.path);
         }
@@ -1034,7 +1066,7 @@ async function refreshSe() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
-            document.getElementById("thumbnail-picture").src = "../img/trash.png";
+            document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
         document.getElementById("se-list").appendChild(elem);
@@ -1044,9 +1076,14 @@ async function refreshSe() {
 function setupSe() {
     var sePanel = document.getElementById("tab-panel-se");
     sePanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-se").classList.add('dragover');
+        if(!event.dataTransfer.types.includes("scenario") &&
+           !event.dataTransfer.types.includes("palette")) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById("tab-panel-se").classList.add('dragover');
+            return true;
+        }
+        return false;
     });
     sePanel.addEventListener('dragleave', (e) => {
         e.preventDefault();
@@ -1057,6 +1094,7 @@ function setupSe() {
         e.preventDefault();
         e.stopPropagation();
         document.getElementById("tab-panel-se").classList.remove('dragover');
+        document.getElementById("thumbnail-picture").src = "";
         for (const file of e.dataTransfer.files) {
             await window.api.addSeFile(file.path);
         }
@@ -1099,7 +1137,7 @@ async function refreshMov() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
-            document.getElementById("thumbnail-picture").src = "../img/trash.png";
+            document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
         document.getElementById("mov-list").appendChild(elem);
@@ -1109,9 +1147,14 @@ async function refreshMov() {
 function setupMov() {
     var movPanel = document.getElementById("tab-panel-mov");
     movPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-mov").classList.add('dragover');
+        if(!event.dataTransfer.types.includes("scenario") &&
+           !event.dataTransfer.types.includes("palette")) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById("tab-panel-mov").classList.add('dragover');
+            return true;
+        }
+        return false;
     });
     movPanel.addEventListener('dragleave', (e) => {
         e.preventDefault();
@@ -1122,6 +1165,7 @@ function setupMov() {
         e.preventDefault();
         e.stopPropagation();
         document.getElementById("tab-panel-mov").classList.remove('dragover');
+        document.getElementById("thumbnail-picture").src = "";
         for (const file of e.dataTransfer.files) {
             await window.api.addMovFile(file.path);
         }
@@ -1949,17 +1993,23 @@ function setupThumbnail() {
 
 function onThumbnailDragOver(event) {
     event.preventDefault();
-    document.getElementById("thumbnail-picture").style.border = "5px solid black";
+
+    var elem = document.getElementById("thumbnail-picture");
+    if(elem.src.endsWith("trash-close.png")) {
+        elem.src = "../img/trash-open.png";
+    }
     return false;
 }
 
 function onThumbnailDragLeave(event) {
-    document.getElementById("thumbnail-picture").style.border = "";
+    var elem = document.getElementById("thumbnail-picture");
+    if(elem.src.endsWith("trash-open.png")) {
+        elem.src = "../img/trash-close.png";
+    }
 }
 
 function onThumbnailDrop(event) {
     event.preventDefault();
-    document.getElementById("thumbnail-picture").style.border = "";
     document.getElementById("thumbnail-picture").src = "";
 
     var id = event.dataTransfer.getData("text/plain");

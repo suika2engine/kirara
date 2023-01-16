@@ -49,7 +49,7 @@ body {
 .grid2-pallete-header {
 	grid-row: 1;
 	grid-column: 1;
-	width: 100%;
+	width: calc(100% - 35px);
 	height: 100%;
 	font-weight: bold;
 	text-align: center;
@@ -65,7 +65,7 @@ body {
 .grid2-files-header {
 	grid-row: 3;
 	grid-column: 1;
-	width: 100%;
+	width: calc(100% - 35px);
 	height: 100%;
 	font-weight: bold;
 	text-align: center;
@@ -128,7 +128,7 @@ body {
 	border-radius: 6px;
 	list-style-type: none!important;
 	cursor: pointer;
-
+	text-align: center;
 	transition: .3s;
 }
 .palette-list-item:hover {
@@ -144,7 +144,7 @@ body {
 	padding: 0.3em;
 	list-style-type: none!important;
 	cursor: pointer;
-
+	text-align: center;
 	border-radius: 6px;
 	animation: right-move 2s infinite;
 }
@@ -311,6 +311,12 @@ input[name="tab-btn"] {
 	border-radius: 10px;
 	cursor: pointer;
 	list-style-type: none!important;
+	text-align: center;
+	transition: .3s;
+}
+.drag-list-item:hover {
+	color: white;
+	background: #2d8fdd;
 }
 
 /* 選択中の項目 */

@@ -38,6 +38,7 @@ class Model {
     static ch = [];
     static bgm = [];
     static se = [];
+    static mov = [];
     static scenarioFile = "";
     static scenarioData = [""];
 }
@@ -226,6 +227,14 @@ ipcMain.handle('getSeList', (event) => {
 })
 
 //
+// movフォルダのファイルのリストを取得する
+//
+ipcMain.handle('getMovList', (event) => {
+    refreshFiles("mov", Model.mov, [".wmv", ".mp4"]);
+    return Model.mov;
+})
+
+//
 // txtファイルを追加する
 //
 ipcMain.handle('addTxtFile', (event, srcFilePath) => {
@@ -239,7 +248,15 @@ function copyAsset(srcFilePath, allowExts, subDir) {
       
     var srcFileName = path.basename(srcFilePath);
     var dstFileName = srcFileName.replace(/[^\x00-\x7F]/g, "_").replace(/ /g, "_");
-    var dstPath = Model.dir + "/" + subDir + "/" + dstFileName;
+    var dstDir = Model.dir + "/" + subDir;
+    var dstPath = dstDir + "/" + dstFileName;
+
+    if(!fs.existsSync(dstDir)) {
+        if(!fs.mkdirSync(dstDir)) {
+            return false;
+        }
+    }
+
     fs.writeFileSync(dstPath, fs.readFileSync(srcFilePath));
     return true;
 }
@@ -270,6 +287,13 @@ ipcMain.handle('addBgmFile', (event, srcFilePath) => {
 //
 ipcMain.handle('addSeFile', (event, srcFilePath) => {
     return copyAsset(srcFilePath, ['.ogg'], "se");
+})
+
+//
+// movファイルを追加する
+//
+ipcMain.handle('addMovFile', (event, srcFilePath) => {
+    return copyAsset(srcFilePath, [".wmv", ".mp4"], "mov");
 })
 
 //

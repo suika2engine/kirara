@@ -464,8 +464,6 @@ input[name="tab-btn"] {
 }
 
 /* タブ切り替え */
-#tab-palette:checked ~ .tab-area .tab-palette-label {background:#fff; color:#000; }
-#tab-palette:checked ~ .tab-panel-area #tab-panel-palette { display:block; }
 #tab-txt:checked ~ .tab-area .tab-txt-label {background:#fff; color:#000; }
 #tab-txt:checked ~ .tab-panel-area #tab-panel-txt { display:block; }
 #tab-bg:checked ~ .tab-area .tab-bg-label {background:#fff; color:#000; }
@@ -476,6 +474,8 @@ input[name="tab-btn"] {
 #tab-bgm:checked ~ .tab-panel-area #tab-panel-bgm { display:block; }
 #tab-se:checked ~ .tab-area .tab-se-label {background:#fff; color:#000; }
 #tab-se:checked ~ .tab-panel-area #tab-panel-se { display:block; }
+#tab-mov:checked ~ .tab-area .tab-mov-label {background:#fff; color:#000; }
+#tab-mov:checked ~ .tab-panel-area #tab-panel-mov { display:block; }
 
 /*
  * 素材のリスト

@@ -165,6 +165,16 @@ function createCommandElement(command) {
         var cl = normalizeWms(command);
         newElem.textContent = "高機能スクリプトを呼び出す";
         newElem.classList.add("drag-list-item-wms");
+    } else if(command.startsWith("@gui ") || command.startsWith("@メニュー ")) {
+        // @gui
+        var cl = normalizeGui(command);
+        newElem.textContent = "高機能メニューを呼び出す";
+        newElem.classList.add("drag-list-item-gui");
+    } else if(command.startsWith("@video ") || command.startsWith("@動画 ")) {
+        // @video
+        var cl = normalizeVideo(command);
+        newElem.textContent = "動画";
+        newElem.classList.add("drag-list-item-video");
     } else if(command.startsWith("@")) {
         // Kiraraで未対応のコマンド
         newElem.textContent = command;
@@ -414,6 +424,16 @@ function showProps() {
         var cl = normalizeWms(cmd);
         document.getElementById("prop-wms-file").value = cl[1];
         document.getElementById("prop-wms").style.display = "block";
+    } else if(cmd.startsWith("@gui ") || cmd.startsWith("@メニュー ")) {
+        // @gui編集開始
+        var cl = normalizeGui(cmd);
+        document.getElementById("prop-gui-file").value = cl[1];
+        document.getElementById("prop-gui").style.display = "block";
+    } else if(cmd.startsWith("@video ") || cmd.startsWith("@動画 ")) {
+        // @video編集開始
+        var cl = normalizeVideo(cmd);
+        document.getElementById("prop-video-file").value = cl[1];
+        document.getElementById("prop-video").style.display = "block";
     } else if(cmd.startsWith("@")) {
         // 未対応のコマンド編集開始
     } else if(cmd.startsWith(":")) {
@@ -612,6 +632,14 @@ function commitProps() {
         // @wms保存
         var file = document.getElementById("prop-wms-file").value;
         elementInEdit.cmd = "@wms " + file;
+    } else if(cmd.startsWith("@gui ") || cmd.startsWith("@メニュー ")) {
+        // @gui保存
+        var file = document.getElementById("prop-gui-file").value;
+        elementInEdit.cmd = "@gui " + file;
+    } else if(cmd.startsWith("@video ") || cmd.startsWith("@動画 ")) {
+        // @video保存
+        var file = document.getElementById("prop-video-file").value;
+        elementInEdit.cmd = "@video " + file;
     } else if (cmd.startsWith("@")) {
         // 未対応のコマンド保存
     } else if (cmd.startsWith(":")) {
@@ -654,6 +682,56 @@ function commitProps() {
         elementInEdit.cmd = msg;
         elementInEdit.textContent = msg;
     }
+}
+
+/*
+ * パレットビュー
+ */
+
+function setupPalette() {
+    Array.from(document.getElementById("palette").childNodes).forEach(function (elem) {
+        if(elem.id === undefined) {
+            return;
+        }
+        switch(elem.id) {
+        case "cmd-message": elem.cmd = "ここに文章を入力してください。"; break;
+        case "cmd-serif": elem.cmd = "キャラ名「セリフを入力してください」"; break;
+        case "cmd-choose": elem.cmd = "@choose 目印1 学校へ行く 目印2 海へ行く 目印3 公園へ行く"; break;
+        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
+        case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
+        case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
+        case "cmd-label": elem.cmd = ":名前をつけてください"; break;
+        case "cmd-goto": elem.cmd = "@goto 目印を選んでください"; break;
+        case "cmd-set": elem.cmd = "@set $0 = 1"; break;
+        case "cmd-if": elem.cmd = "@if $0 == 1 目印を選んでください"; break;
+        case "cmd-chapter": elem.cmd = "@chapter 章のタイトル"; break;
+        case "cmd-click": elem.cmd = "@click"; break;
+        case "cmd-wait": elem.cmd = "@wait 1.0"; break;
+        case "cmd-shake": elem.cmd = "@shake horizontal 3 3 100"; break;
+        case "cmd-skip": elem.cmd = "@skip enable"; break;
+        case "cmd-wms": elem.cmd = "@wms ファイルを指定してください"; break;
+        case "cmd-comment": elem.cmd = "#ここにメモを記入してください"; break;
+        }
+        elem.template = true;
+        elem.addEventListener("dragstart", () => {
+            event.dataTransfer.setData("text/plain", event.target.id);
+            return true;
+        });
+        elem.addEventListener("click", () => {
+            Array.from(document.getElementById("palette").childNodes).forEach(function (c) {
+                if(c.classList != null && (c.classList.contains("palette-list-item") || c.classList.contains("palette-list-item-sel"))) {
+                    if(c === event.srcElement) {
+                        c.classList.add("palette-list-item-sel");
+                        c.classList.remove("palette-list-item");
+                    } else {
+                        c.classList.remove("palette-list-item-sel");
+                        c.classList.add("palette-list-item");
+                    }
+                }
+            });
+            document.getElementById("thumbnail-picture").src = "";
+        });
+    });
 }
 
 /*
@@ -701,6 +779,29 @@ function makeId() {
     return new Date().getTime().toString(16) + Math.floor(1000 * Math.random()).toString(16);
 }
 
+function setupTxt() {
+    var txtPanel = document.getElementById("tab-panel-txt");
+    txtPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-txt").classList.add('dragover');
+    });
+    txtPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-txt").classList.remove('dragover');
+    });
+    txtPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-txt").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addTxtFile(file.path);
+        }
+        refreshTxt();
+    });
+}
+
 /*
  * bgビュー
  */
@@ -739,6 +840,29 @@ async function refreshBg() {
             return true;
         });
         document.getElementById("bg-list").appendChild(elem);
+    });
+}
+
+function setupBg() {
+    var bgPanel = document.getElementById("tab-panel-bg");
+    bgPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-bg").classList.add('dragover');
+    });
+    bgPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-bg").classList.remove('dragover');
+    });
+    bgPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-bg").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addBgFile(file.path);
+        }
+        refreshBg();
     });
 }
 
@@ -783,6 +907,29 @@ async function refreshCh() {
     });
 }
 
+function setupCh() {
+    var chPanel = document.getElementById("tab-panel-ch");
+    chPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-ch").classList.add('dragover');
+    });
+    chPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-ch").classList.remove('dragover');
+    });
+    chPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-ch").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addChFile(file.path);
+        }
+        refreshCh();
+    });
+}
+
 /*
  * bgmビュー
  */
@@ -821,6 +968,29 @@ async function refreshBgm() {
             return true;
         });
         document.getElementById("bgm-list").appendChild(elem);
+    });
+}
+
+function setupBgm() {
+    var bgmPanel = document.getElementById("tab-panel-bgm");
+    bgmPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-bgm").classList.add('dragover');
+    });
+    bgmPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-bgm").classList.remove('dragover');
+    });
+    bgmPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-bgm").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addBgmFile(file.path);
+        }
+        refreshBgm();
     });
 }
 
@@ -865,6 +1035,93 @@ async function refreshSe() {
     });
 }
 
+function setupSe() {
+    var sePanel = document.getElementById("tab-panel-se");
+    sePanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-se").classList.add('dragover');
+    });
+    sePanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-se").classList.remove('dragover');
+    });
+    sePanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-se").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addSeFile(file.path);
+        }
+        refreshSe();
+    });
+}
+
+/*
+ * movビュー
+ */
+
+async function refreshMov() {
+    var element = document.getElementById("mov-list");
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+
+    const se = await window.api.getMovList();
+    se.forEach(function(file) {
+        var elem = document.createElement('li');
+        elem.id = makeId();
+        elem.textContent = file;
+        elem.draggable = "true";
+        elem.className = "tab-list-item";
+        elem.template = true;
+        elem.cmd = "@video " + file;
+        elem.addEventListener("click", async () => {
+            Array.from(document.getElementById("mov-list").childNodes).forEach(function (e) {
+                if(e.classList != null && (e.classList.contains("tab-list-item") || e.classList.contains("tab-list-item-sel"))) {
+                    if(e === event.srcElement) {
+                        e.classList.add("tab-list-item-sel");
+                        e.classList.remove("tab-list-item");
+                    } else {
+                        e.classList.remove("tab-list-item-sel");
+                        e.classList.add("tab-list-item");
+                    }
+                }
+            });
+            document.getElementById("thumbnail-picture").src = "";
+        });
+        elem.addEventListener("dragstart", () => {
+            event.dataTransfer.setData("text/plain", event.target.id);
+            return true;
+        });
+        document.getElementById("mov-list").appendChild(elem);
+    });
+}
+
+function setupMov() {
+    var movPanel = document.getElementById("tab-panel-mov");
+    movPanel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-mov").classList.add('dragover');
+    });
+    movPanel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-mov").classList.remove('dragover');
+    });
+    movPanel.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.getElementById("tab-panel-mov").classList.remove('dragover');
+        for (const file of e.dataTransfer.files) {
+            await window.api.addMovFile(file.path);
+        }
+        refreshMov();
+    });
+}
+
 /*
  * コマンドの正規化
  *  - コマンドをトークナイズし、UIで使いやすいように変換して、配列を返す
@@ -875,9 +1132,9 @@ async function refreshSe() {
  *  - 必須引数が指定されていなければエラー用の値が設定される
  */
 
-const MSG_SPECIFY_FILE = "Specify_file name"; //ファイルを指定してください";
-const MSG_SPECIFY_LABEL = "Speify_destination"; //"行き先を指定してください";
-const MSG_SPECIFY_OPTION = "Specify_option"; //"選択肢を指定してください";
+const MSG_SPECIFY_FILE = "ファイルを指定してください";
+const MSG_SPECIFY_LABEL = "行き先を指定してください";
+const MSG_SPECIFY_OPTION = "選択肢を指定してください";
 
 // @bg
 function normalizeBg(command) {
@@ -1615,6 +1872,44 @@ function normalizeChapter(command) {
     return [op, title];
 }
 
+// @gui
+function normalizeGui(command) {
+	var op = "@gui";
+	var file = "";
+
+    // トークナイズする
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
+    }
+
+    // バリデーションする
+    if(file === "") {
+        file = MSG_SPECIFY_FILE;
+    }
+
+    return [op, file];
+}
+
+// @video
+function normalizeVideo(command) {
+	var op = "@video";
+	var file = "";
+
+    // トークナイズする
+    var tokens = command.split(" ");
+    if(tokens.length >= 2) {
+        file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
+    }
+
+    // バリデーションする
+    if(file === "") {
+        file = MSG_SPECIFY_FILE;
+    }
+
+    return [op, file];
+}
+
 // @wms
 function normalizeWms(command) {
 	var op = "@wms";
@@ -1639,185 +1934,36 @@ function normalizeWms(command) {
  */
 
 window.addEventListener('load', async () => {
-    //
     // ゲームのベースURLを取得する
-    //
     baseUrl = await window.api.getBaseUrl();
 
-    //
-    // パレットの要素をセットアップしてイベントリスナを追加する
-    //
-    Array.from(document.getElementById("palette").childNodes).forEach(function (elem) {
-        if(elem.id === undefined) {
-            return;
-        }
-        switch(elem.id) {
-        case "cmd-message": elem.cmd = "ここに文章を入力してください。"; break;
-        case "cmd-serif": elem.cmd = "キャラ名「セリフを入力してください」"; break;
-        case "cmd-choose": elem.cmd = "@choose 目印1 学校へ行く 目印2 海へ行く 目印3 公園へ行く"; break;
-        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
-        case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
-        case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
-        case "cmd-label": elem.cmd = ":名前をつけてください"; break;
-        case "cmd-goto": elem.cmd = "@goto 目印を選んでください"; break;
-        case "cmd-set": elem.cmd = "@set $0 = 1"; break;
-        case "cmd-if": elem.cmd = "@if $0 == 1 目印を選んでください"; break;
-        case "cmd-chapter": elem.cmd = "@chapter 章のタイトル"; break;
-        case "cmd-click": elem.cmd = "@click"; break;
-        case "cmd-wait": elem.cmd = "@wait 1.0"; break;
-        case "cmd-shake": elem.cmd = "@shake horizontal 3 3 100"; break;
-        case "cmd-skip": elem.cmd = "@skip enable"; break;
-        case "cmd-wms": elem.cmd = "@wms ファイルを指定してください"; break;
-        case "cmd-comment": elem.cmd = "#ここにメモを記入してください"; break;
-        }
-        elem.template = true;
-        elem.addEventListener("dragstart", () => {
-            event.dataTransfer.setData("text/plain", event.target.id);
-            return true;
-        });
-        elem.addEventListener("click", () => {
-            Array.from(document.getElementById("palette").childNodes).forEach(function (c) {
-                if(c.classList != null && (c.classList.contains("palette-list-item") || c.classList.contains("palette-list-item-sel"))) {
-                    if(c === event.srcElement) {
-                        c.classList.add("palette-list-item-sel");
-                        c.classList.remove("palette-list-item");
-                    } else {
-                        c.classList.remove("palette-list-item-sel");
-                        c.classList.add("palette-list-item");
-                    }
-                }
-            });
-            document.getElementById("thumbnail-picture").src = "";
-        });
-    });
+    // パレットの要素をセットアップする
+    setupPalette();
 
-    //
-    // txtフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
-    //
-    refreshTxt();
-    var txtPanel = document.getElementById("tab-panel-txt");
-    txtPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-txt").classList.add('dragover');
-    });
-    txtPanel.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-txt").classList.remove('dragover');
-    });
-    txtPanel.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-txt").classList.remove('dragover');
-        for (const file of e.dataTransfer.files) {
-            await window.api.addTxtFile(file.path);
-        }
-        refreshTxt();
-    });
-
-    //
-    // bgフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
-    //
-    refreshBg();
-    var bgPanel = document.getElementById("tab-panel-bg");
-    bgPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bg").classList.add('dragover');
-    });
-    bgPanel.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bg").classList.remove('dragover');
-    });
-    bgPanel.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bg").classList.remove('dragover');
-        for (const file of e.dataTransfer.files) {
-            await window.api.addBgFile(file.path);
-        }
-        refreshBg();
-    });
-
-    //
-    // chフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
-    //
-    refreshCh();
-    var chPanel = document.getElementById("tab-panel-ch");
-    chPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-ch").classList.add('dragover');
-    });
-    chPanel.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-ch").classList.remove('dragover');
-    });
-    chPanel.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-ch").classList.remove('dragover');
-        for (const file of e.dataTransfer.files) {
-            await window.api.addChFile(file.path);
-        }
-        refreshCh();
-    });
-
-    //
-    // bgmフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
-    //
-    refreshBgm();
-    var bgmPanel = document.getElementById("tab-panel-bgm");
-    bgmPanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bgm").classList.add('dragover');
-    });
-    bgmPanel.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bgm").classList.remove('dragover');
-    });
-    bgmPanel.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-bgm").classList.remove('dragover');
-        for (const file of e.dataTransfer.files) {
-            await window.api.addBgmFile(file.path);
-        }
-        refreshBgm();
-    });
-
-    //
-    // seフォルダの中身を取得してリスト要素を追加し、イベントリスナを追加する
-    //
-    refreshSe();
-    var sePanel = document.getElementById("tab-panel-se");
-    sePanel.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-se").classList.add('dragover');
-    });
-    sePanel.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-se").classList.remove('dragover');
-    });
-    sePanel.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        document.getElementById("tab-panel-se").classList.remove('dragover');
-        for (const file of e.dataTransfer.files) {
-            await window.api.addSeFile(file.path);
-        }
-        refreshSe();
-    });
-
-    //
-    // シナリオの要素を追加する
-    //
+    // シナリオの要素をセットアップする
     refreshScenario();
+
+    // txtタブの要素をセットアップする
+    refreshTxt();
+    setupTxt();
+
+    // bgタブの要素をセットアップする
+    refreshBg();
+    setupBg();
+
+    // chタブの要素をセットアップする
+    refreshCh();
+    setupCh();
+
+    // bgmタブの要素をセットアップする
+    refreshBgm();
+    setupBgm();
+
+    // seタブの要素をセットアップする
+    refreshSe();
+    setupSe();
+
+    // movタブの要素をセットアップする
+    refreshMov();
+    setupMov();
 })

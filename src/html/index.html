@@ -297,6 +297,14 @@
 								WMSファイル:<br>
 								<input id="prop-wms-file" type="text" class="prop-textsingle">
 							</div>
+							<div id="prop-gui" class="prop-pane">
+								GUIファイル:<br>
+								<input id="prop-gui-file" type="text" class="prop-textsingle">
+							</div>
+							<div id="prop-video" class="prop-pane">
+								動画ファイル:<br>
+								<input id="prop-video-file" type="text" readonly class="prop-textsingle">
+							</div>
 							<div id="prop-label" class="prop-pane">
 								行き先の目印:<br>
 								<input id="prop-label-name" type="text" class="prop-textsingle">
@@ -350,12 +358,14 @@
 						<input id="tab-ch" type="radio" name="tab-btn">
 						<input id="tab-bgm" type="radio" name="tab-btn">
 						<input id="tab-se" type="radio" name="tab-btn">
+						<input id="tab-mov" type="radio" name="tab-btn">
 						<div class="tab-area">
 							<label class="tab-txt-label" for="tab-txt">脚本</label>
 							<label class="tab-bg-label" for="tab-bg">背景</label>
 							<label class="tab-ch-label" for="tab-ch">キャラ</label>
 							<label class="tab-bgm-label" for="tab-bgm">音楽</label>
 							<label class="tab-se-label" for="tab-se">効果音</label>
+							<label class="tab-mov-label" for="tab-mov">動画</label>
 						</div>
 						<div class="tab-panel-area">
 							<div id="tab-panel-txt" class="tab-panel">
@@ -376,6 +386,10 @@
 							</div>
 							<div id="tab-panel-se" class="tab-panel">
 								<ul id="se-list" class="tab-list-holder">
+								</ul>
+							</div>
+							<div id="tab-panel-mov" class="tab-panel">
+								<ul id="mov-list" class="tab-list-holder">
 								</ul>
 							</div>
 						</div>

@@ -96,7 +96,7 @@ function createCommandElement(command) {
     } else if(command.startsWith("@se ") || command.startsWith("@効果音 ")) {
         // @se
         var cl = normalizeSe(command);
-        newElem.textContent = "効果音 " + cl[1];
+        newElem.textContent = "効果音";
         newElem.classList.add("drag-list-item-se");
     } else if(command.startsWith("@vol ") || command.startsWith("@音量 ")) {
         // @vol
@@ -1369,7 +1369,7 @@ function normalizeBgm(command) {
         file = MSG_SPECIFY_FILE;
     }
 
-    return [op, file, once];
+    return [op, file, opt];
 }
 
 // @se

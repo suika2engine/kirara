@@ -8,350 +8,39 @@
 </head>
 <body>
 
-	<div class="vertical-grid-area">
-		<div class="vertical-grid-area-top">
-			<div class="top-horizontal-grid-area">
-				<div class="top-horizontal-grid-area-left">
-					<div class="scenario-container">
-						<ul id="scenario" class="scenario-list">
+	<div class="grid1-area">
+		<div class="grid1-left">
+			<div class="grid2-area">
+				<div class="grid2-pallete-header">
+					演出一覧
+				</div>
+				<div class="grid2-palette">
+					<div class="palette-panel">
+						<ul id="palette" class="palette-list-holder">
+							<li class="palette-list-item" draggable="true" id="cmd-message">文章</li>
+							<li class="palette-list-item" draggable="true" id="cmd-serif">セリフ</li>
+							<li class="palette-list-item" draggable="true" id="cmd-choose">選択肢</li>
+							<li class="palette-list-item" draggable="true" id="cmd-chs">場面転換</li>
+							<li class="palette-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
+							<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
+							<li class="palette-list-item" draggable="true" id="cmd-label">目印を付ける</li>
+							<li class="palette-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
+							<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
+							<li class="palette-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
+							<li class="palette-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
+							<li class="palette-list-item" draggable="true" id="cmd-click">クリック待ち</li>
+							<li class="palette-list-item" draggable="true" id="cmd-wait">時間待ち</li>
+							<li class="palette-list-item" draggable="true" id="cmd-shake">画面を揺らす</li>
+							<li class="palette-list-item" draggable="true" id="cmd-skip">スキップの許可</li>
+							<li class="palette-list-item" draggable="true" id="cmd-wms">高機能スクリプト</li>
+							<li class="palette-list-item" draggable="true" id="cmd-comment">コメント</li>
 						</ul>
 					</div>
 				</div>
-				<div class="top-horizontal-grid-area-right">
-					<div class="top-right-vertical-grid-area">
-						<div id="prop-container" class="top-right-vertical-grid-area-top">
-							<div id="prop-msg" class="prop-pane">
-								文章:<br>
-								<textarea id="prop-msg-text" class="prop-textmulti"></textarea>
-							</div>
-							<div id="prop-serif" class="prop-pane">
-								名前:<br>
-								<input id="prop-serif-name" type="text" class="prop-textsingle"><br>
-								<br>
-								テキスト:<br>
-								<textarea id="prop-serif-text" class="prop-textmulti"></textarea><br>
-								<br>
-								音声ファイル(オプション):<br>
-								<input id="prop-serif-voice" type="text" class="prop-textsingle" size="10">
-							</div>
-							<div id="prop-bg" class="prop-pane">
-								ファイル:<br>
-								<input id="prop-bg-file" type="text" readonly class="prop-textsingle"><br>
-								<br>
-								秒:<br>
-								<input id="prop-bg-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
-								<br>
-								エフェクト:<br>
-								<select id="prop-bg-effect" name="effect">
-									<option value="normal">標準</option>
-									<option value="curtain-right">右カーテン</option>
-									<option value="curtain-left">左カーテン</option>
-									<option value="curtain-up">上カーテン</option>
-									<option value="curtain-down">下カーテン</option>
-								</select>
-							</div>
-							<div id="prop-ch" class="prop-pane">
-								ファイル:<br>
-								<input id="prop-ch-file" type="text" readonly class="prop-textsingle"><br>
-								<br>
-								位置:<br>
-								<select id="prop-ch-position" name="position">
-									<option value="center">中央</option>
-									<option value="right">右</option>
-									<option value="left">左</option>
-									<option value="back">中央背面</option>
-									<option value="face">顔</option>
-								</select><br>
-								<br>
-								秒:<br>
-								<input id="prop-ch-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
-								<br>
-								エフェクト:<br>
-								<select id="prop-ch-effect" name="effect">
-									<option value="normal">標準</option>
-									<option value="curtain-right">右カーテン</option>
-									<option value="curtain-left">左カーテン</option>
-									<option value="curtain-up">上カーテン</option>
-									<option value="curtain-down">下カーテン</option>
-								</select><br>
-								<br>
-								横方向シフト:<br>
-								<input id="prop-ch-xshift" type="range" name="xshift" min="-1280" max="1280" step="1"><br>
-								<br>
-								縦方向シフト:<br>
-								<input id="prop-ch-yshift" type="range" name="yshift" min="-720" max="720" step="1"><br>
-								<br>
-								アルファ(不透明度):<br>
-								<input id="prop-ch-alpha" type="range" name="alpha" min="0" max="255" step="1"><br>
-							</div>
-							<div id="prop-bgm" class="prop-pane">
-								ファイル:<br>
-								<input id="prop-bgm-file" type="text" readonly class="prop-textsingle"><br>
-								<br>
-								繰り返さない:<br>
-								<input id="prop-bgm-once" type="checkbox">
-							</div>
-							<div id="prop-se" class="prop-pane">
-								ファイル:<br>
-								<input id="prop-se-file" type="text" readonly class="prop-textsingle"><br>
-								<br>
-								ループする:<br>
-								<input id="prop-se-loop" type="checkbox"><br>
-								<br>
-								ボイスにする:<br>
-								<input id="prop-se-voice" type="checkbox"><br>
-							</div>
-							<div id="prop-vol" class="prop-pane">
-								トラック:<br>
-								<select id="prop-vol-track" name="track">
-									<option value="bgm">音楽</option>
-									<option value="voice">声</option>
-									<option value="se">効果音</option>
-									<option value="BGM">音楽(全セーブデータ共通)</option>
-									<option value="VOICE">声(全セーブデータ共通)</option>
-									<option value="SE">効果音(全セーブデータ共通)</option>
-								</select><br>
-								<br>
-								音量:<br>
-								<input id="prop-vol-volume" type="range" name="volume" min="0.0" max="1.0" step="0.1"><br>
-								<br>
-								秒:<br>
-								<input id="prop-vol-duration" type="range" name="duration" min="0.0" max="10.0" step="0.2">
-							</div>
-							<div id="prop-choose" class="prop-pane">
-								選択肢1:<input id="prop-choose-text1" type="text" class="prop-textsingle"><br>
-								行き先1:<input id="prop-choose-label1" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢2:<input id="prop-choose-text2" type="text" class="prop-textsingle"><br>
-								行き先2:<input id="prop-choose-label2" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢3:<input id="prop-choose-text3" type="text" class="prop-textsingle"><br>
-								行き先3:<input id="prop-choose-label3" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢4:<input id="prop-choose-text4" type="text" class="prop-textsingle"><br>
-								行き先4:<input id="prop-choose-label4" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢5:<input id="prop-choose-text5" type="text" class="prop-textsingle"><br>
-								行き先5:<input id="prop-choose-label5" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢6:<input id="prop-choose-text6" type="text" class="prop-textsingle"><br>
-								行き先6:<input id="prop-choose-label6" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢7:<input id="prop-choose-text7" type="text" class="prop-textsingle"><br>
-								行き先7:<input id="prop-choose-label7" type="text" class="prop-textsingle"><br>
-								<br>
-								選択肢8:<input id="prop-choose-text8" type="text" class="prop-textsingle"><br>
-								行き先8:<input id="prop-choose-label8" type="text" class="prop-textsingle">
-							</div>
-							<div id="prop-label" class="prop-pane">
-								目印の名前:<br>
-								<input id="prop-label-name" type="text" class="prop-textsingle"><br>
-							</div>
-							<div id="prop-cha" class="prop-pane">
-								位置:<br>
-								<select id="prop-cha-position" name="position">
-									<option value="center">中央</option>
-									<option value="right">右</option>
-									<option value="left">左</option>
-									<option value="back">中央背面</option>
-									<option value="face">顔</option>
-								</select><br>
-								<br>
-								秒:<br>
-								<input id="prop-cha-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
-								<br>
-								加速:<br>
-								<select id="prop-cha-acceleration" name="position">
-									<option value="move">なし</option>
-									<option value="accel">あり</option>
-									<option value="brake">減速</option>
-								</select><br>
-								<br>
-								横方向の移動(ピクセル数):<br>
-								<input id="prop-cha-xoffset" type="range" name="duration" min="-1280" max="1280" step="1"><br>
-								<br>
-								縦方向の移動(ピクセル数):<br>
-								<input id="prop-cha-yoffset" type="range" name="duration" min="-720" max="720" step="1"><br>
-								<br>
-								アルファ(不透明度):<br>
-								<input id="prop-cha-alpha" type="range" name="duration" min="0" max="255" step="1"><br>
-							</div>
-							<div id="prop-chs" class="prop-pane">
-								秒:<br>
-								<input id="prop-chs-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
-								<br>
-								エフェクト:<br>
-								<select id="prop-chs-effect" name="effect">
-									<option value="normal">標準</option>
-									<option value="curtain-right">右カーテン</option>
-									<option value="curtain-left">左カーテン</option>
-									<option value="curtain-up">上カーテン</option>
-									<option value="curtain-down">下カーテン</option>
-								</select><br>
-								<br>
-								中央キャラ:<br>
-								<select id="prop-chs-center" name="center">
-									<option value="stay">変更なし</option>
-									<option value="none">消去</option>
-								</select><br>
-								<br>
-								右キャラ:<br>
-								<select id="prop-chs-right" name="right">
-									<option value="stay">変更なし</option>
-									<option value="none">消去</option>
-								</select><br>
-								<br>
-								左キャラ:<br>
-								<select id="prop-chs-left" name="left">
-									<option value="stay">変更なし</option>
-									<option value="none">消去</option>
-								</select><br>
-								<br>
-								中央背面キャラ:<br>
-								<select id="prop-chs-back" name="back">
-									<option value="stay">変更なし</option>
-									<option value="none">消去</option>
-								</select><br>
-								<br>
-								中央背面キャラ:<br>
-								<select id="prop-chs-background" name="background">
-									<option value="stay">変更なし</option>
-								</select>
-							</div>
-							<div id="prop-shake" class="prop-pane">
-								方向:<br>
-								<select id="prop-shake-direction" name="direction">
-									<option value="horizontal">横方向</option>
-									<option value="vertical">縦方向</option>
-								</select><br>
-								<br>
-								秒:<br>
-								<input id="prop-shake-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
-								<br>
-								回数:<br>
-								<input id="prop-shake-times" type="range" name="duration" min="0" max="10" step="1"><br>
-								<br>
-								大きさ:<br>
-								<input id="prop-shake-amplitude" type="range" name="amplitude" min="0" max="1280" step="1">
-							</div>
-							<div id="prop-wait" class="prop-pane">
-								秒:<br>
-								<input id="prop-wait-duration" type="range" name="duration" min="0" max="30" step="0.2">
-							</div>
-							<div id="prop-skip" class="prop-pane">
-								スキップ禁止:<br>
-								<input id="prop-skip-opt" type="checkbox">
-							</div>
-							<div id="prop-goto" class="prop-pane">
-								行き先の目印:<br>
-								<select id="prop-goto-label" name="label">
- 								</select>
-							</div>
-							<div id="prop-set" class="prop-pane">
-								変数番号:<br>
-								<input id="prop-set-variable" type="text" class="prop-textsingle"><br>
-								<br>
-								フラグセットの種類:<br>
-								<select id="prop-set-operator" name="operator">
-									<option value="=">セット</option>
-									<option value="+=">足し算</option>
-									<option value="-=">引き算</option>
-									<option value="*=">かけ算</option>
-									<option value="/=">割り算</option>
-									<option value="%=">余り</option>
-								</select><br>
-								<br>
-								セットする数値:<br>
-								<input id="prop-set-value" type="text" class="prop-textsingle">
-							</div>
-							<div id="prop-if" class="prop-pane">
-								変数番号:<br>
-								<input id="prop-if-variable" type="text" class="prop-textsingle"><br>
-								<br>
-								フラグ判定の種類:<br>
-								<select id="prop-if-operator" name="operator">
-									<option value="==">セットされているか</option>
-									<option value="!=">セットされていないか</option>
-									<option value=">">大きいか</option>
-									<option value=">=">大きいか等しいか</option>
-									<option value="<">小さいか</option>
-									<option value="<=">小さいか等しいか</option>
-								</select><br>
-								<br>
-								比較する数値:<br>
-								<input id="prop-if-value" type="text" class="prop-textsingle"><br>
-								<br>
-								行き先の目印:<br>
-								<select id="prop-if-label" name="label">
- 								</select>
-							</div>
-							<div id="prop-load" class="prop-pane">
-								シナリオファイル:<br>
-								<input id="prop-load-file" type="text" readonly class="prop-textsingle">
-							</div>
-							<div id="prop-chapter" class="prop-pane">
-								章タイトル:<br>
-								<input id="prop-chapter-title" type="text" class="prop-textsingle">
-							</div>
-							<div id="prop-wms" class="prop-pane">
-								WMSファイル:<br>
-								<input id="prop-wms-file" type="text" class="prop-textsingle">
-							</div>
-							<div id="prop-gui" class="prop-pane">
-								GUIファイル:<br>
-								<input id="prop-gui-file" type="text" class="prop-textsingle">
-							</div>
-							<div id="prop-video" class="prop-pane">
-								動画ファイル:<br>
-								<input id="prop-video-file" type="text" readonly class="prop-textsingle">
-							</div>
-							<div id="prop-label" class="prop-pane">
-								行き先の目印:<br>
-								<input id="prop-label-name" type="text" class="prop-textsingle">
-							</div>
-							<div id="prop-comment" class="prop-pane">
-								コメント:<br>
-								<input id="prop-comment-text" type="text" class="prop-textsingle">
-							</div>
-							<!--
-								-- 未対応のコマンドをここに追加
-								-->
-						</div>
-						<div class="top-right-vertical-grid-area-bottom">
-							<div class="palette-panel">
-								<ul id="palette" class="palette-list-holder">
-									<li class="palette-list-item" draggable="true" id="cmd-message">文章</li>
-									<li class="palette-list-item" draggable="true" id="cmd-serif">セリフ</li>
-									<li class="palette-list-item" draggable="true" id="cmd-choose">選択肢</li>
-									<li class="palette-list-item" draggable="true" id="cmd-chs">場面転換</li>
-									<li class="palette-list-item" draggable="true" id="cmd-cha">キャラ移動</li>
-									<li class="palette-list-item" draggable="true" id="cmd-vol">音量</li>
-									<li class="palette-list-item" draggable="true" id="cmd-label">目印を付ける</li>
-									<li class="palette-list-item" draggable="true" id="cmd-goto">目印にジャンプ</li>
-									<li class="palette-list-item" draggable="true" id="cmd-set">フラグを立てる</li>
-									<li class="palette-list-item" draggable="true" id="cmd-if">フラグでジャンプ</li>
-									<li class="palette-list-item" draggable="true" id="cmd-chapter">章タイトル</li>
-									<li class="palette-list-item" draggable="true" id="cmd-click">クリック待ち</li>
-									<li class="palette-list-item" draggable="true" id="cmd-wait">時間待ち</li>
-									<li class="palette-list-item" draggable="true" id="cmd-shake">画面を揺らす</li>
-									<li class="palette-list-item" draggable="true" id="cmd-skip">スキップの許可</li>
-									<li class="palette-list-item" draggable="true" id="cmd-wms">高機能スクリプト</li>
-									<li class="palette-list-item" draggable="true" id="cmd-comment">コメント</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+				<div class="grid2-files-header">
+					素材一覧
 				</div>
-			</div>
-		</div>
-		<div class="vertical-grid-area-bottom">
-			<div class="bottom-horizontal-grid-area">
-				<div class="bottom-horizontal-grid-area-left">
-					<div class="thumbnail-holder">
-						<img id="thumbnail-picture" class="thumbnail-picture">
-					</div>
-				</div>
-				<div class="bottom-horizontal-grid-area-right">
+				<div class="grid2-files">
 					<div class="tab-wrap">
 						<input id="tab-txt" type="radio" name="tab-btn">
 						<input id="tab-bg" type="radio" name="tab-btn" checked>
@@ -360,12 +49,12 @@
 						<input id="tab-se" type="radio" name="tab-btn">
 						<input id="tab-mov" type="radio" name="tab-btn">
 						<div class="tab-area">
-							<label class="tab-txt-label" for="tab-txt">脚本</label>
-							<label class="tab-bg-label" for="tab-bg">背景</label>
-							<label class="tab-ch-label" for="tab-ch">キャラ</label>
-							<label class="tab-bgm-label" for="tab-bgm">音楽</label>
-							<label class="tab-se-label" for="tab-se">効果音</label>
-							<label class="tab-mov-label" for="tab-mov">動画</label>
+							<label class="tab-txt-label" for="tab-txt"><img src="../img/txt.png" class="tab-img"></label>
+							<label class="tab-bg-label" for="tab-bg"><img src="../img/bg.png" class="tab-img"></label>
+							<label class="tab-ch-label" for="tab-ch"><img src="../img/ch.png" class="tab-img"></label>
+							<label class="tab-bgm-label" for="tab-bgm"><img src="../img/bgm.png" class="tab-img"></label>
+							<label class="tab-se-label" for="tab-se"><img src="../img/se.png" class="tab-img"></label>
+							<label class="tab-mov-label" for="tab-mov"><img src="../img/mov.png" class="tab-img"></label>
 						</div>
 						<div class="tab-panel-area">
 							<div id="tab-panel-txt" class="tab-panel">
@@ -397,7 +86,321 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="grid1-scenario">
+			<div class="scenario-container">
+				<ul id="scenario" class="scenario-list">
+				</ul>
+			</div>
+		</div>
+		<div class="grid1-right">
+			<div class="grid3-area">
+				<div class="grid3-prop">
+					<div id="prop-container" class="top-right-vertical-grid-area-top">
+						<div id="prop-msg" class="prop-pane">
+							<h3>文章</h3>
+							テキスト:<br>
+							<textarea id="prop-msg-text" class="prop-textmulti"></textarea>
+						</div>
+						<div id="prop-serif" class="prop-pane">
+							<h3>セリフ</h3>
+							名前:<br>
+							<input id="prop-serif-name" type="text" class="prop-textsingle"><br>
+							<br>
+							テキスト:<br>
+							<textarea id="prop-serif-text" class="prop-textmulti"></textarea><br>
+							<br>
+							音声ファイル(オプション):<br>
+							<input id="prop-serif-voice" type="text" class="prop-textsingle" size="10">
+						</div>
+						<div id="prop-bg" class="prop-pane">
+							ファイル:<br>
+							<input id="prop-bg-file" type="text" readonly class="prop-textsingle"><br>
+							<br>
+							秒:<br>
+							<input id="prop-bg-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
+							<br>
+							エフェクト:<br>
+							<select id="prop-bg-effect" name="effect">
+								<option value="normal">標準</option>
+								<option value="curtain-right">右カーテン</option>
+								<option value="curtain-left">左カーテン</option>
+								<option value="curtain-up">上カーテン</option>
+								<option value="curtain-down">下カーテン</option>
+							</select>
+						</div>
+						<div id="prop-ch" class="prop-pane">
+							ファイル:<br>
+							<input id="prop-ch-file" type="text" readonly class="prop-textsingle"><br>
+							<br>
+							位置:<br>
+							<select id="prop-ch-position" name="position">
+								<option value="center">中央</option>
+								<option value="right">右</option>
+								<option value="left">左</option>
+								<option value="back">中央背面</option>
+								<option value="face">顔</option>
+							</select><br>
+							<br>
+							秒:<br>
+							<input id="prop-ch-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
+							<br>
+							エフェクト:<br>
+							<select id="prop-ch-effect" name="effect">
+								<option value="normal">標準</option>
+								<option value="curtain-right">右カーテン</option>
+								<option value="curtain-left">左カーテン</option>
+								<option value="curtain-up">上カーテン</option>
+								<option value="curtain-down">下カーテン</option>
+							</select><br>
+							<br>
+							横方向シフト:<br>
+							<input id="prop-ch-xshift" type="range" name="xshift" min="-1280" max="1280" step="1"><br>
+							<br>
+							縦方向シフト:<br>
+							<input id="prop-ch-yshift" type="range" name="yshift" min="-720" max="720" step="1"><br>
+							<br>
+							アルファ(不透明度):<br>
+							<input id="prop-ch-alpha" type="range" name="alpha" min="0" max="255" step="1"><br>
+						</div>
+						<div id="prop-bgm" class="prop-pane">
+							ファイル:<br>
+							<input id="prop-bgm-file" type="text" readonly class="prop-textsingle"><br>
+							<br>
+							繰り返さない:<br>
+							<input id="prop-bgm-once" type="checkbox">
+						</div>
+						<div id="prop-se" class="prop-pane">
+							ファイル:<br>
+							<input id="prop-se-file" type="text" readonly class="prop-textsingle"><br>
+							<br>
+							ループする:<br>
+							<input id="prop-se-loop" type="checkbox"><br>
+							<br>
+							ボイスにする:<br>
+							<input id="prop-se-voice" type="checkbox"><br>
+						</div>
+						<div id="prop-vol" class="prop-pane">
+							トラック:<br>
+							<select id="prop-vol-track" name="track">
+								<option value="bgm">音楽</option>
+								<option value="voice">声</option>
+								<option value="se">効果音</option>
+								<option value="BGM">音楽(全セーブデータ共通)</option>
+								<option value="VOICE">声(全セーブデータ共通)</option>
+								<option value="SE">効果音(全セーブデータ共通)</option>
+							</select><br>
+							<br>
+							音量:<br>
+							<input id="prop-vol-volume" type="range" name="volume" min="0.0" max="1.0" step="0.1"><br>
+							<br>
+							秒:<br>
+							<input id="prop-vol-duration" type="range" name="duration" min="0.0" max="10.0" step="0.2">
+						</div>
+						<div id="prop-choose" class="prop-pane">
+							選択肢1:<input id="prop-choose-text1" type="text" class="prop-textsingle"><br>
+							行き先1:<input id="prop-choose-label1" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢2:<input id="prop-choose-text2" type="text" class="prop-textsingle"><br>
+							行き先2:<input id="prop-choose-label2" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢3:<input id="prop-choose-text3" type="text" class="prop-textsingle"><br>
+							行き先3:<input id="prop-choose-label3" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢4:<input id="prop-choose-text4" type="text" class="prop-textsingle"><br>
+							行き先4:<input id="prop-choose-label4" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢5:<input id="prop-choose-text5" type="text" class="prop-textsingle"><br>
+							行き先5:<input id="prop-choose-label5" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢6:<input id="prop-choose-text6" type="text" class="prop-textsingle"><br>
+							行き先6:<input id="prop-choose-label6" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢7:<input id="prop-choose-text7" type="text" class="prop-textsingle"><br>
+							行き先7:<input id="prop-choose-label7" type="text" class="prop-textsingle"><br>
+							<br>
+							選択肢8:<input id="prop-choose-text8" type="text" class="prop-textsingle"><br>
+							行き先8:<input id="prop-choose-label8" type="text" class="prop-textsingle">
+						</div>
+						<div id="prop-label" class="prop-pane">
+							目印の名前:<br>
+							<input id="prop-label-name" type="text" class="prop-textsingle"><br>
+						</div>
+						<div id="prop-cha" class="prop-pane">
+							位置:<br>
+							<select id="prop-cha-position" name="position">
+								<option value="center">中央</option>
+								<option value="right">右</option>
+								<option value="left">左</option>
+								<option value="back">中央背面</option>
+								<option value="face">顔</option>
+							</select><br>
+							<br>
+							秒:<br>
+							<input id="prop-cha-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
+							<br>
+							加速:<br>
+							<select id="prop-cha-acceleration" name="position">
+								<option value="move">なし</option>
+								<option value="accel">あり</option>
+								<option value="brake">減速</option>
+							</select><br>
+							<br>
+							横方向の移動(ピクセル数):<br>
+							<input id="prop-cha-xoffset" type="range" name="duration" min="-1280" max="1280" step="1"><br>
+							<br>
+							縦方向の移動(ピクセル数):<br>
+							<input id="prop-cha-yoffset" type="range" name="duration" min="-720" max="720" step="1"><br>
+							<br>
+							アルファ(不透明度):<br>
+							<input id="prop-cha-alpha" type="range" name="duration" min="0" max="255" step="1"><br>
+						</div>
+						<div id="prop-chs" class="prop-pane">
+							秒:<br>
+							<input id="prop-chs-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
+							<br>
+							エフェクト:<br>
+							<select id="prop-chs-effect" name="effect">
+								<option value="normal">標準</option>
+								<option value="curtain-right">右カーテン</option>
+								<option value="curtain-left">左カーテン</option>
+								<option value="curtain-up">上カーテン</option>
+								<option value="curtain-down">下カーテン</option>
+							</select><br>
+							<br>
+							中央キャラ:<br>
+							<select id="prop-chs-center" name="center">
+								<option value="stay">変更なし</option>
+								<option value="none">消去</option>
+							</select><br>
+							<br>
+							右キャラ:<br>
+							<select id="prop-chs-right" name="right">
+								<option value="stay">変更なし</option>
+								<option value="none">消去</option>
+							</select><br>
+							<br>
+							左キャラ:<br>
+							<select id="prop-chs-left" name="left">
+								<option value="stay">変更なし</option>
+								<option value="none">消去</option>
+							</select><br>
+							<br>
+							中央背面キャラ:<br>
+							<select id="prop-chs-back" name="back">
+								<option value="stay">変更なし</option>
+								<option value="none">消去</option>
+							</select><br>
+							<br>
+							中央背面キャラ:<br>
+							<select id="prop-chs-background" name="background">
+								<option value="stay">変更なし</option>
+							</select>
+						</div>
+						<div id="prop-shake" class="prop-pane">
+							方向:<br>
+							<select id="prop-shake-direction" name="direction">
+								<option value="horizontal">横方向</option>
+								<option value="vertical">縦方向</option>
+							</select><br>
+							<br>
+							秒:<br>
+							<input id="prop-shake-duration" type="range" name="duration" min="0" max="10" step="0.1"><br>
+							<br>
+							回数:<br>
+							<input id="prop-shake-times" type="range" name="duration" min="0" max="10" step="1"><br>
+							<br>
+							大きさ:<br>
+							<input id="prop-shake-amplitude" type="range" name="amplitude" min="0" max="1280" step="1">
+						</div>
+						<div id="prop-wait" class="prop-pane">
+							秒:<br>
+							<input id="prop-wait-duration" type="range" name="duration" min="0" max="30" step="0.2">
+						</div>
+						<div id="prop-skip" class="prop-pane">
+							スキップ禁止:<br>
+							<input id="prop-skip-opt" type="checkbox">
+						</div>
+						<div id="prop-goto" class="prop-pane">
+							行き先の目印:<br>
+							<select id="prop-goto-label" name="label">
+ 							</select>
+						</div>
+						<div id="prop-set" class="prop-pane">
+							変数番号:<br>
+							<input id="prop-set-variable" type="text" class="prop-textsingle"><br>
+							<br>
+							フラグセットの種類:<br>
+							<select id="prop-set-operator" name="operator">
+								<option value="=">セット</option>
+								<option value="+=">足し算</option>
+								<option value="-=">引き算</option>
+								<option value="*=">かけ算</option>
+								<option value="/=">割り算</option>
+								<option value="%=">余り</option>
+							</select><br>
+							<br>
+							セットする数値:<br>
+							<input id="prop-set-value" type="text" class="prop-textsingle">
+						</div>
+						<div id="prop-if" class="prop-pane">
+							変数番号:<br>
+							<input id="prop-if-variable" type="text" class="prop-textsingle"><br>
+							<br>
+							フラグ判定の種類:<br>
+							<select id="prop-if-operator" name="operator">
+								<option value="==">セットされているか</option>
+								<option value="!=">セットされていないか</option>
+								<option value=">">大きいか</option>
+								<option value=">=">大きいか等しいか</option>
+								<option value="<">小さいか</option>
+								<option value="<=">小さいか等しいか</option>
+							</select><br>
+							<br>
+							比較する数値:<br>
+							<input id="prop-if-value" type="text" class="prop-textsingle"><br>
+							<br>
+							行き先の目印:<br>
+							<select id="prop-if-label" name="label">
+ 							</select>
+						</div>
+						<div id="prop-load" class="prop-pane">
+							シナリオファイル:<br>
+							<input id="prop-load-file" type="text" readonly class="prop-textsingle">
+						</div>
+						<div id="prop-chapter" class="prop-pane">
+							章タイトル:<br>
+							<input id="prop-chapter-title" type="text" class="prop-textsingle">
+						</div>
+						<div id="prop-wms" class="prop-pane">
+							WMSファイル:<br>
+							<input id="prop-wms-file" type="text" class="prop-textsingle">
+						</div>
+						<div id="prop-gui" class="prop-pane">
+							GUIファイル:<br>
+							<input id="prop-gui-file" type="text" class="prop-textsingle">
+						</div>
+						<div id="prop-video" class="prop-pane">
+							動画ファイル:<br>
+							<input id="prop-video-file" type="text" readonly class="prop-textsingle">
+						</div>
+						<div id="prop-label" class="prop-pane">
+							行き先の目印:<br>
+							<input id="prop-label-name" type="text" class="prop-textsingle">
+						</div>
+						<div id="prop-comment" class="prop-pane">
+							コメント:<br>
+							<input id="prop-comment-text" type="text" class="prop-textsingle">
+						</div>
+					</div>
+				</div>
+				<div class="grid3-thumbnail">
+					<div class="thumbnail-holder">
+						<img id="thumbnail-picture" class="thumbnail-picture">
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
 
   <script src="../js/index.js"></script>
 </body>

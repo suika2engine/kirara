@@ -22,8 +22,6 @@ body {
 	grid-column: 1;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(to right, #ee9ca7, #ffdde1);
-	color: white;
 }
 
 .grid1-scenario {
@@ -115,6 +113,7 @@ body {
 
 .palette-list-holder {
 	padding: 0;
+	width: calc(100% - 35px);
 	position: relative;
 	margin-block-start: 0em;
 	margin-block-end: 0em;
@@ -125,18 +124,53 @@ body {
 	margin-bottom: 3px;
 	line-height: 1.3em;
 	padding: 0.3em;
+	border: 1px solid #2d8fdd;
+	border-radius: 6px;
 	list-style-type: none!important;
 	cursor: pointer;
+
+	transition: .3s;
+}
+.palette-list-item:hover {
+	background: #2d8fdd;
 }
 
 .palette-list-item-sel {
 	font-size: 14px;
+	color: white;
 	background: #2d8fdd;
 	margin-bottom: 3px;
 	line-height: 1.3em;
 	padding: 0.3em;
 	list-style-type: none!important;
 	cursor: pointer;
+
+	border-radius: 6px;
+	animation: right-move 2s infinite;
+}
+
+@keyframes right-move {
+	0% {
+		transform: translate(5px, 0px);
+	}
+	5% {
+		transform: translate(10px, 0px);
+	}
+	10% {
+		transform: translate(15px, 0px);
+	}
+	15% {
+		transform: translate(20px, 0px);
+	}
+	20% {
+		transform: translate(25px, 0px);
+	}
+	25% {
+		transform: translate(30px, 0px);
+	}
+	30% {
+		transform: translate(35px, 0px);
+	}
 }
 
 /*
@@ -208,33 +242,41 @@ input[name="tab-btn"] {
 
 .tab-list-holder {
 	padding: 0;
+	width: calc(100% - 35px);
 	position: relative;
     margin-block-start: 0em;
 	margin-block-end: 0em;
 }
 
 .tab-list-item {
-	color: #2ddd8f;
-	border: 1px solid #2ddd8f;
+	color: #2d8fdd;
+	border: 1px solid #2d8fdd;
 	margin-bottom: 3px;
-	border-radius: 15px;
+	border-radius: 6px;
 	line-height: 1.0;
 	padding: 0.2em;
 	list-style-type: none!important;
-
 	text-align: center;
+	transition: .3s;
+}
+.tab-list-item:hover {
+	color: white;
+	background: #2d8fdd;
 }
 
 .tab-list-item-sel {
-	color: #f1fff8;
-	background: #2ddd8f;
+	color: white;
+	background: #2d8fdd;
 	margin-bottom: 3px;
-	border-radius: 15px;
+	border-radius: 6px;
 	line-height: 1.0;
 	padding: 0.2em;
 	list-style-type: none!important;
-
 	text-align: center;
+
+	background: #2d8fdd;
+	border-radius: 6px;
+	animation: right-move 2s infinite;
 }
 
 .dragover {

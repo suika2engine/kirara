@@ -297,6 +297,55 @@ ipcMain.handle('addMovFile', (event, srcFilePath) => {
 })
 
 //
+// txtファイルを削除する
+//
+ipcMain.handle('removeTxtFile', (event, file) => {
+    removeAsset("txt", file);
+})
+
+function removeAsset(subDir, file) {
+    var filePath = Model.dir + "/" + subDir + "/" + file;
+    if(fs.existsSync(filePath)) {
+        fs.rmSync(filePath);
+    }
+}
+
+//
+// bgファイルを削除する
+//
+ipcMain.handle('removeBgFile', (event, file) => {
+    removeAsset("bg", file);
+})
+
+//
+// chファイルを削除する
+//
+ipcMain.handle('removeChFile', (event, file) => {
+    removeAsset("ch", file);
+})
+
+//
+// bgmファイルを削除する
+//
+ipcMain.handle('removeBgmFile', (event, file) => {
+    removeAsset("bgm", file);
+})
+
+//
+// seファイルを削除する
+//
+ipcMain.handle('removeSeFile', (event, file) => {
+    removeAsset("se", file);
+})
+
+//
+// movファイルを削除する
+//
+ipcMain.handle('removeMovFile', (event, file) => {
+    removeAsset("mov", file);
+})
+
+//
 // ゲーム実行
 //
 

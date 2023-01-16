@@ -225,6 +225,7 @@ async function saveScenario() {
 
 function onScenarioDragStart(event) {
     event.dataTransfer.setData("text/plain", event.target.id);
+    document.getElementById("thumbnail-picture").src = "../img/trash.png";
     return true;
 }
 
@@ -769,6 +770,7 @@ async function refreshTxt() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            document.getElementById("thumbnail-picture").src = "../img/trash.png";
             return true;
         });
         document.getElementById("txt-list").appendChild(elem);
@@ -837,6 +839,7 @@ async function refreshBg() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            document.getElementById("thumbnail-picture").src = "../img/trash.png";
             return true;
         });
         document.getElementById("bg-list").appendChild(elem);
@@ -901,6 +904,7 @@ async function refreshCh() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            document.getElementById("thumbnail-picture").src = "../img/trash.png";
             return true;
         });
         document.getElementById("ch-list").appendChild(elem);
@@ -965,6 +969,7 @@ async function refreshBgm() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            document.getElementById("thumbnail-picture").src = "../img/trash.png";
             return true;
         });
         document.getElementById("bgm-list").appendChild(elem);
@@ -1029,6 +1034,7 @@ async function refreshSe() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            document.getElementById("thumbnail-picture").src = "../img/trash.png";
             return true;
         });
         document.getElementById("se-list").appendChild(elem);
@@ -1093,6 +1099,7 @@ async function refreshMov() {
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
+            document.getElementById("thumbnail-picture").src = "../img/trash.png";
             return true;
         });
         document.getElementById("mov-list").appendChild(elem);
@@ -1930,6 +1937,69 @@ function normalizeWms(command) {
 }
 
 /*
+ * サムネイル
+ */
+
+function setupThumbnail() {
+    var elem = document.getElementById("thumbnail-picture");
+    elem.addEventListener("dragover", onThumbnailDragOver);
+    elem.addEventListener("dragleave", onThumbnailDragLeave);
+    elem.addEventListener("drop", onThumbnailDrop);
+}
+
+function onThumbnailDragOver(event) {
+    event.preventDefault();
+    document.getElementById("thumbnail-picture").style.border = "5px solid black";
+    return false;
+}
+
+function onThumbnailDragLeave(event) {
+    document.getElementById("thumbnail-picture").style.border = "";
+}
+
+function onThumbnailDrop(event) {
+    event.preventDefault();
+    document.getElementById("thumbnail-picture").style.border = "";
+    document.getElementById("thumbnail-picture").src = "";
+
+    var id = event.dataTransfer.getData("text/plain");
+    var elemDrag = document.getElementById(id);
+
+    // シナリオ項目を削除する場合
+    if(elemDrag.template === undefined) {
+        elemDrag.parentNode.removeChild(elemDrag);
+        return;
+    }
+
+    // 素材を削除する場合
+    if(elemDrag.cmd.startsWith("@load ")) {
+        var cl = normalizeLoad(elemDrag.cmd);
+        window.api.removeTxtFile(cl[1]);
+        refreshTxt();
+    } else if(elemDrag.cmd.startsWith("@bg ")) {
+        var cl = normalizeBg(elemDrag.cmd);
+        window.api.removeBgFile(cl[1]);
+        refreshBg();
+    } else if(elemDrag.cmd.startsWith("@ch ")) {
+        var cl = normalizeCh(elemDrag.cmd);
+        window.api.removeChFile(cl[2]);
+        refreshCh();
+    } else if(elemDrag.cmd.startsWith("@bgm ")) {
+        var cl = normalizeBgm(elemDrag.cmd);
+        window.api.removeBgmFile(cl[1]);
+        refreshBgm();
+    } else if(elemDrag.cmd.startsWith("@se ")) {
+        var cl = normalizeSe(elemDrag.cmd);
+        window.api.removeSeFile(cl[1]);
+        refreshSe();
+    } else if(elemDrag.cmd.startsWith("@video ")) {
+        var cl = normalizeVideo(elemDrag.cmd);
+        window.api.removeMovFile(cl[1]);
+        refreshMov();
+    }
+}
+
+/*
  * ロード時
  */
 
@@ -1966,4 +2036,7 @@ window.addEventListener('load', async () => {
     // movタブの要素をセットアップする
     refreshMov();
     setupMov();
+
+    // サムネイルをセットアップする
+    setupThumbnail();
 })

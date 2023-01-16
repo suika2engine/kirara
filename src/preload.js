@@ -21,6 +21,13 @@ contextBridge.exposeInMainWorld('api', {
     addBgmFile: async (filePath) => await ipcRenderer.invoke('addBgmFile', filePath),
     addSeFile: async (filePath) => await ipcRenderer.invoke('addSeFile', filePath),
     addMovFile: async (filePath) => await ipcRenderer.invoke('addMovFile', filePath),
+    removeTxtFile: async (file) => await ipcRenderer.invoke('removeTxtFile', file),
+    removeBgFile: async (file) => await ipcRenderer.invoke('removeBgFile', file),
+    removeChFile: async (file) => await ipcRenderer.invoke('removeChFile', file),
+    removeBgmFile: async (file) => await ipcRenderer.invoke('removeBgmFile', file),
+    removeSeFile: async (file) => await ipcRenderer.invoke('removeSeFile', file),
+    removeMovFile: async (file) => await ipcRenderer.invoke('removeMovFile', file),
+
     playGame: async () => await ipcRenderer.invoke('playGame'),
     debugGame: async (lineIndex) => await ipcRenderer.invoke('debugGame', lineIndex)
 })

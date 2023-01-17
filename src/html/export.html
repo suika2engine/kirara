@@ -8,30 +8,16 @@
 </head>
 <body>
 	<h1>ゲームの書き出し</h1>
+	<a href="index.html">編集に戻る</a>
 
 	<div>
-		<h2>コンテンツについて</h2>
-		<span>用途:</span><br>
+		<h2>配信先</h2>
 		<select>
 			<option value="freem">ふりーむへの投稿</option>
 			<option value="event">DVDでの配布</option>
 			<option value="event">USBメモリでの配布</option>
 			<option value="other">その他</option>
-		</select><br>
-		<span id="rate">対象年齢:</span><br>
-		<select>
-			<option value="all">全年齢</option>
-			<option value="r18">18歳以上</option>
-			<option value="other">その他</option>
-		</select><br>
-		<span id="play-time">プレイ時間:</span><br>
-		<select selected="60">
-			<option value="5">5分以内</option>
-			<option value="30">30分以内</option>
-			<option value="60">60分以内</option>
-			<option value="more">それ以上</option>
-		</select><br>
-		<span>判定:&nbsp;</span><span id="judge"></span>
+		</select>
 	</div>
 
 	<div>
@@ -39,7 +25,7 @@
 		<button id="export-windows">Windows向け</button>
 		<button id="export-web">Web向け</button>
 		<button id="export-winmac">Windows/Mac向け</button><br>
-		<span>ボタンを押してから完了するまで時間がかかることがあります。</span>
+		<p>ボタンを押してから完了するまで時間がかかります。</p>
 	</div>
 
   <script src="../js/export.js"></script>

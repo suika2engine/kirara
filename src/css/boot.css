@@ -1,3 +1,10 @@
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Yu Gothic UI;
+	user-select: none;
+}
+
 .game-list-item {
 	width: 200px;
 	line-height: 2em;

@@ -1,1 +1,6 @@
-
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Yu Gothic UI;
+	user-select: none;
+}

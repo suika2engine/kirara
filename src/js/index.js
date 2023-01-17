@@ -186,7 +186,7 @@ function createCommandElement(command) {
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-etc");
     } else if(command.startsWith(":")) {
-        newElem.textContent = "目印 " + command.substring(1);
+        newElem.textContent = "目印 \"" + command.substring(1) + "\"";
         newElem.classList.add("drag-list-item-label");
     } else if(command.match(/^\*[^\*]+\*[^\*]+$/)) {
         // セリフ(*キャラ名*セリフ)
@@ -213,6 +213,7 @@ function createCommandElement(command) {
         newElem.classList.add("drag-list-item-comment");
     } else {
         // 上記に該当しなければメッセージ
+        command = command.replace(/\n/g, "\\n");
         newElem.textContent = command;
         newElem.classList.add("drag-list-item-msg");
     }
@@ -727,7 +728,7 @@ function commitProps() {
         // ラベル保存
         var label = document.getElementById("prop-label-name").value;
         elementInEdit.cmd = ":" + label;
-        elementInEdit.textContent = "目印 " + label;
+        elementInEdit.textContent = "目印 \"" + label + "\"";
     } else if(cmd.startsWith("#")) {
         // コメント保存
         var comment = document.getElementById("prop-comment-text").value;
@@ -778,7 +779,7 @@ function setupPalette() {
         case "cmd-message": elem.cmd = "ここに文章を入力してください。"; break;
         case "cmd-serif": elem.cmd = "キャラ名「セリフを入力してください」"; break;
         case "cmd-choose": elem.cmd = "@choose 目印1 学校へ行く 目印2 海へ行く 目印3 公園へ行く"; break;
-        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
+        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normmal"; break;
         case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
         case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
         case "cmd-label": elem.cmd = ":名前をつけてください"; break;
@@ -2216,6 +2217,18 @@ window.addEventListener("load", async() => {
 
     // サムネイルをセットアップする
     setupThumbnail();
+
+    // 再生ボタンをセットアップする
+    document.getElementById("play").addEventListener("click", async () => {
+        await saveScenario();
+        window.api.playGame();
+    });
+    
+    // エクスポートボタンをセットアップする
+    document.getElementById("export").addEventListener("click", async () => {
+        await saveScenario();
+        window.location.href = "export.html";
+    });
 })
 
 window.addEventListener("beforeunload", async () => {

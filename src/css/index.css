@@ -1,7 +1,7 @@
 body {
 	padding: 0;
 	margin: 0;
-	font-family: Yu Gothic UI;
+	font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
 	user-select: none;
 }
 
@@ -49,10 +49,11 @@ body {
 .grid2-pallete-header {
 	grid-row: 1;
 	grid-column: 1;
-	width: calc(100% - 35px);
+	width: 100%;
 	height: 100%;
 	font-weight: bold;
-	text-align: center;
+	background: red;
+	color: white;
 }
 
 .grid2-palette {
@@ -65,10 +66,11 @@ body {
 .grid2-files-header {
 	grid-row: 3;
 	grid-column: 1;
-	width: calc(100% - 35px);
+	width: 100%;
 	height: 100%;
 	font-weight: bold;
-	text-align: center;
+	background: green;
+	color: white;
 }
 
 .grid2-files {
@@ -91,6 +93,8 @@ body {
 	grid-column: 1;
 	width: 100%;
 	height: 100%;
+	background: #6c7383;
+	color: white;
 }
 
 .grid3-thumbnail {
@@ -122,6 +126,28 @@ body {
 	height: 100%;
 }
 
+/* grid4-headerの中の左右 */
+.grid5-area {
+	display: grid;
+	height: 100%;
+	grid-template-rows: 100%;
+	grid-template-columns: calc(100% - 64px) 64px;
+}
+
+.grid5-left {
+	grid-row: 1;
+	grid-column: 1;
+	width: 100%;
+	height: 100%;
+}
+
+.grid5-right {
+	grid-row: 1;
+	grid-column: 2;
+	width: 100%;
+	height: 100%;
+}
+
 /*
  * パレット
  */
@@ -146,15 +172,17 @@ body {
 	margin-bottom: 3px;
 	line-height: 1.3em;
 	padding: 0.3em;
-	border: 1px solid #2d8fdd;
 	border-radius: 6px;
 	list-style-type: none!important;
 	cursor: pointer;
 	text-align: center;
 	transition: .3s;
+	background: #efebfc;
+	color: black;
 }
 .palette-list-item:hover {
 	background: #2d8fdd;
+	color: #633ce6;
 }
 
 .palette-list-item-sel {
@@ -279,6 +307,7 @@ input[name="tab-btn"] {
 	padding: 0.2em;
 	list-style-type: none!important;
 	text-align: center;
+	background: white;
 	transition: .3s;
 }
 .tab-list-item:hover {
@@ -312,6 +341,16 @@ input[name="tab-btn"] {
 
 .scenario-header {
 	font-weight: bold;
+}
+
+.scenario-header-img {
+	object-fit: contain;
+	width: 32px;
+	height: 32px;
+	transition: .3s;
+}
+.scenario-header-img:hover {
+	opacity: 0.3;
 }
 
 /* メインリストのコンテナ */

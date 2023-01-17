@@ -304,6 +304,7 @@ function showProps() {
         var cl = normalizeBg(cmd);
         document.getElementById("prop-bg-file").value = cl[1];
         document.getElementById("prop-bg-duration").value = cl[2];
+        document.getElementById("prop-bg-duration-num").textContent = cl[2];
         document.getElementById("prop-bg-effect").value = normalizeBgEffect(cl[3]);
         document.getElementById("prop-bg").style.display = "block";
         document.getElementById("thumbnail-picture").src = baseUrl + "bg/" + cl[1];
@@ -313,10 +314,14 @@ function showProps() {
         document.getElementById("prop-ch-position").value = normalizeChPosition(cl[1]);
         document.getElementById("prop-ch-file").value = cl[2];
         document.getElementById("prop-ch-duration").value = cl[3];
+        document.getElementById("prop-ch-duration-num").textContent = cl[3];
         document.getElementById("prop-ch-effect").value = normalizeBgEffect(cl[4]);
         document.getElementById("prop-ch-xshift").value = cl[5];
+        document.getElementById("prop-ch-xshift-num").textContent = cl[5];
         document.getElementById("prop-ch-yshift").value = cl[6];
+        document.getElementById("prop-ch-yshift-num").textContent = cl[6];
         document.getElementById("prop-ch-alpha").value = cl[7];
+        document.getElementById("prop-ch-alpha-num").textContent = cl[7];
         document.getElementById("prop-ch").style.display = "block";
         if(cl[2] !== "none" && cl[2] !== "消去") {
             document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + cl[2];
@@ -341,7 +346,9 @@ function showProps() {
         var cl = normalizeVol(cmd);
         document.getElementById("prop-vol-track").value = cl[1];
         document.getElementById("prop-vol-volume").value = cl[2];
+        document.getElementById("prop-vol-volume-num").textContent = cl[2];
         document.getElementById("prop-vol-duration").value = cl[3];
+        document.getElementById("prop-vol-duration-num").textContent = cl[3];
         document.getElementById("prop-vol").style.display = "block";
     } else if(cmd.startsWith("@choose ") || cmd.startsWith("@選択肢 ")) {
         // @choose編集開始
@@ -356,20 +363,19 @@ function showProps() {
             }
         }
         document.getElementById("prop-choose").style.display = "block";
-    } else if(cmd.startsWith(":")) {
-        // @vol編集開始
-        var label = cmd.substring(1);
-        document.getElementById("prop-label-name").value = label;
-        document.getElementById("prop-label").style.display = "block";
     } else if(cmd.startsWith("@cha ") || cmd.startsWith("@キャラ移動 ")) {
         // @cha編集開始
         var cl = normalizeCha(cmd);
         document.getElementById("prop-cha-position").value = cl[1];
         document.getElementById("prop-cha-duration").value = cl[2];
+        document.getElementById("prop-cha-duration-num").textContent = cl[2];
         document.getElementById("prop-cha-acceleration").value = cl[3];
         document.getElementById("prop-cha-xoffset").value = cl[4];
+        document.getElementById("prop-cha-xoffset-num").textContent = cl[4];
         document.getElementById("prop-cha-yoffset").value = cl[5];
+        document.getElementById("prop-cha-yoffset-num").textContent = cl[5];
         document.getElementById("prop-cha-alpha").value = cl[6];
+        document.getElementById("prop-cha-alpha-num").textContent = cl[6];
         document.getElementById("prop-cha").style.display = "block";
     } else if(cmd.startsWith("@chs ") || cmd.startsWith("@場面転換 ")) {
         // @chs編集開始
@@ -379,6 +385,7 @@ function showProps() {
         document.getElementById("prop-chs-left").value = cl[3];
         document.getElementById("prop-chs-back").value = cl[4];
         document.getElementById("prop-chs-duration").value = cl[5];
+        document.getElementById("prop-chs-duration-num").textContent = cl[5];
         document.getElementById("prop-chs-background").value = cl[6];
         document.getElementById("prop-chs-effect").value = cl[7];
         document.getElementById("prop-chs").style.display = "block";
@@ -387,13 +394,17 @@ function showProps() {
         var cl = normalizeShake(cmd);
         document.getElementById("prop-shake-direction").value = cl[1];
         document.getElementById("prop-shake-duration").value = cl[2];
+        document.getElementById("prop-shake-duration-num").textContent = cl[2];
         document.getElementById("prop-shake-times").value = cl[3];
+        document.getElementById("prop-shake-times-num").textContent = cl[3];
         document.getElementById("prop-shake-amplitude").value = cl[4];
+        document.getElementById("prop-shake-amplitude-num").textContent = cl[4];
         document.getElementById("prop-shake").style.display = "block";
     } else if(cmd.startsWith("@wait ") || cmd.startsWith("@時間待ち ")) {
         // @wait編集開始
         var cl = normalizeWait(cmd);
         document.getElementById("prop-wait-duration").value = cl[1];
+        document.getElementById("prop-wait-duration-num").textContent = cl[1];
         document.getElementById("prop-wait").style.display = "block";
     } else if(cmd.startsWith("@skip ") || cmd.startsWith("@スキップ ")) {
         // @skip編集開始
@@ -455,7 +466,8 @@ function showProps() {
         // 未対応のコマンド編集開始
     } else if(cmd.startsWith(":")) {
         // ラベル編集開始
-        document.getElementById("prop-label-name").value = cmd.substring(1);
+        var label = cmd.substring(1);
+        document.getElementById("prop-label-name").value = label;
         document.getElementById("prop-label").style.display = "block";
     } else if(cmd.startsWith("#")) {
         // コメント編集開始
@@ -2073,18 +2085,34 @@ function onThumbnailDrop(event) {
 }
 
 /*
+ * プロパティ
+ */
+
+function setupProp() {
+    var rangeArray = [].slice.call(document.querySelectorAll("input[type='range']"));
+    for(let r of rangeArray) {
+        if(r.id !== undefined && r.id !== null) {
+            var num = document.getElementById(r.id + "-num");
+            if(num !== null) {
+                r.linkedRange = num;
+                r.addEventListener("input", (e) => {
+                    e.target.linkedRange.textContent = e.target.value;
+                });
+            }
+        }
+    }
+}
+
+/*
  * ロード時
  */
 
-window.addEventListener("load", async () => {
+window.addEventListener("load", async() => {
     // ゲームのベースURLを取得する
     baseUrl = await window.api.getBaseUrl();
 
     // パレットの要素をセットアップする
     setupPalette();
-
-    // シナリオの要素をセットアップする
-    refreshScenario();
 
     // txtタブの要素をセットアップする
     refreshTxt();
@@ -2109,6 +2137,12 @@ window.addEventListener("load", async () => {
     // movタブの要素をセットアップする
     refreshMov();
     setupMov();
+
+    // シナリオの要素をセットアップする
+    refreshScenario();
+
+    // プロパティをセットアップする
+    setupProp();
 
     // サムネイルをセットアップする
     setupThumbnail();

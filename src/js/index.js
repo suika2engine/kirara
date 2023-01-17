@@ -792,7 +792,7 @@ function setupPalette() {
         case "cmd-message": elem.cmd = "ここに文章を入力してください。"; break;
         case "cmd-serif": elem.cmd = "キャラ名「セリフを入力してください」"; break;
         case "cmd-choose": elem.cmd = "@choose 目印1 学校へ行く 目印2 海へ行く 目印3 公園へ行く"; break;
-        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normmal"; break;
+        case "cmd-chs": elem.cmd = "@chs stay stay stay stay 1.0 stay normal"; break;
         case "cmd-vol": elem.cmd = "@vol bgm 1.0 1.0"; break;
         case "cmd-cha": elem.cmd = "@cha center 1.0 move 100 0 show"; break;
         case "cmd-label": elem.cmd = ":名前をつけてください"; break;

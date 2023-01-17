@@ -10,6 +10,7 @@ function createWindow () {
 	    contextIsolation: true,
 	    preload: __dirname + '/preload.js'
     }});
+    mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL('file://' + __dirname + '/html/boot.html');
 }
 
@@ -17,7 +18,7 @@ app.on('ready', function() {
     createWindow();
 
     // デバッグウィンドウ
-    mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools();
 });
 
 app.on('window-all-closed', () => {
@@ -414,10 +415,10 @@ async function doDesktopExport(withMac) {
 
     // パッケージを作成する
     if(process.platform === "win32") {
-        fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync("apps/pack.exe"));
+        fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync(app.getAppPath() + "/apps/pack.exe"));
         execSync("cd " + Model.dir + " && pack.exe");
     } else if(process.platform === "darwin") {
-        fs.writeFileSync(Model.dir + "/pack", fs.readFileSync("apps/pack.mac"));
+        fs.writeFileSync(Model.dir + "/pack", fs.readFileSync(app.getAppPath() + "/apps/pack.mac"));
         execSync("cd " + Model.dir + " && chmod +x ./pack && ./pack");
     }
     if(!fs.existsSync(Model.dir + "/data01.arc")) {
@@ -426,9 +427,9 @@ async function doDesktopExport(withMac) {
 
     // ファイルをコピーする
     fs.copyFileSync(Model.dir + "/data01.arc", dstPathRoot + "/data01.arc");
-    fs.writeFileSync(dstPathRoot + "/game.exe", fs.readFileSync("apps/suika.exe"));
+    fs.writeFileSync(dstPathRoot + "/game.exe", fs.readFileSync(app.getAppPath() + "/apps/suika.exe"));
     if(withMac) {
-        fs.writeFileSync(dstPathRoot + "/game.dmg", fs.readFileSync("apps/mac.dmg"));
+        fs.writeFileSync(dstPathRoot + "/game.dmg", fs.readFileSync(app.getAppPath() + "/apps/mac.dmg"));
     }
     if(fs.existsSync(Model.dir + "/mov")) {
         if(!fs.existsSync(dstPathRoot + "/mov")) {
@@ -462,10 +463,10 @@ ipcMain.handle('exportForWeb', (event) => {
 
     // パッケージを作成する
     if(process.platform === "win32") {
-        fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync("apps/pack.exe"));
+        fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync(app.getAppPath() + "/apps/pack.exe"));
         execSync("cd " + Model.dir + " && pack.exe");
     } else if(process.platform === "darwin") {
-        fs.writeFileSync(Model.dir + "/pack", fs.readFileSync("apps/pack.mac"));
+        fs.writeFileSync(Model.dir + "/pack", fs.readFileSync(app.getAppPath() + "/apps/pack.mac"));
         execSync("cd " + Model.dir + " && chmod +x ./pack && ./pack");
     }
     if(!fs.existsSync(Model.dir + "/data01.arc")) {
@@ -474,9 +475,9 @@ ipcMain.handle('exportForWeb', (event) => {
 
     // ファイルをコピーする
     fs.copyFileSync(Model.dir + "/data01.arc", dstPathRoot + "/data01.arc");
-    fs.writeFileSync(dstPathRoot + "/index.html", fs.readFileSync("apps/index.html"));
-    fs.writeFileSync(dstPathRoot + "/index.js", fs.readFileSync("apps/index.js"));
-    fs.writeFileSync(dstPathRoot + "/index.wasm", fs.readFileSync("apps/index.wasm"));
+    fs.writeFileSync(dstPathRoot + "/index.html", fs.readFileSync(app.getAppPath() + "/apps/index.html"));
+    fs.writeFileSync(dstPathRoot + "/index.js", fs.readFileSync(app.getAppPath() + "/apps/index.js"));
+    fs.writeFileSync(dstPathRoot + "/index.wasm", fs.readFileSync(app.getAppPath() + "/apps/index.wasm"));
     if(fs.existsSync(Model.dir + "/mov")) {
         if(!fs.existsSync(dstPathRoot + "/mov")) {
             fs.mkdirSync(dstPathRoot + "/mov");

@@ -1,0 +1,15 @@
+.game-list-item {
+	width: 200px;
+	line-height: 2em;
+	border: 1px solid #cccccc;
+	padding-left: 10px;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	list-style-type: none!important;
+	transition: .3s;
+}
+.game-list-item:hover {
+	color: white;
+	background: #2d8fdd;
+}

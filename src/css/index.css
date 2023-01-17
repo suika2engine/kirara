@@ -100,6 +100,28 @@ body {
 	height: 100%;
 }
 
+/* 中央段の上下 */
+.grid4-area {
+	display: grid;
+	height: 100vh;
+	grid-template-rows: 32px calc(100% - 32px);
+	grid-template-columns: 100%;
+}
+
+.grid4-header {
+	grid-row: 1;
+	grid-column: 1;
+	width: 100%;
+	height: 100%;
+}
+
+.grid4-scenario {
+	grid-row: 2;
+	grid-column: 1;
+	width: 100%;
+	height: 100%;
+}
+
 /*
  * パレット
  */
@@ -287,6 +309,10 @@ input[name="tab-btn"] {
 /*
  * シナリオビュー
  */
+
+.scenario-header {
+	font-weight: bold;
+}
 
 /* メインリストのコンテナ */
 .scenario-container {

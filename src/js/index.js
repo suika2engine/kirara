@@ -10,6 +10,9 @@ var baseUrl;
  */
 
 async function refreshScenario() {
+    // ヘッダを更新する
+    document.getElementById("scenario-header").innerHTML = await window.api.getScenarioName();
+
     // シナリオビューのアイテムをすべて削除する
     var element = document.getElementById("scenario");
     while (element.firstChild) {
@@ -774,6 +777,13 @@ async function refreshTxt() {
                     }
                 }
             });
+            document.getElementById("thumbnail-picture").src = "";
+        });
+        elem.addEventListener("dblclick", async () => {
+            var cl = normalizeLoad(event.srcElement.cmd);
+            await saveScenario();
+            await window.api.openScenario(cl[1]);
+            refreshScenario();
             document.getElementById("thumbnail-picture").src = "";
         });
         elem.addEventListener("dragstart", () => {
@@ -2053,7 +2063,7 @@ function onThumbnailDrop(event) {
  * ロード時
  */
 
-window.addEventListener('load', async () => {
+window.addEventListener("load", async () => {
     // ゲームのベースURLを取得する
     baseUrl = await window.api.getBaseUrl();
 
@@ -2089,4 +2099,9 @@ window.addEventListener('load', async () => {
 
     // サムネイルをセットアップする
     setupThumbnail();
+})
+
+window.addEventListener("beforeunload", async () => {
+    // シナリオを保存する
+    saveScenario();
 })

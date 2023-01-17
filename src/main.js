@@ -353,6 +353,7 @@ ipcMain.handle('removeMovFile', (event, file) => {
 //
 
 const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 
 ipcMain.handle('playGame', (event) => {
     // セーブデータをクリアする
@@ -399,7 +400,7 @@ async function doDesktopExport(withMac) {
     var files = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
-    if(files.length === 0) {
+    if(typeof files === "undefined") {
         return "canceled";
     }
 
@@ -414,10 +415,10 @@ async function doDesktopExport(withMac) {
     // パッケージを作成する
     if(process.platform === "win32") {
         fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync("apps/pack.exe"));
-        exec("cd " + Model.dir + " && pack.exe");
+        execSync("cd " + Model.dir + " && pack.exe");
     } else if(process.platform === "darwin") {
         fs.writeFileSync(Model.dir + "/pack", fs.readFileSync("apps/pack.mac"));
-        exec("cd " + Model.dir + " && chmod +x ./pack && ./pack");
+        execSync("cd " + Model.dir + " && chmod +x ./pack && ./pack");
     }
     if(!fs.existsSync(Model.dir + "/data01.arc")) {
         return "failed";
@@ -439,7 +440,7 @@ async function doDesktopExport(withMac) {
     }
 
     // フォルダを開く
-    shell.showItemInFolder(dstPathRoot);
+    shell.showItemInFolder(path.normalize(dstPathRoot));
 }
 
 ipcMain.handle('exportForWeb', (event) => {
@@ -447,7 +448,7 @@ ipcMain.handle('exportForWeb', (event) => {
     var files = dialog.showOpenDialogSync({
         properties: ['openDirectory']
     });
-    if(files.length === 0) {
+    if(typeof files === "undefined") {
         return "canceled";
     }
 
@@ -462,10 +463,10 @@ ipcMain.handle('exportForWeb', (event) => {
     // パッケージを作成する
     if(process.platform === "win32") {
         fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync("apps/pack.exe"));
-        exec("cd " + Model.dir + " && pack.exe");
+        execSync("cd " + Model.dir + " && pack.exe");
     } else if(process.platform === "darwin") {
         fs.writeFileSync(Model.dir + "/pack", fs.readFileSync("apps/pack.mac"));
-        exec("cd " + Model.dir + " && chmod +x ./pack && ./pack");
+        execSync("cd " + Model.dir + " && chmod +x ./pack && ./pack");
     }
     if(!fs.existsSync(Model.dir + "/data01.arc")) {
         return "failed";
@@ -473,9 +474,9 @@ ipcMain.handle('exportForWeb', (event) => {
 
     // ファイルをコピーする
     fs.copyFileSync(Model.dir + "/data01.arc", dstPathRoot + "/data01.arc");
-    fs.writeFileSync(Model.dir + "/index.html", fs.readFileSync("apps/index.html"));
-    fs.writeFileSync(Model.dir + "/index.html", fs.readFileSync("apps/index.js"));
-    fs.writeFileSync(Model.dir + "/index.html", fs.readFileSync("apps/index.wasm"));
+    fs.writeFileSync(dstPathRoot + "/index.html", fs.readFileSync("apps/index.html"));
+    fs.writeFileSync(dstPathRoot + "/index.js", fs.readFileSync("apps/index.js"));
+    fs.writeFileSync(dstPathRoot + "/index.wasm", fs.readFileSync("apps/index.wasm"));
     if(fs.existsSync(Model.dir + "/mov")) {
         if(!fs.existsSync(dstPathRoot + "/mov")) {
             fs.mkdirSync(dstPathRoot + "/mov");
@@ -486,5 +487,5 @@ ipcMain.handle('exportForWeb', (event) => {
     }
 
     // フォルダを開く
-    shell.showItemInFolder(dstPathRoot);
+    shell.showItemInFolder(path.normalize(dstPathRoot));
 })

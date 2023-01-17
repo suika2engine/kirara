@@ -12,21 +12,21 @@
 
 	<div>
 		<h2>配信先</h2>
-		<select>
+		<select id="dist">
 			<option value="freem">ふりーむへの投稿</option>
-			<option value="event">DVDでの配布</option>
-			<option value="event">USBメモリでの配布</option>
+			<option value="dvd">DVDでの配布</option>
+			<option value="usb">USBメモリでの配布</option>
 			<option value="other">その他</option>
 		</select>
 	</div>
 
 	<div>
 		<h2>書き出し実行</h2>
-		<input type="file" id="dirs">
-		<button id="export-windows">Windows向け</button>
-		<button id="export-web">Web向け</button>
-		<button id="export-winmac">Windows/Mac向け</button><br>
+		<button id="export-windows">Windows用</button>
+		<button id="export-winmac">Windows/Mac両用</button><br>
+		<button id="export-web">Web用</button>
 		<p>ボタンを押してから完了するまで時間がかかります。</p>
+		<p>Web向けはアップロードしないと起動しません。</p>
 	</div>
 
   <script src="../js/export.js"></script>

@@ -1,6 +1,6 @@
 'use strict';
 
-const {app, BrowserWindow, ipcMain} = require("electron");
+const {app, dialog, shell, BrowserWindow, ipcMain} = require("electron");
 
 let mainWindow;
 
@@ -257,12 +257,10 @@ function copyAsset(srcFilePath, allowExts, subDir) {
     var dstPath = dstDir + "/" + dstFileName;
 
     if(!fs.existsSync(dstDir)) {
-        if(!fs.mkdirSync(dstDir)) {
-            return false;
-        }
+        fs.mkdirSync(dstDir);
     }
 
-    fs.writeFileSync(dstPath, fs.readFileSync(srcFilePath));
+    fs.copyFileSync(srcFilePath, dstPath);
     return true;
 }
 
@@ -382,4 +380,111 @@ ipcMain.handle('debugGame', (event, lineIndex) => {
         var command = "open " + Model.dir + "/suika-pro.app --args scenario-file=" + Model.scenarioFile + " scenario-line=" + lineIndex;
         exec(command);
     }
+})
+
+//
+// エクスポート
+//
+
+ipcMain.handle('exportForWindows', (event) => {
+    doDesktopExport(false);
+})
+
+ipcMain.handle('exportForWinMac', (event) => {
+    doDesktopExport(true);
+})
+
+async function doDesktopExport(withMac) {
+    // フォルダ選択ダイアログでパスを取得する
+    var files = dialog.showOpenDialogSync({
+        properties: ['openDirectory']
+    });
+    if(files.length === 0) {
+        return "canceled";
+    }
+
+    // 選択されたフォルダ直下にフォルダを作成する
+    var dstPathRoot = files[0] + "/" + path.basename(Model.dir);
+    if(!fs.existsSync(dstPathRoot)) {
+        fs.mkdirSync(dstPathRoot);
+    } else {
+        // TODO: 上書きします。よろしいですか？
+    }
+
+    // パッケージを作成する
+    if(process.platform === "win32") {
+        fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync("apps/pack.exe"));
+        exec("cd " + Model.dir + " && pack.exe");
+    } else if(process.platform === "darwin") {
+        fs.writeFileSync(Model.dir + "/pack", fs.readFileSync("apps/pack.mac"));
+        exec("cd " + Model.dir + " && chmod +x ./pack && ./pack");
+    }
+    if(!fs.existsSync(Model.dir + "/data01.arc")) {
+        return "failed";
+    }
+
+    // ファイルをコピーする
+    fs.copyFileSync(Model.dir + "/data01.arc", dstPathRoot + "/data01.arc");
+    fs.writeFileSync(dstPathRoot + "/game.exe", fs.readFileSync("apps/suika.exe"));
+    if(withMac) {
+        fs.writeFileSync(dstPathRoot + "/game.dmg", fs.readFileSync("apps/mac.dmg"));
+    }
+    if(fs.existsSync(Model.dir + "/mov")) {
+        if(!fs.existsSync(dstPathRoot + "/mov")) {
+            fs.mkdirSync(dstPathRoot + "/mov");
+        }
+        fs.readdirSync(Model.dir + "/mov").forEach(function (file) {
+            fs.copyFileSync(file, dstPathRoot + "/mov/" + path.basename(file));
+        });
+    }
+
+    // フォルダを開く
+    shell.showItemInFolder(dstPathRoot);
+}
+
+ipcMain.handle('exportForWeb', (event) => {
+    // フォルダ選択ダイアログでパスを取得する
+    var files = dialog.showOpenDialogSync({
+        properties: ['openDirectory']
+    });
+    if(files.length === 0) {
+        return "canceled";
+    }
+
+    // 選択されたフォルダ直下にフォルダを作成する
+    var dstPathRoot = files[0] + "/" + path.basename(Model.dir);
+    if(!fs.existsSync(dstPathRoot)) {
+        fs.mkdirSync(dstPathRoot);
+    } else {
+        // TODO: 上書きします。よろしいですか？
+    }
+
+    // パッケージを作成する
+    if(process.platform === "win32") {
+        fs.writeFileSync(Model.dir + "/pack.exe", fs.readFileSync("apps/pack.exe"));
+        exec("cd " + Model.dir + " && pack.exe");
+    } else if(process.platform === "darwin") {
+        fs.writeFileSync(Model.dir + "/pack", fs.readFileSync("apps/pack.mac"));
+        exec("cd " + Model.dir + " && chmod +x ./pack && ./pack");
+    }
+    if(!fs.existsSync(Model.dir + "/data01.arc")) {
+        return "failed";
+    }
+
+    // ファイルをコピーする
+    fs.copyFileSync(Model.dir + "/data01.arc", dstPathRoot + "/data01.arc");
+    fs.writeFileSync(Model.dir + "/index.html", fs.readFileSync("apps/index.html"));
+    fs.writeFileSync(Model.dir + "/index.html", fs.readFileSync("apps/index.js"));
+    fs.writeFileSync(Model.dir + "/index.html", fs.readFileSync("apps/index.wasm"));
+    if(fs.existsSync(Model.dir + "/mov")) {
+        if(!fs.existsSync(dstPathRoot + "/mov")) {
+            fs.mkdirSync(dstPathRoot + "/mov");
+        }
+        fs.readdirSync(Model.dir + "/mov").forEach(function (file) {
+            fs.copyFileSync(file, dstPathRoot + "/mov/" + path.basename(file));
+        });
+    }
+
+    // フォルダを開く
+    shell.showItemInFolder(dstPathRoot);
 })

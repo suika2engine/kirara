@@ -237,6 +237,7 @@ input[name="tab-btn"] {
 }
 
 .tab-area {
+	background: lightgray;
 }
 
 .tab-area label {
@@ -261,6 +262,10 @@ input[name="tab-btn"] {
 }
 
 .tab-panel-area {
+	padding: 5px;
+	width: 100%;
+	height: calc(100% - 32px - 10px - 10px);
+	overflow: auto;
 }
 
 .tab-panel {
@@ -358,9 +363,8 @@ input[name="tab-btn"] {
 
 /* メインリスト */
 .scenario-list {
-	margin: 0;
-	padding: 0;
-	padding-inline-start: 0;
+	margin: 5px;
+	padding-inline-start: 0px;
 }
 
 /* ドラッグ可能なリスト項目 */

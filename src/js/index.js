@@ -87,11 +87,13 @@ function createCommandElement(command) {
     } else if(command.startsWith("@ch ") || command.startsWith("@キャラ ")) {
         // @ch
         var cl = normalizeCh(command);
-        newElem.textContent = "キャラ";
+        newElem.textContent = "キャラ " + cl[2];
         newElem.classList.add("drag-list-item-ch");
-        newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "ch/" + cl[2] + "\")";
-        newElem.style.backgroundRepeat = "no-repeat";
-        newElem.style.backgroundSize = "contain";
+        if(cl[2] !== "none" && cl[2] !== "消去") {
+            newElem.style.backgroundImage = "url(\"" + baseUrl.replace(/\\/g, "\\\\") + "ch/" + cl[2] + "\")";
+            newElem.style.backgroundRepeat = "no-repeat";
+            newElem.style.backgroundSize = "contain";
+        }
     } else if(command.startsWith("@bgm ") || command.startsWith("@音楽 ")) {
         // @bgm
         var cl = normalizeBgm(command);
@@ -100,7 +102,7 @@ function createCommandElement(command) {
     } else if(command.startsWith("@se ") || command.startsWith("@効果音 ")) {
         // @se
         var cl = normalizeSe(command);
-        newElem.textContent = "効果音";
+        newElem.textContent = "効果音 " + cl[1];
         newElem.classList.add("drag-list-item-se");
     } else if(command.startsWith("@vol ") || command.startsWith("@音量 ")) {
         // @vol
@@ -177,7 +179,7 @@ function createCommandElement(command) {
     } else if(command.startsWith("@video ") || command.startsWith("@動画 ")) {
         // @video
         var cl = normalizeVideo(command);
-        newElem.textContent = "動画";
+        newElem.textContent = "動画 " + cl[1];
         newElem.classList.add("drag-list-item-video");
     } else if(command.startsWith("@")) {
         // Kiraraで未対応のコマンド
@@ -316,7 +318,11 @@ function showProps() {
         document.getElementById("prop-ch-yshift").value = cl[6];
         document.getElementById("prop-ch-alpha").value = cl[7];
         document.getElementById("prop-ch").style.display = "block";
-        document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + cl[2];
+        if(cl[2] !== "none" && cl[2] !== "消去") {
+            document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + cl[2];
+        } else {
+            document.getElementById("thumbnail-picture").src = "";
+        }
     } else if(cmd.startsWith("@bgm ") || cmd.startsWith("@音楽 ")) {
         // @bgm編集開始
         var cl = normalizeBgm(cmd);
@@ -909,7 +915,8 @@ async function refreshCh() {
         element.removeChild(element.firstChild);
     }
 
-    const ch = await window.api.getChList();
+    var ch = await window.api.getChList();
+    ch.unshift("消去");
     ch.forEach(function(file) {
         var elem = document.createElement('li');
         elem.id = makeId();
@@ -930,7 +937,11 @@ async function refreshCh() {
                     }
                 }
             });
-            document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + file;
+            if(file !== "none" && file !== "消去") {
+                document.getElementById("thumbnail-picture").src = baseUrl + "ch/" + file;
+            } else {
+                document.getElementById("thumbnail-picture").src = "";
+            }
         });
         elem.addEventListener("dragstart", () => {
             event.dataTransfer.setData("text/plain", event.target.id);
@@ -981,6 +992,7 @@ async function refreshBgm() {
     }
 
     const bgm = await window.api.getBgmList();
+    bgm.unshift("停止");
     bgm.forEach(function(file) {
         var elem = document.createElement('li');
         elem.id = makeId();
@@ -1051,7 +1063,8 @@ async function refreshSe() {
         element.removeChild(element.firstChild);
     }
 
-    const se = await window.api.getSeList();
+    var se = await window.api.getSeList();
+    se.unshift("停止");
     se.forEach(function(file) {
         var elem = document.createElement('li');
         elem.id = makeId();

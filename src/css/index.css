@@ -153,13 +153,12 @@ body {
 .palette-panel {
 	width: 100%;
 	height: 100%;
-	padding: 0;
 	overflow: auto;
 }
 
 .palette-list-holder {
-	padding: 0;
-	width: calc(100% - 35px);
+	padding: 5px;
+	width: calc(100% - 35px - 10px);
 	position: relative;
 	margin-block-start: 0em;
 	margin-block-end: 0em;

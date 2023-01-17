@@ -574,6 +574,7 @@ input[name="tab-btn"] {
 .prop-pane {
 	font-size: 12px;
 	border: 1px solid gray;
+	padding: 5px;
 	overflow: auto;
 	display: none;
 }

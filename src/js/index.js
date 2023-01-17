@@ -380,6 +380,11 @@ function showProps() {
     } else if(cmd.startsWith("@chs ") || cmd.startsWith("@場面転換 ")) {
         // @chs編集開始
         var cl = normalizeChs(cmd);
+        createChsChList("prop-chs-center");
+        createChsChList("prop-chs-right");
+        createChsChList("prop-chs-left");
+        createChsChList("prop-chs-back");
+        createChsBgList();
         document.getElementById("prop-chs-center").value = cl[1];
         document.getElementById("prop-chs-right").value = cl[2];
         document.getElementById("prop-chs-left").value = cl[3];
@@ -526,6 +531,53 @@ function createLabelOptions(selectId) {
         }
     });
 }
+
+async function createChsChList(id) {
+    var parentElem = document.getElementById(id);
+    while (parentElem.firstChild) {
+        parentElem.removeChild(parentElem.firstChild);
+    }
+
+    var stayElem = document.createElement('option');
+	stayElem.value = "stay";
+    stayElem.textContent = "変更なし";
+    parentElem.appendChild(stayElem);
+
+    var noneElem = document.createElement('option');
+	noneElem.value = "none";
+    noneElem.textContent = "消去";
+    parentElem.appendChild(noneElem);
+
+    var ch = await window.api.getChList();
+    ch.forEach(function(file) {
+        var fileElem = document.createElement('option');
+	    fileElem.value = file;
+        fileElem.textContent = file;
+        parentElem.appendChild(fileElem);
+    });
+}
+
+async function createChsBgList(id) {
+    var parentElem = document.getElementById("prop-chs-background");
+    while (parentElem.firstChild) {
+        parentElem.removeChild(parentElem.firstChild);
+    }
+
+    var stayElem = document.createElement('option');
+	stayElem.value = "stay";
+    stayElem.textContent = "変更なし";
+    parentElem.appendChild(stayElem);
+
+    var bg = await window.api.getBgList();
+    bg.forEach(function(file) {
+        var fileElem = document.createElement('option');
+	    fileElem.value = file;
+        fileElem.textContent = file;
+        parentElem.appendChild(fileElem);
+    });
+}
+
+
 
 // 変更を保存する
 function commitProps() {
@@ -1687,7 +1739,7 @@ function normalizeChs(command) {
         duration = "0.0";
     }
     if(background === "") {
-        // nothing to do
+        background = "stay";
     }
     if(effect === "") {
         effect = "normal";

@@ -128,8 +128,13 @@ ipcMain.handle('openGame', (event, dir) => {
 })
 
 function refreshFiles(subDir, list, allowExts) {
+    var dirPath = Model.dir + "/" + subDir;
+    if(!fs.existsSync(dirPath)) {
+        return;
+    }
+
     list.length = 0;
-    fs.readdirSync(Model.dir + "/" + subDir).forEach(function (file) {
+    fs.readdirSync(dirPath).forEach(function (file) {
         var ext = path.extname(file).toLowerCase();
         if(allowExts.includes(ext)) {
             list.push(file);

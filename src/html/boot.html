@@ -4,15 +4,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <title>Suika2 Kirara</title>
-  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/boot.css">
 </head>
 <body>
-	<h1>ゲーム選択</h1>
+	<h1>Suika2 Kiraraへようこそ</h1>
 
-  <ul id="game-list">
-	</ul>
+	<div>
+		<h2>新規ゲームを作成する</h2>
+		<span>ゲーム名:</span><br>
+		<input id="game-name" type="text"><br>
+		<button id="new-game">作成</button>
+	</div>
 
-	<button id="new-game">テンプレからゲームを作成する(仮)</a>
+	<div>
+		<h2>作成中のゲームを編集する</h2>
+		<ul id="game-list">
+		</ul>
+	</div>
 
   <script src="../js/boot.js"></script>
 </body>

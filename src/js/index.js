@@ -861,6 +861,9 @@ async function refreshTxt() {
             document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
+        elem.addEventListener("dragend", () => {
+            document.getElementById("thumbnail-picture").src = "";
+        });
         document.getElementById("txt-list").appendChild(elem);
     });
 }
@@ -935,6 +938,9 @@ async function refreshBg() {
             event.dataTransfer.setData("text/plain", event.target.id);
             document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
+        });
+        elem.addEventListener("dragend", () => {
+            document.getElementById("thumbnail-picture").src = "";
         });
         document.getElementById("bg-list").appendChild(elem);
     });
@@ -1012,6 +1018,9 @@ async function refreshCh() {
             document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
+        elem.addEventListener("dragend", () => {
+            document.getElementById("thumbnail-picture").src = "";
+        });
         document.getElementById("ch-list").appendChild(elem);
     });
 }
@@ -1083,6 +1092,9 @@ async function refreshBgm() {
             event.dataTransfer.setData("text/plain", event.target.id);
             document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
+        });
+        elem.addEventListener("dragend", () => {
+            document.getElementById("thumbnail-picture").src = "";
         });
         document.getElementById("bgm-list").appendChild(elem);
     });
@@ -1156,6 +1168,9 @@ async function refreshSe() {
             document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
         });
+        elem.addEventListener("dragend", () => {
+            document.getElementById("thumbnail-picture").src = "";
+        });
         document.getElementById("se-list").appendChild(elem);
     });
 }
@@ -1226,6 +1241,9 @@ async function refreshMov() {
             event.dataTransfer.setData("text/plain", event.target.id);
             document.getElementById("thumbnail-picture").src = "../img/trash-close.png";
             return true;
+        });
+        elem.addEventListener("dragend", () => {
+            document.getElementById("thumbnail-picture").src = "";
         });
         document.getElementById("mov-list").appendChild(elem);
     });

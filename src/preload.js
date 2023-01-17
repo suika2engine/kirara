@@ -31,5 +31,6 @@ contextBridge.exposeInMainWorld('api', {
     debugGame: async (lineIndex) => await ipcRenderer.invoke('debugGame', lineIndex),
     exportForWindows: async () => await ipcRenderer.invoke('exportForWindows'),
     exportForWeb: async () => await ipcRenderer.invoke('exportForWeb'),
-    exportForWinMac: async () => await ipcRenderer.invoke('exportForWinMac')
+    exportForWinMac: async () => await ipcRenderer.invoke('exportForWinMac'),
+    getLocale: async () => await ipcRenderer.invoke('getLocale')
 })

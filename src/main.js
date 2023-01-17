@@ -11,14 +11,23 @@ function createWindow () {
 	    preload: __dirname + '/preload.js'
     }});
     mainWindow.setMenuBarVisibility(false);
-    mainWindow.loadURL('file://' + __dirname + '/html/boot.html');
+    mainWindow.loadURL('file://' + __dirname + (getLocale() == "ja" ? '/html/boot.html' : '/html/boot_en.html'));
+}
+
+function getLocale() {
+    var code = app.getLocale();
+    if(code === "ja") {
+        return "ja";
+        //return "en";
+    }
+    return "en";
 }
 
 app.on('ready', function() {
     createWindow();
 
     // デバッグウィンドウ
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 });
 
 app.on('window-all-closed', () => {
@@ -489,4 +498,12 @@ ipcMain.handle('exportForWeb', (event) => {
 
     // フォルダを開く
     shell.showItemInFolder(path.normalize(dstPathRoot));
+})
+
+//
+// その他
+//
+
+ipcMain.handle('getLocale', (event) => {
+    return getLocale();
 })

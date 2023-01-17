@@ -1,4 +1,20 @@
+var locale = "ja";
+
+function translate(msg) {
+    if(locale === "ja") {
+        return msg;
+    }
+
+    switch(msg) {
+    case "名前にスペースを含められません。": return "You can't include spaces in the game name.";
+    case "ゲームフォルダの作成に失敗しました。": return "Failed to create the game folder.";
+    default: return "(This message is not yet translated.)";
+    }
+}
+
 window.addEventListener("load", async () => {
+    locale = await window.api.getLocale();
+
     var gameList = await window.api.getGameList();
     gameList.forEach(game => {
         var e = document.createElement("li");
@@ -7,7 +23,7 @@ window.addEventListener("load", async () => {
         e.addEventListener("click", async () => {
             await window.api.openGame(event.srcElement.textContent);
             await window.api.openScenario("init.txt");
-            window.location.href = "index.html";
+            window.location.href = locale === "ja" ? "index.html" : "index_en.html";
         });
         document.getElementById("game-list").appendChild(e);
     });
@@ -16,18 +32,17 @@ window.addEventListener("load", async () => {
         var elem = document.getElementById("game-name");
         var gameName = elem.value;
         if(gameName.indexOf(" ") !== -1) {
-            alert("名前にスペースを含められません。");
+            alert(translate("名前にスペースを含められません。"));
             return;
         }
 
         if(! await window.api.createGame(gameName)) {
-            alert("ゲームフォルダの作成に失敗しました。");
+            alert(translate("ゲームフォルダの作成に失敗しました。"));
             return;
         }
 
         await window.api.openGame(gameName);
         await window.api.openScenario("init.txt");
-        window.location.href = "index.html";
+        window.location.href = locale === "ja" ? "index.html" : "index_en.html";
     });
 });
-

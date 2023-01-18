@@ -155,7 +155,7 @@ function createCommandElement(command) {
     } else if(command.startsWith("@goto ") || command.startsWith("@ジャンプ ")) {
         // @goto
         var cl = normalizeGoto(command);
-        newElem.textContent = translate("ジャンプ \"") + cl[1] + translate("\"へ");
+        newElem.textContent = translate("ジャンプ \"") + unquote(cl[1]) + translate("\"へ");
         newElem.classList.add("drag-list-item-goto");
     } else if(command.startsWith("@set ") || command.startsWith("@フラグをセット ")) {
         // @set
@@ -443,7 +443,7 @@ function showProps() {
 
         // @goto編集開始
         var cl = normalizeGoto(cmd);
-        document.getElementById("prop-goto-label").value = cl[1];
+        document.getElementById("prop-goto-label").value = unquote(cl[1]);
         document.getElementById("prop-goto").style.display = "block";
     } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
         // @set編集開始
@@ -787,6 +787,13 @@ function commitProps() {
 function quote(s) {
     if(s.indexOf(" ") != -1) {
         return "\"" + s + "\"";
+    }
+    return s;
+}
+
+function unquote(s) {
+    if(s.startsWith("\"") && s.endsWith("\"") && s.length >= 2) {
+        return s.substring(1, s.length - 1);
     }
     return s;
 }

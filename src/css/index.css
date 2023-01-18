@@ -153,7 +153,16 @@ body {
 .palette-panel {
 	width: 100%;
 	height: 100%;
-	overflow: auto;
+	overflow-y: scroll;
+}
+.palette-panel::-webkit-scrollbar {
+	width: 5px;
+}
+.palette-panel::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+}
+.palette-panel::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
 }
 
 .palette-list-holder {
@@ -265,15 +274,23 @@ input[name="tab-btn"] {
 	padding: 5px;
 	width: 100%;
 	height: calc(100% - 32px - 10px - 10px);
-	overflow: auto;
 }
 
 .tab-panel {
-	width: 100%;
-	height: 100%;
 	padding: 0;
 	display: none;
-	overflow: auto;
+	width: calc(100% - 5px);
+	height: 100%;
+	overflow-y: scroll;
+}
+.tab-panel::-webkit-scrollbar {
+	width: 5px;
+}
+.tab-panel::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+}
+.tab-panel::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
 }
 
 #tab-txt:checked ~ .tab-area .tab-txt-label {background:#fff; color:#000; }
@@ -292,8 +309,8 @@ input[name="tab-btn"] {
 /* タブの中身 */
 
 .tab-list-holder {
-	padding: 0;
 	width: calc(100% - 35px);
+	padding: 0;
 	position: relative;
     margin-block-start: 0em;
 	margin-block-end: 0em;
@@ -342,6 +359,7 @@ input[name="tab-btn"] {
 
 .scenario-header {
 	font-weight: bold;
+	padding-left: 5px;
 }
 
 .scenario-header-img {
@@ -356,15 +374,27 @@ input[name="tab-btn"] {
 
 /* メインリストのコンテナ */
 .scenario-container {
-	width: 100%
-	height: 100%;
-	overflow: auto;
+	width: calc(100% - 5px);
+	height: calc(100vh - 32px);
+	padding-left: 5px;
 }
 
 /* メインリスト */
 .scenario-list {
-	margin: 5px;
-	padding-inline-start: 0px;
+	height: calc(100vh - 32px);
+	overflow-y: scroll;
+    margin-block-start: 0em;
+	margin-block-end: 0em;
+	padding: 0;
+}
+.scenario-list::-webkit-scrollbar {
+	width: 5px;
+}
+.scenario-list::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+}
+.scenario-list::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
 }
 
 /* ドラッグ可能なリスト項目 */

@@ -333,7 +333,7 @@ function showProps() {
         // @ch編集開始
         var cl = normalizeCh(cmd);
         document.getElementById("prop-ch-position").value = normalizeChPosition(cl[1]);
-        document.getElementById("prop-ch-file").value = cl[2];
+        document.getElementById("prop-ch-file").value = (locale === "ja") ? japanizeChFile(cl[2]) : cl[2];
         document.getElementById("prop-ch-duration").value = cl[3];
         document.getElementById("prop-ch-duration-num").textContent = cl[3];
         document.getElementById("prop-ch-effect").value = normalizeBgEffect(cl[4]);
@@ -611,25 +611,25 @@ function commitProps() {
         var file = document.getElementById("prop-bg-file").value;
         var duration = document.getElementById("prop-bg-duration").value;
         var effect = normalizeBgEffect(document.getElementById("prop-bg-effect").value);
-        elementInEdit.cmd = "@bg " + file + " " + duration + " " + effect;
+        elementInEdit.cmd = "@bg " + quote(file) + " " + duration + " " + effect;
     } else if(cmd.startsWith("@ch ") || cmd.startsWith("@キャラ ")) {
         // @ch保存
         var position = normalizeChPosition(document.getElementById("prop-ch-position").value);
-        var file = document.getElementById("prop-ch-file").value;
+        var file = normalizeChFile(document.getElementById("prop-ch-file").value);
         var duration = document.getElementById("prop-ch-duration").value;
         var effect = normalizeBgEffect(document.getElementById("prop-ch-effect").value);
         var xshift = document.getElementById("prop-ch-xshift").value;
         var yshift = document.getElementById("prop-ch-yshift").value;
         var alpha = document.getElementById("prop-ch-alpha").value;
-        elementInEdit.cmd = "@ch " + position + " " + file + " " + duration + " " + effect + " " + xshift + " " + yshift + " " + alpha;
+        elementInEdit.cmd = "@ch " + position + " " + quote(file) + " " + duration + " " + effect + " " + xshift + " " + yshift + " " + alpha;
     } else if(cmd.startsWith("@bgm ") || cmd.startsWith("@音楽 ")) {
         // @bgm保存
         var file = document.getElementById("prop-bgm-file").value;
         var once = document.getElementById("prop-bgm-once").checked;
         if(!once) {
-            elementInEdit.cmd = "@bgm " + file;
+            elementInEdit.cmd = "@bgm " + quote(file);
         } else {
-            elementInEdit.cmd = "@bgm " + file + " once";
+            elementInEdit.cmd = "@bgm " + quote(file) + " once";
         }
     } else if(cmd.startsWith("@se ") || cmd.startsWith("@効果音 ")) {
         // @se保存
@@ -637,11 +637,11 @@ function commitProps() {
         var loop = document.getElementById("prop-se-loop").checked;
         var voice = document.getElementById("prop-se-voice").checked;
         if(!loop && !voice) {
-            elementInEdit.cmd = "@se " + file;
+            elementInEdit.cmd = "@se " + quote(file);
         } else if(loop) {
-            elementInEdit.cmd = "@se " + file + " loop";
+            elementInEdit.cmd = "@se " + quote(file) + " loop";
         } else if(voice) {
-            elementInEdit.cmd = "@se " + file + " voice";
+            elementInEdit.cmd = "@se " + quote(file) + " voice";
         }
     } else if(cmd.startsWith("@vol ") || cmd.startsWith("@音量 ")) {
         // @vol保存
@@ -662,7 +662,7 @@ function commitProps() {
             if(label[i] === "" || text[i] === "") {
                 break;
             }
-            c = c + " " + label[i] + " " + text[i];
+            c = c + " " + quote(label[i]) + " " + quote(text[i]);
         }
         elementInEdit.cmd = c;
     } else if(cmd.startsWith("@cha ") || cmd.startsWith("@キャラ移動 ")) {
@@ -683,7 +683,7 @@ function commitProps() {
         var duration = document.getElementById("prop-chs-duration").value;
         var background = document.getElementById("prop-chs-background").value;
         var effect = document.getElementById("prop-chs-effect").value;
-        elementInEdit.cmd = "@chs " + center + " " + right + " " + left + " " + back + " " + duration + " " + background + " " + effect;
+        elementInEdit.cmd = "@chs " + quote(center) + " " + quote(right) + " " + quote(left) + " " + quote(back) + " " + duration + " " + quote(background) + " " + effect;
     } else if(cmd.startsWith("@shake ") || cmd.startsWith("@振動 ")) {
         // @shake保存
         var direction = document.getElementById("prop-shake-direction").value;
@@ -704,7 +704,7 @@ function commitProps() {
     } else if(cmd.startsWith("@goto ") || cmd.startsWith("@ジャンプ ")) {
         // @goto保存
         var label = document.getElementById("prop-goto-label").value;
-        elementInEdit.cmd = "@goto " + label;
+        elementInEdit.cmd = "@goto " + quote(label);
         elementInEdit.textContent = translate("ジャンプ \"") + label + "\"へ";
     } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
         // @set保存
@@ -718,28 +718,28 @@ function commitProps() {
         var operator = document.getElementById("prop-if-operator").value;
         var value = document.getElementById("prop-if-value").value;
         var label = document.getElementById("prop-if-label").value;
-        elementInEdit.cmd = "@if " + variable + " " + operator + " " + value + " " + label;
+        elementInEdit.cmd = "@if " + variable + " " + operator + " " + value + " " + quote(label);
     } else if(cmd.startsWith("@load ") || cmd.startsWith("@シナリオ ")) {
         // @load保存
         var file = document.getElementById("prop-load-file").value;
-        elementInEdit.cmd = "@load " + file;
+        elementInEdit.cmd = "@load " + quote(file);
     } else if(cmd.startsWith("@chapter ") || cmd.startsWith("@章 ")) {
         // @chapter保存
         var title = document.getElementById("prop-chapter-title").value;
-        elementInEdit.cmd = "@chapter " + title;
+        elementInEdit.cmd = "@chapter " + quote(title);
         elementInEdit.textContent = translate("章のタイトル \"") + title + "\"";
     } else if(cmd.startsWith("@wms ") || cmd.startsWith("@スクリプト ")) {
         // @wms保存
         var file = document.getElementById("prop-wms-file").value;
-        elementInEdit.cmd = "@wms " + file;
+        elementInEdit.cmd = "@wms " + quote(file);
     } else if(cmd.startsWith("@gui ") || cmd.startsWith("@メニュー ")) {
         // @gui保存
         var file = document.getElementById("prop-gui-file").value;
-        elementInEdit.cmd = "@gui " + file;
+        elementInEdit.cmd = "@gui " + quote(file);
     } else if(cmd.startsWith("@video ") || cmd.startsWith("@動画 ")) {
         // @video保存
         var file = document.getElementById("prop-video-file").value;
-        elementInEdit.cmd = "@video " + file;
+        elementInEdit.cmd = "@video " + quote(file);
     } else if (cmd.startsWith("@")) {
         // 未対応のコマンド保存
     } else if (cmd.startsWith(":")) {
@@ -782,6 +782,13 @@ function commitProps() {
         elementInEdit.cmd = msg;
         elementInEdit.textContent = msg;
     }
+}
+
+function quote(s) {
+    if(s.indexOf(" ") != -1) {
+        return "\"" + s + "\"";
+    }
+    return s;
 }
 
 /*
@@ -1339,7 +1346,7 @@ function normalizeBg(command) {
     var effect = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -1440,7 +1447,7 @@ function normalizeCh(command) {
     var alpha = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         position = normalizeParameter(tokens[1], ["position=", "位置"], "center");
         position = normalizeChPosition(position);
@@ -1526,6 +1533,22 @@ function japanizeChPosition(pos) {
     return "中央";
 }
 
+function normalizeChFile(file) {
+    switch(file) {
+    case "none":            return "none";
+    case "消去":            return "none";
+    default:                return file;
+    }
+}
+
+function japanizeChFile(file) {
+    switch(file) {
+    case "none":            return "消去";
+    case "消去":            return "消去";
+    default:                return file;
+    }
+}
+
 function normalizeChAlpha(alpha) {
     if(alpha === "hide") {
         return 0;
@@ -1549,7 +1572,7 @@ function normalizeBgm(command) {
     var opt = "";
 
 	// トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -1574,7 +1597,7 @@ function normalizeSe(command) {
     var opt = "";
 
 	// トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -1602,7 +1625,7 @@ function normalizeVol(command) {
     var duration = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         track = normalizeParameter(tokens[1], ["track=", "トラック"], "bgm");
         track = normalizeVolTrack(track);
@@ -1655,7 +1678,7 @@ function normalizeChoose(command) {
     var label = ["", "", "", "", "", "", "", ""];
     var text = ["", "", "", "", "", "", "", ""];
 
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     for(let i = 0; i < 8; i++) {
         if(tokens.length < i * 2 + 2) {
             break;
@@ -1678,7 +1701,7 @@ function normalizeCha(command) {
     var alpha = "";
 
 	// トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         position = normalizeParameter(tokens[1], ["position=", "位置="], "center");
         position = normalizeChPosition(position);
@@ -1750,7 +1773,7 @@ function normalizeChs(command) {
     var effect = "";
 
 	// トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         center = normalizeParameter(tokens[1], ["center=", "中央="], MSG_SPECIFY_FILE);
         center = normalizeChsFile(center);
@@ -1838,7 +1861,7 @@ function normalizeShake(command) {
 	var amplitude = "";
 
 	// トークナイズ
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         direction = normalizeParameter(tokens[1], ["direction=", "方向="], "horizontal");
         direction = normalizeShakeDirection(direction);
@@ -1890,7 +1913,7 @@ function normalizeWait(command) {
 	var duration = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         duration = normalizeParameter(tokens[1], ["duration=", "秒="], "1.0");
     }
@@ -1909,7 +1932,7 @@ function normalizeSkip(command) {
 	var opt = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         if(tokens[1] === "enable" || tokens[1] === "許可") {
             opt = "enable";
@@ -1934,7 +1957,7 @@ function normalizeGoto(command) {
     var destination = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         destination = normalizeParameter(tokens[1], ["destination=", "行き先="], MSG_SPECIFY_LABEL);
     }
@@ -1955,7 +1978,7 @@ function normalizeSet(command) {
 	var value = "";
 
     // トークナイズする (引数名はない)
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
 		if(tokens[1].startsWith("$") && !isNaN(tokens[1].substring(1))) {
 			variable = tokens[1];
@@ -1995,7 +2018,7 @@ function normalizeIf(command) {
 	var label = "";
 
     // トークナイズする (引数名はない)
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
 		if(variable.startsWith("$") && !isNaN(variable.substring(1))) {
 			variable = tokens[1];
@@ -2038,7 +2061,7 @@ function normalizeLoad(command) {
 	var file = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -2057,7 +2080,7 @@ function normalizeChapter(command) {
 	var title = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         title = normalizeParameter(tokens[1], ["title=", "タイトル="], "");
     }
@@ -2073,7 +2096,7 @@ function normalizeGui(command) {
 	var file = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -2092,7 +2115,7 @@ function normalizeVideo(command) {
 	var file = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }
@@ -2111,7 +2134,7 @@ function normalizeWms(command) {
 	var file = "";
 
     // トークナイズする
-    var tokens = command.split(" ");
+    var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
     }

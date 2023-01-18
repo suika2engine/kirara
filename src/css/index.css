@@ -604,11 +604,27 @@ input[name="tab-btn"] {
  */
 
 /* プロパティペイン */
+.prop-container {
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+}
+.prop-container::-webkit-scrollbar {
+	width: 5px;
+}
+.prop-container::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+}
+.prop-container::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
+}
+
+/* プロパティペイン */
 .prop-pane {
+	width: calc(100% - 15px);
+	height: calc(100% - 10px);
 	font-size: 12px;
-	border: 1px solid gray;
 	padding: 5px;
-	overflow: auto;
 	display: none;
 }
 

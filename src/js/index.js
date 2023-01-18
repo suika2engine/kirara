@@ -217,13 +217,16 @@ function createCommandElement(command) {
         newElem.textContent = name + translate("「") + msg + translate("」");
         newElem.classList.add("drag-list-item-serif");
     } else if(command === "") {
-        // 空行はコメントに置き換える
-        newElem.cmd = "#";
-        newElem.textContent = "";
+        // 空行は空コマンドにする
+        newElem.cmd = "";
+        newElem.textContent = "　";
         newElem.classList.add("drag-list-item-comment");
     } else if(command.startsWith("#")) {
         // コメント
         newElem.textContent = command.substring(1);
+        if(newElem.textContent === "") {
+            newElem.textContent = " ";
+        }
         newElem.classList.add("drag-list-item-comment");
     } else {
         // 上記に該当しなければメッセージ
@@ -283,7 +286,12 @@ function onScenarioDrop(event) {
     newElem.addEventListener("dragover", onScenarioDragOver);
     newElem.addEventListener("dragleave", onScenarioDragLeave);
     newElem.addEventListener("drop", onScenarioDrop);
+    newElem.classList.add("drag-list-item-sel");
     this.parentNode.insertBefore(newElem, this);
+
+    // プロパティを表示する
+    changeElement(newElem);
+    showProps();
 }
 
 function onScenarioDragEnd(event) {
@@ -752,9 +760,13 @@ function commitProps() {
         var comment = document.getElementById("prop-comment-text").value;
         elementInEdit.cmd = "#" + comment;
         elementInEdit.textContent = comment;
+        if(elementInEdit.textContent === "") {
+            elementInEdit.textContent = "　";
+        }
     } else if(cmd.length === 0) {
-        // FIXME:ここには空行はこないはず
-        elementInEdit.cmd = "#";
+        // 空行保存
+        elementInEdit.cmd = "";
+        elementInEdit.textContent = "　";
     } else if(cmd.match(/^\*[^\*]+\*[^\*]+$/) || cmd.match(/^\*[^\*]+\*[^\*]+\*[^\*]+$/) || cmd.match(/^.+「.*」$/)) {
         // セリフ保存
         var name = document.getElementById("prop-serif-name").value;

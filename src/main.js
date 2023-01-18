@@ -27,7 +27,7 @@ app.on('ready', function() {
     createWindow();
 
     // デバッグウィンドウ
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 });
 
 app.on('window-all-closed', () => {
@@ -357,6 +357,49 @@ ipcMain.handle('removeSeFile', (event, file) => {
 ipcMain.handle('removeMovFile', (event, file) => {
     removeAsset("mov", file);
 })
+
+//
+// txtフォルダを開く
+//
+ipcMain.handle('openTxtFolder', (event) => {
+    shell.showItemInFolder(path.normalize(Model.dir + "/txt"));
+})
+
+//
+// bgフォルダを開く
+//
+ipcMain.handle('openBgFolder', (event) => {
+    shell.showItemInFolder(path.normalize(Model.dir + "/bg"));
+})
+
+//
+// chフォルダを開く
+//
+ipcMain.handle('openChFolder', (event) => {
+    shell.showItemInFolder(path.normalize(Model.dir + "/ch"));
+})
+
+//
+// bgmフォルダを開く
+//
+ipcMain.handle('openBgmFolder', (event) => {
+    shell.showItemInFolder(path.normalize(Model.dir + "/bgm"));
+})
+
+//
+// seフォルダを開く
+//
+ipcMain.handle('openSeFolder', (event) => {
+    shell.showItemInFolder(path.normalize(Model.dir + "/se"));
+})
+
+//
+// movフォルダを開く
+//
+ipcMain.handle('openMovFolder', (event) => {
+    shell.showItemInFolder(path.normalize(Model.dir + "/mov"));
+})
+
 
 //
 // ゲーム実行

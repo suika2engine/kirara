@@ -308,6 +308,16 @@ function changeElement(elem) {
     elementInEdit = elem;
 }
 
+function hidePropsForElement(elem) {
+    if(elementInEdit == elem) {
+        Array.from(document.getElementById("prop-container").childNodes).forEach(function (e) {
+            if(e.style != null) {
+                e.style.display = "none";
+            }
+        });
+    }
+}
+
 // 編集を開始する
 function showProps() {
     // すべてのプロパティペインを非表示にする
@@ -919,6 +929,11 @@ function makeId() {
 }
 
 function setupTxt() {
+    var btnTxt = document.getElementById("btn-txt");
+    btnTxt.addEventListener("dblclick", async (e) => {
+        window.api.openTxtFolder();
+    });
+
     var txtPanel = document.getElementById("tab-panel-txt");
     txtPanel.addEventListener('dragover', (e) => {
         if(!event.dataTransfer.types.includes("scenario") &&
@@ -1012,6 +1027,11 @@ async function refreshBg() {
 }
 
 function setupBg() {
+    var btnBg = document.getElementById("btn-bg");
+    btnBg.addEventListener("dblclick", async (e) => {
+        window.api.openBgFolder();
+    });
+
     var bgPanel = document.getElementById("tab-panel-bg");
     bgPanel.addEventListener('dragover', (e) => {
         if(!event.dataTransfer.types.includes("scenario") &&
@@ -1091,6 +1111,11 @@ async function refreshCh() {
 }
 
 function setupCh() {
+    var btnCh = document.getElementById("btn-ch");
+    btnCh.addEventListener("dblclick", async (e) => {
+        window.api.openChFolder();
+    });
+
     var chPanel = document.getElementById("tab-panel-ch");
     chPanel.addEventListener('dragover', (e) => {
         if(!event.dataTransfer.types.includes("scenario") &&
@@ -1166,6 +1191,11 @@ async function refreshBgm() {
 }
 
 function setupBgm() {
+    var btnBgm = document.getElementById("btn-bgm");
+    btnBgm.addEventListener("dblclick", async (e) => {
+        window.api.openBgmFolder();
+    });
+
     var bgmPanel = document.getElementById("tab-panel-bgm");
     bgmPanel.addEventListener('dragover', (e) => {
         if(!event.dataTransfer.types.includes("scenario") &&
@@ -1241,6 +1271,11 @@ async function refreshSe() {
 }
 
 function setupSe() {
+    var btnSe = document.getElementById("btn-se");
+    btnSe.addEventListener("dblclick", async (e) => {
+        window.api.openSeFolder();
+    });
+
     var sePanel = document.getElementById("tab-panel-se");
     sePanel.addEventListener('dragover', (e) => {
         if(!event.dataTransfer.types.includes("scenario") &&
@@ -1315,6 +1350,11 @@ async function refreshMov() {
 }
 
 function setupMov() {
+    var btnMov = document.getElementById("btn-mov");
+    btnMov.addEventListener("dblclick", async (e) => {
+        window.api.openMovFolder();
+    });
+
     var movPanel = document.getElementById("tab-panel-mov");
     movPanel.addEventListener('dragover', (e) => {
         if(!event.dataTransfer.types.includes("scenario") &&
@@ -2207,6 +2247,7 @@ function onThumbnailDrop(event) {
 
     // シナリオ項目を削除する場合
     if(typeof elemDrag.template === "undefined") {
+        hidePropsForElement(elemDrag);
         elemDrag.parentNode.removeChild(elemDrag);
         return;
     }

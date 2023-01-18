@@ -1186,7 +1186,7 @@ async function refreshSe() {
     }
 
     var se = await window.api.getSeList();
-    se.unshift("停止");
+    se.unshift(translate("停止"));
     se.forEach(function(file) {
         var elem = document.createElement('li');
         elem.id = makeId();

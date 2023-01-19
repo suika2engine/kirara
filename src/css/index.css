@@ -129,7 +129,7 @@ body {
 	display: grid;
 	height: 100%;
 	grid-template-rows: 100%;
-	grid-template-columns: calc(100% - 64px) 64px;
+	grid-template-columns: calc(100% - 128px - 30px) calc(128px + 15px);
 }
 
 .grid5-left {

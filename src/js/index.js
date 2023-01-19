@@ -2423,11 +2423,25 @@ window.addEventListener("load", async() => {
         await window.api.playGame();
     });
     
+    // コンフィグボタンをセットアップする
+    document.getElementById("config").addEventListener("click", async () => {
+        commitProps();
+        await saveScenario();
+        window.location.href = locale === "ja" ? "config.html" : "config_en.html";
+    });
+
     // エクスポートボタンをセットアップする
     document.getElementById("export").addEventListener("click", async () => {
         commitProps();
         await saveScenario();
         window.location.href = locale === "ja" ? "export.html" : "export_en.html";
+    });
+
+    // ヘルプボタンをセットアップする
+    document.getElementById("help").addEventListener("click", async () => {
+        commitProps();
+        await saveScenario();
+        window.location.href = locale === "ja" ? "help.html" : "help_en.html";
     });
 })
 

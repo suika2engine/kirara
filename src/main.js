@@ -18,7 +18,7 @@ function getLocale() {
     var code = app.getLocale();
     if(code === "ja") {
         return "ja";
-        //return "en";
+        return "en";
     }
     return "en";
 }
@@ -27,7 +27,7 @@ app.on('ready', function() {
     createWindow();
 
     // デバッグウィンドウ
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 });
 
 app.on('window-all-closed', () => {
@@ -549,4 +549,8 @@ ipcMain.handle('exportForWeb', (event) => {
 
 ipcMain.handle('getLocale', (event) => {
     return getLocale();
+})
+
+ipcMain.handle('openURL', (event, url) => {
+    shell.openExternal(url);
 })

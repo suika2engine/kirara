@@ -4,11 +4,198 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <title>Suika2 Kirara</title>
-  <link rel="stylesheet" href="../css/doc.css">
+  <link rel="stylesheet" href="help.css">
 </head>
 <body>
-	<h1>Documentation</h1>
-	<a href="index.html">Return to the editor</a>
-  <p>This is a test message, please ignore.</p>
+  <div class="header">
+    <h1>Documentation (Heading Level 1)</h1>
+    <p><small>Revision 0.5 | 19th Jan, 2023</small></p>
+  </div>
+
+  <ul class="nav">
+    <li><a href="index.html">&#8592; Return to the Editor</a></li>
+    <li><a href="#none">Documentation Homepage</a></li>
+    <li><a href="#one">About Suika2 Kirara</a></li>
+    <li><a href="#two">Commands and Usage</a></li>
+    <li><a href="#three">Contact</a></li>
+  </ul>
+
+  <p id="none">Please select an option from the navigation menu, it will appear below this message.</p>
+
+  <!-- About Page -->
+  <div class="page" id="one">
+    <h2>About Suika2 Kirara</h2>
+    <p>
+      Suika2 Kirara is a graphical implementation of the Suika2 Visual Novel Development Engine. This application allows developers to create Suika2Script scenario files and structures from within a cohesive environment and combines a number of Suika2 features with Suika2 Pro for Creators' export functionality. This is an early version of the application and documentation, please report any strange behaviour to the contact information noted at the bottom of this page to let us know.
+    </p>
+
+    <h2>What can Kirara do at the moment?</h2>
+    <p>Kirara can...</p>
+    <ul>
+      <li>Facilitate simple, timeline-based scenario editing.</li>
+      <li>Facilitate graphical Suika2Script editing for all currently supported commands.</li>
+    </ul>
+
+    <h2>What can't Kirara do at the moment?</h2>
+    <p>Kirara can't...</p>
+    <ul>
+      <li>Facilitate graphical GUI definition editing.</li>
+      <ul>
+        <li>A GUI Library is planned as an alternative.</li>
+      </ul>
+      <li>Facilitate graphical Suika2Script editing for all currently supported commands.</li>
+      <ul>
+        <li>We will introduce the structured editing of branches (<code>@choose</code>, <code>@if</code>, and <code>@goto</code>).</li>
+      </ul>
+      <li>Facilitate the use of the multilingual prefix feature.</li>
+      <ul>
+        <li>This feature is currently under consideration.</li>
+      </ul>
+    </ul>
+
+    <h2>System Requirements</h2>
+    <p>
+      Most modern Windows and Mac systems are capable of running Suika2 Kirara. More information regarding system requirements will be compiled when it is deemed appropriate.
+    </p>
+  </div>
+
+  <!-- Commands Page -->
+  <div class="page" id="two">
+    <h2>Commands and Usage</h2>
+    <p>
+      While Kirara does not rely on keyboard-entered commands like Suika2 scenario files, it is helpful for a user to understand what each does.
+      Like Suika2, Kirara uses Suika2Script as its main scenario blocks. For more information regarding Suika2Script, please see the corresponding <a href="https://github.com/suika2engine/suika2/wiki/3.-Suika2Script-and-Commands">Suika2 Wiki article</a>.
+    </p>
+
+    <h2>What is Suika2Script?</h2>
+    <p>
+      Suika2Script is the markup language used in the creation of Suika2 script files (often referred to as scenario files in a general sense). Being such a versatile markup, the user only needs to learn a few concepts before they are able to utilise the entire feature-set from displaying messages, images, playing sounds, music, and even building menus.
+    </p>
+    <p>
+      Suika2Script is an actively developed markup, therefore it is subject to changes alongside Suika2 (and sister applications).
+    </p>
+
+    <h2>What are Commands?</h2>
+    <p>
+      If Suika2Script is Suika2's language, then commands are the individual words and sentences that make up that language – they may seem out of place on their own, but when paired with other commands, they are able to tell brilliant stories of varying levels of intricacy.
+    </p>
+
+    <h2>Command List</h2>
+    <p>Command blocks are located on the left-hand side of the screen.</p>
+
+    <h3>Message</h3>
+    <p>
+      The message command block is used to draw a message within the message box.
+      <br>
+      This command block supports NVL markup.
+    </p>
+
+    <h3>Line</h3>
+    <p>
+      The line command block is used to draw a message within the message box and a name to the namebox.
+      <br>
+      This command supports an optional audio file (most often for character voices).
+      <br>
+      This command block supports NVL markup.
+    </p>
+
+    <h3>Options</h3>
+    <p>
+      The options command block is used to present a series of options (a maximum of 8) to the player.
+      <br>
+      These options can branch to differenct labels.
+    </p>
+
+    <h3>Stage Change</h3>
+    <p>
+      The stage change command block is used to change the background and characters at the same time.
+    </p>
+
+    <h3>Character Move</h3>
+    <p>
+      The character move command block is used to move a character.
+    </p>
+
+    <h3>Sound Volume</h3>
+    <p>
+      The sound volume command block is used to set game volume.
+    </p>
+
+    <h3>Bookmark</h3>
+    <p>
+      The bookmark command block acts as a jumpable marker or scenario separator.
+      <br>
+      The equivalent written name is <code>LABEL</code>.
+    </p>
+
+    <h3>Jump to a Bookmark</h3>
+    <p>
+      The jump to a bookmark command block is used to jump to bookmarks.
+      <br>
+      The equivalent written name is <code>@goto</code>.
+    </p>
+
+    <h3>Set a Flag</h3>
+    <p>
+      The set a flag command block sets a variable.
+      <br>
+      This command supports <code>variable operations</code> such as <code>+</code>, <code>-</code>, <code>x</code>, and <code>÷</code> (or <code>/</code>).
+    </p>
+
+    <h3>Jump by a Flag</h3>
+    <p>
+      The jump by a flag command block jumps to a bookmark based on conditions set by a flag.
+    </p>
+
+    <h3>Chapter Title</h3>
+    <p>
+      The chapter title command block sets the chapter (reflected in the game windows titlebar).
+    </p>
+
+    <h3>Wait for a Click</h3>
+    <p>
+      The wait for a click command block pauses the game until the user clicks.
+    </p>
+
+    <h3>Timed Wait</h3>
+    <p>
+      The timed wait command block pauses the game for a specified number of seconds then resumes play.
+    </p>
+
+    <h3>Shake the Screen</h3>
+    <p>
+      The shake the screen command block shakes the screen for a specified number of seconds.
+    </p>
+
+    <h3>Allow Skip</h3>
+    <p>
+      The allow skip command block either allows or denies the user the ability to skip through command sections.
+    </p>
+
+    <h3>Advanced Script</h3>
+    <p>
+      The advanced script block allows the use of Watermelon Script files (used in script-calls).
+    </p>
+
+    <h3>Comment</h3>
+    <p>
+      The comment command block is not visable during play, and aids in scenario structure and notes.
+    </p>
+  </div>
+
+  <!-- Contact Page -->
+  <div class="page" id="three">
+    <h2>Contact</h2>
+    <p>For enquiries regarding development and use, please contact us with your below method of choice.</p>
+    <ul>
+      <li>Join the coversation on <a href="https://discord.gg/ZmvXxE8GFg" id="discord-link">Discord</a>.</li>
+      <li>E-mail <code style="text-decoration: underline;}">midori@suika2.com</code></li>
+    </ul>
+    <p>Please contact us via e-mail for enquiries regarding individual copyright.</p>
+  </div>
+
+  <footer>Documentation Copyright &#169; 2023 Kyou. All Rights Reserved.</footer>
+
+<script src="../js/help.js"></script>
 </body>
 </html>

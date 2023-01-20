@@ -1,86 +1,85 @@
-/* General */
 body {
   margin: 2.5em;
 }
-/* Header */
+
+/* ヘッダ | Header */
 .header {
-  color: black;
   border: 1px solid black;
+  color: black;
   padding: 0.5em;
 }
 .header h1 {
   margin-bottom: 0;
 }
 
-/* Navigation */
+/* ナビゲーション | Navigation */
 .nav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
+  border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: sticky; /* Rest */
+  top: 0;
 }
 .nav li {
   float: left;
 }
 .nav li a {
-  display: block;
   color: black;
-  text-align: center;
+  display: block;
   padding: 14px 16px;
+  text-align: center;
   text-decoration: none;
   transition: 0.5s;
 }
 .nav li a:hover{
-  color: white;
   background-color: grey;
+  color: white;
 }
 
-/* Text */
+/* 文章 | Text */
 h1 {
+  color: black;
   font-size: 2.5em;
   font-weight: bold;
-  color: black;
 }
 h2 {
+  border-bottom: solid 1px black;
+  color: black;
   font-size: 1.5em;
   font-weight: bold;
-  margin-top: 1.5em;
   margin-bottom: 0em;
-  color: black;
+  margin-top: 1.5em;
   padding: 0.5em 0;
-  border-bottom: solid 1px black;
 }
 h3, h4 {
+  color: black;
   font-size: 1em;
   font-weight: bold;
-  margin-top: 1.5em;
   margin-bottom: 0em;
-  color: black;
+  margin-top: 1.5em;
   padding: 0.5em 0;
 }
 p {
-  text-align: justify;
   font-size: 1.0em;
   line-height: 1.8em;
   margin-bottom: 1.5em;
+  text-align: justify;
 }
 ul {
   line-height: 1.8em;
   margin-left: 0.5em;
 }
 
-/* Footer */
+/* フッター | Footer */
 footer {
   text-align: center;
 }
 
-/* Pages */
+/* ページ | Pages */
 .page {
   display: none;
 }

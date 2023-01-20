@@ -544,6 +544,35 @@ ipcMain.handle('exportForWeb', (event) => {
 })
 
 //
+// コンフィグ
+//
+
+ipcMain.handle('loadConfig', (event) => {
+    var config = {};
+    var lines = fs.readFileSync(Model.dir + "/conf/config.txt", "utf8").replace(/\r/g, "").split("\n");
+    for(let line of lines) {
+        if(!line.startsWith("#")) {
+            // Split line before and after the first "=".
+            var [key, ...value] = line.split("=");
+
+            // Add to the dictionary.
+            if(key !== "" && value !== "") {
+                config[key] = value.join("=");
+            }
+        }
+    }
+    return config;
+})
+
+ipcMain.handle('storeConfig', (event, config) => {
+    var outputString = "";
+    for(let key of Object.keys(config)) {
+        outputString = outputString + key + "=" + config[key] + "\n";
+    }
+    fs.writeFileSync(Model.dir + "/conf/config.txt", outputString, "utf8");
+})
+
+//
 // その他
 //
 

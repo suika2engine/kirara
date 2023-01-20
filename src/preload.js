@@ -39,5 +39,7 @@ contextBridge.exposeInMainWorld('api', {
     exportForWeb: async () => await ipcRenderer.invoke('exportForWeb'),
     exportForWinMac: async () => await ipcRenderer.invoke('exportForWinMac'),
     getLocale: async () => await ipcRenderer.invoke('getLocale'),
-    openURL: async (url) => await ipcRenderer.invoke('openURL', url)
+    openURL: async (url) => await ipcRenderer.invoke('openURL', url),
+    loadConfig: async () => await ipcRenderer.invoke('loadConfig'),
+    storeConfig: async (config) => await ipcRenderer.invoke('storeConfig', config)
 })

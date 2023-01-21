@@ -14,6 +14,7 @@ body {
 
 /* ナビゲーション | Navigation */
 .nav {
+  background-color: white;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
@@ -21,7 +22,6 @@ body {
   margin: 0;
   overflow: hidden;
   padding: 0;
-  position: sticky; /* Rest */
   top: 0;
 }
 .nav li {
@@ -39,6 +39,7 @@ body {
   background-color: grey;
   color: white;
 }
+
 
 /* 文章 | Text */
 h1 {
@@ -74,15 +75,20 @@ ul {
   margin-left: 0.5em;
 }
 
+/* ページ | Pages */
+#welcome {display:none}
+#welcome:target {display:block; scroll-margin-top:20px;}
+#page1 {display:none}
+#page1:target {display:block; scroll-margin-top:20px;}
+#page2 {display:none}
+#page2:target {display:block; scroll-margin-top:20px;}
+#page3 {display:none}
+#page3:target {display:block; scroll-margin-top:20px;}
+#page4 {display:none}
+#page4:target {display:block; scroll-margin-top:20px;}
+
 /* フッター | Footer */
 footer {
+  margin-top: 1.5em;
   text-align: center;
-}
-
-/* ページ | Pages */
-.page {
-  display: none;
-}
-  .page:target {
-    display: block;
 }

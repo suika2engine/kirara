@@ -394,8 +394,8 @@ function showProps() {
         var cl = normalizeChoose(cmd);
         for(let i = 1; i <= 8; i++) {
             if(cl.length >= i + 2 + 1) {
-                document.getElementById("prop-choose-label" + i).value = cl[i * 2 - 1];
-                document.getElementById("prop-choose-text" + i).value = cl[i * 2];
+                document.getElementById("prop-choose-label" + i).value = unquote(cl[i * 2 - 1]);
+                document.getElementById("prop-choose-text" + i).value = unquote(cl[i * 2]);
             } else {
                 document.getElementById("prop-choose-label" + i).value = "";
                 document.getElementById("prop-choose-text" + i).value = "";

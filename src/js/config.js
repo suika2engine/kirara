@@ -1,5 +1,9 @@
 var config = {};
 
+let typingTimer;
+let typeInterval = 500;
+let searchInput;
+
 function getConfigValue(key, defaultValue) {
     if(typeof config[key] === "undefined") {
         return defaultValue;
@@ -19,6 +23,18 @@ function boolToInt(val) {
         return "1";
     }
     return "0";
+}
+
+function liveSearch() {
+    var cards = document.querySelectorAll('.card')
+    var searchQuery = document.getElementById("searchbox").value;
+    for (let card of cards) {
+        if(card.innerText.toLowerCase().includes(searchQuery.toLowerCase())) {
+            card.classList.remove("is-hidden");
+        } else {
+            card.classList.add("is-hidden");
+        }
+    }
 }
 
 window.addEventListener("load", async() => {
@@ -267,6 +283,13 @@ window.addEventListener("load", async() => {
             }
         }
     }
+
+    // Add live search.
+    searchInput = document.getElementById('searchbox');
+    searchInput.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(liveSearch, typeInterval);
+    });
 })
 
 window.addEventListener("beforeunload", async () => {

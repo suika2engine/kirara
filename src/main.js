@@ -17,8 +17,8 @@ function createWindow () {
 function getLocale() {
     var code = app.getLocale();
     if(code === "ja") {
-//        return "ja";
-        return "en";
+        return "ja";
+//        return "en";
     }
     return "en";
 }

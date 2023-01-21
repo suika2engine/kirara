@@ -26,13 +26,26 @@ function boolToInt(val) {
 }
 
 function liveSearch() {
-    var cards = document.querySelectorAll('.card')
+    var cards = document.querySelectorAll(".card");
     var searchQuery = document.getElementById("searchbox").value;
-    for (let card of cards) {
-        if(card.innerText.toLowerCase().includes(searchQuery.toLowerCase())) {
+    for(let card of cards) {
+        if(searchQuery === "") {
+            card.classList.remove("is-hidden");
+        } else if(card.innerText.toLowerCase().includes(searchQuery.toLowerCase())) {
             card.classList.remove("is-hidden");
         } else {
             card.classList.add("is-hidden");
+        }
+    }
+
+    var h3s = document.querySelectorAll("h3");
+    for(let elem of h3s) {
+        if(searchQuery === "") {
+            elem.classList.remove("highlight");
+        } else if(elem.textContent.toLowerCase().includes(searchQuery.toLowerCase())) {
+            elem.classList.add("highlight");
+        } else {
+            elem.classList.remove("highlight");
         }
     }
 }

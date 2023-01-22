@@ -1,22 +1,51 @@
 body {
+	background-color: #13161C;
+	color: #E7E5DE;
+	font-family: sans-serif;
+	margin: 5em;
 	padding: 0;
-	margin: 0;
-	font-family: Yu Gothic UI;
 	user-select: none;
 }
 
-.game-list-item {
-	width: 200px;
-	line-height: 2em;
-	border: 1px solid #cccccc;
-	padding-left: 10px;
-	margin-bottom: 10px;
-	border-radius: 10px;
+#game-name {
+	background-color: transparent;
+	border: 1px solid grey;
+	color: #E7E5DE;
+	font-size: 16px;
+	padding: 1em;
+	width: 15em;
+}
+#new-game {
+	background-color: transparent;
+	border: 1px solid grey;
+	color: #E7E5DE;
 	cursor: pointer;
-	list-style-type: none!important;
+	font-size: 16px;
+	padding: 1em;
 	transition: .3s;
+	width: 6em;
+}
+#new-game:hover {
+	background: #1F456E;
+}
+#game-list {
+	padding: 0;
+}
+
+.game-list-item {
+	border: 1px solid grey;
+	cursor: pointer;
+	font-size: 16px;
+	list-style-type: none!important;
+	margin-bottom: 1em;
+	padding: 1em;
+	transition: .3s;
+	width: 15em;
 }
 .game-list-item:hover {
-	color: white;
-	background: #2d8fdd;
+	background: #1F456E;
+}
+
+.cols {
+	columns: 2;
 }

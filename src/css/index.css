@@ -384,7 +384,6 @@ input[name="tab-btn"] {
 .scenario-header {
 	width: calc(100% - 25px - 25px - 25px);
 	height: calc(100vh - 32px);
-	padding-left: 5px;
 	margin: auto;
 }
 
@@ -400,19 +399,21 @@ input[name="tab-btn"] {
 
 /* メインリストのコンテナ | Centre scenario container */
 .scenario-container {
-	width: calc(100% - 25px - 25px - 25px);
+	width: calc(100% - 30px);
 	height: calc(100vh - 32px);
-	padding-left: 5px;
-	margin: auto;
 }
 
 /* メインリスト | Scenario view */
 .scenario-list {
+	width: 100%;    
 	height: calc(100vh - 32px);
 	overflow-y: scroll;
-  margin-block-start: 0em;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-block-start: 0em;
 	margin-block-end: 0em;
-	padding: 0;
 }
 .scenario-list::-webkit-scrollbar {
 	width: 5px;

@@ -1,10 +1,15 @@
 :root {
-	--bg-colour: #13161C;
-	--white-colour: #E7E5DE;
-	--hover-colour: #1F456E;
+	--bg-colour: #FEF6E8;
+	--white-colour: black;
+	--pastel-green: #ACD489;
+	--pastel-orange: #FFDBA3;
+	--pastel-red: #F27B6F;
 }
 
 body {
+	font-weight: bold;
+	color: var(--white-colour);
+	background: var(--bg-colour);
 	padding: 0;
 	margin: 0;
 	font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
@@ -15,7 +20,7 @@ body {
  * 分割 | Columns
  */
 
-/* 縦の左中右 | Verticle: Left/Middle/Right */
+/* 縦の左中右 | Controls the entire page */
 .grid1-area {
 	display: grid;
 	height: 100vh;
@@ -44,7 +49,7 @@ body {
 	height: 100%;
 }
 
-/* 左段の上中下 | Left-hand side: Top, Middle, Bottom */
+/* 左段の上中下 | Left-hand side */
 .grid2-area {
 	display: grid;
 	height: 100vh;
@@ -53,13 +58,13 @@ body {
 }
 
 .grid2-pallete-header {
+	margin: auto;
 	grid-row: 1;
 	grid-column: 1;
 	width: 100%;
 	height: 100%;
-	font-weight: bold;
-	background: red;
-	color: white;
+	padding: 0px;
+	margin-left: 1em;
 }
 
 .grid2-palette {
@@ -70,13 +75,13 @@ body {
 }
 
 .grid2-files-header {
+	margin: auto;
 	grid-row: 3;
 	grid-column: 1;
 	width: 100%;
 	height: 100%;
-	font-weight: bold;
-	background: green;
-	color: white;
+	padding: 0px;
+	margin-left: 1em;
 }
 
 .grid2-files {
@@ -86,12 +91,13 @@ body {
 	height: 100%;
 }
 
-/* 右段の上下 | Right-hand side: Top and Bottom */
+/* 右段の上下 | Right-hand side */
 .grid3-area {
 	display: grid;
 	height: 100vh;
 	grid-template-rows: 70% 30%;
 	grid-template-columns: 100%;
+	border-left: 1px solid var(--white-colour);
 }
 
 .grid3-prop {
@@ -108,7 +114,7 @@ body {
 	height: 100%;
 }
 
-/* 中央段の上下 | Centre: Top and Bottom */
+/* 中央段の上下 | Centre Body */
 .grid4-area {
 	display: grid;
 	height: 100vh;
@@ -130,12 +136,12 @@ body {
 	height: 100%;
 }
 
-/* grid4-headerの中の左右 | Grid4 Header */
+/* grid4-headerの中の左右 | Centre Header */
 .grid5-area {
 	display: grid;
 	height: 100%;
 	grid-template-rows: 100%;
-	grid-template-columns: calc(100% - 128px - 30px) calc(128px + 15px);
+	grid-template-columns: calc(100% - 128px - 30px);
 }
 
 .grid5-left {
@@ -165,14 +171,15 @@ body {
 	width: 5px;
 }
 .palette-panel::-webkit-scrollbar-thumb {
-	background: rgba(0, 0, 0, 0.3);
+	background: var(--pastel-green);
 }
 .palette-panel::-webkit-scrollbar-track {
-	background: rgba(0, 0, 0, 0.1);
+	background: var(--white-colour);
 }
 
 .palette-list-holder {
 	padding: 5px;
+	padding-top: 0px;
 	width: calc(100% - 35px - 10px);
 	position: relative;
 	margin-block-start: 0em;
@@ -180,58 +187,68 @@ body {
 }
 
 .palette-list-item {
-	font-size: 14px;
-	margin-bottom: 3px;
-	line-height: 1.3em;
-	padding: 0.3em;
-	border-radius: 6px;
+	width: 100%;
+	font-size: 16px;
+	margin-bottom: 10px;
+	padding: 1em;
 	list-style-type: none!important;
 	cursor: pointer;
 	text-align: center;
-	transition: .3s;
-	background: #efebfc;
-	color: black;
+	transition: .5s;
+	background: var(--pastel-green);
+	color: var(--white-colour);
 }
 .palette-list-item:hover {
-	background: #2d8fdd;
-	color: #633ce6;
+	background: var(--pastel-orange);
 }
 
 .palette-list-item-sel {
-	font-size: 14px;
-	color: white;
-	background: #2d8fdd;
-	margin-bottom: 3px;
-	line-height: 1.3em;
-	padding: 0.3em;
+	width: 100%;
+	font-size: 16px;
+	margin-bottom: 10px;
+	padding: 1em;
 	list-style-type: none!important;
 	cursor: pointer;
 	text-align: center;
-	border-radius: 6px;
-	animation: right-move 2s infinite;
+	transition: .5s;
+	background: var(--pastel-green);
+	color: var(--white-colour);
+	animation: glisten 2.5s infinite;
 }
 
-@keyframes right-move {
+@keyframes glisten {
 	0% {
-		transform: translate(0px, 0px);
+		filter: brightness(100%);
 	}
 	5% {
-		transform: translate(5px, 0px);
+		filter: brightness(95%);
 	}
 	10% {
-		transform: translate(10px, 0px);
+		filter: brightness(90%);
 	}
 	15% {
-		transform: translate(15px, 0px);
+		filter: brightness(85%);
 	}
 	20% {
-		transform: translate(20px, 0px);
+		filter: brightness(80%);
 	}
 	25% {
-		transform: translate(25px, 0px);
+		filter: brightness(75%);
 	}
 	30% {
-		transform: translate(30px, 0px);
+		filter: brightness(70%);
+	}
+	35% {
+		filter: brightness(65%);
+	}
+	40% {
+		filter: brightness(60%);
+	}
+	45% {
+		filter: brightness(55%);
+	}
+	50% {
+		filter: brightness(50%);
 	}
 }
 
@@ -252,7 +269,8 @@ input[name="tab-btn"] {
 }
 
 .tab-area {
-	background: lightgray;
+	background: var(--pastel-green);
+	width: 100%;
 }
 
 .tab-area label {
@@ -261,9 +279,8 @@ input[name="tab-btn"] {
 	margin: 0;
 	display: inline-block;
 	padding: 2px 0;
-	text-align: center;
 	cursor: pointer;
-	transition: ease 0.2s opacity;
+	transition: ease 0.5s opacity;
 }
 
 .tab-area label:hover {
@@ -274,6 +291,7 @@ input[name="tab-btn"] {
 	object-fit: contain;
 	width: 32px;
 	height: 32px;
+	margin: auto;
 }
 
 .tab-panel-area {
@@ -285,7 +303,7 @@ input[name="tab-btn"] {
 .tab-panel {
 	padding: 0;
 	display: none;
-	width: calc(100% - 5px);
+	width: 100%;
 	height: 100%;
 	overflow-y: scroll;
 }
@@ -293,10 +311,10 @@ input[name="tab-btn"] {
 	width: 5px;
 }
 .tab-panel::-webkit-scrollbar-thumb {
-	background: rgba(0, 0, 0, 0.3);
+	background: var(--pastel-green);
 }
 .tab-panel::-webkit-scrollbar-track {
-	background: rgba(0, 0, 0, 0.1);
+	background: var(--white-colour);
 }
 
 #tab-txt:checked ~ .tab-area .tab-txt-label {background:#fff; color:#000; }
@@ -315,43 +333,43 @@ input[name="tab-btn"] {
 /* タブの中身 | Tab contents */
 
 .tab-list-holder {
-	width: calc(100% - 35px);
-	padding: 0;
+	padding: 5px;
+	padding-top: 0px;
+	width: calc(100% - 35px - 10px);
 	position: relative;
-    margin-block-start: 0em;
+	margin-block-start: 0em;
 	margin-block-end: 0em;
 }
 
 .tab-list-item {
-	color: #2d8fdd;
-	border: 1px solid #2d8fdd;
-	margin-bottom: 3px;
-	border-radius: 6px;
-	line-height: 1.0;
-	padding: 0.2em;
+	width: 100%;
+	font-size: 16px;
+	margin-bottom: 10px;
+	padding: 1em;
 	list-style-type: none!important;
+	cursor: pointer;
 	text-align: center;
-	background: white;
-	transition: .3s;
+	transition: .5s;
+	background: var(--pastel-green);
+	color: var(--white-colour);
 }
 .tab-list-item:hover {
-	color: white;
-	background: #2d8fdd;
+	color: var(--white-colour);
+	background: var(--pastel-orange);
 }
 
 .tab-list-item-sel {
-	color: white;
-	background: #2d8fdd;
-	margin-bottom: 3px;
-	border-radius: 6px;
-	line-height: 1.0;
-	padding: 0.2em;
+	width: 100%;
+	font-size: 16px;
+	margin-bottom: 10px;
+	padding: 1em;
 	list-style-type: none!important;
+	cursor: pointer;
 	text-align: center;
-
-	background: #2d8fdd;
-	border-radius: 6px;
-	animation: right-move 2s infinite;
+	transition: .5s;
+	background: var(--pastel-green);
+	color: var(--white-colour);
+	animation: glisten 2.5s infinite;
 }
 
 .dragover {
@@ -364,15 +382,17 @@ input[name="tab-btn"] {
  */
 
 .scenario-header {
-	font-weight: bold;
+	width: calc(100% - 25px - 25px - 25px);
+	height: calc(100vh - 32px);
 	padding-left: 5px;
+	margin: auto;
 }
 
 .scenario-header-img {
 	object-fit: contain;
 	width: 32px;
 	height: 32px;
-	transition: .3s;
+	transition: .5s;
 }
 .scenario-header-img:hover {
 	opacity: 0.3;
@@ -380,16 +400,17 @@ input[name="tab-btn"] {
 
 /* メインリストのコンテナ | Centre scenario container */
 .scenario-container {
-	width: calc(100% - 5px);
+	width: calc(100% - 25px - 25px - 25px);
 	height: calc(100vh - 32px);
 	padding-left: 5px;
+	margin: auto;
 }
 
 /* メインリスト | Scenario view */
 .scenario-list {
 	height: calc(100vh - 32px);
 	overflow-y: scroll;
-    margin-block-start: 0em;
+  margin-block-start: 0em;
 	margin-block-end: 0em;
 	padding: 0;
 }
@@ -397,206 +418,249 @@ input[name="tab-btn"] {
 	width: 5px;
 }
 .scenario-list::-webkit-scrollbar-thumb {
-	background: rgba(0, 0, 0, 0.3);
+	background: var(--pastel-green);
 }
 .scenario-list::-webkit-scrollbar-track {
-	background: rgba(0, 0, 0, 0.1);
+	background: var(--white-colour);
 }
 
 /* ドラッグ可能なリスト項目 | List of draggable items */
 .drag-list-item {
-	line-height: 3em;
-	border: 1px solid #cccccc;
-	padding-left: 10px;
+	color: blue;
 	margin-bottom: 10px;
-	border-radius: 10px;
 	cursor: pointer;
 	list-style-type: none!important;
 	text-align: center;
-	transition: .3s;
+	transition: .5s;
 }
 .drag-list-item:hover {
-	color: white;
-	background: #2d8fdd;
+	color: var(--white-colour);
+	background: var(--pastel-orange);
 }
 
 /* 選択中の項目 | Selected item */
 .drag-list-item-sel {
-	border: 3px solid black;
+	border: 3px solid var(--pastel-orange);
 }
 
 /* メッセージの項目 | Message */
 .drag-list-item-msg {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* セリフの項目 | Serif */
 .drag-list-item-serif {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @bgの項目 | Background (item) */
 .drag-list-item-bg {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
 }
 
 /* @bgmの項目 | Background music */
 .drag-list-item-bgm {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @seの項目 | Sound effect */
 .drag-list-item-se {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @volの項目 | Volume */
 .drag-list-item-vol {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @chooseの項目 | Options */
 .drag-list-item-choose {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @chaの項目 | CHA */
 .drag-list-item-cha {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @chsの項目 | CHS */
 .drag-list-item-chs {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @shakeの項目 | Screen shake */
 .drag-list-item-shake {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @clickの項目 | Click wait */
 .drag-list-item-click {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @waitの項目 | Timed Wait */
 .drag-list-item-wait {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @skipの項目 | Skip (item) */
 .drag-list-item-skip {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @gotoの項目 | Goto-jump*/
 .drag-list-item-goto {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @setの項目 | Set (item) */
 .drag-list-item-set {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @ifの項目 | if (item) */
 .drag-list-item-if {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @loadの項目 | load (item) */
 .drag-list-item-load {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @chapterの項目 | Chapter */
 .drag-list-item-chapter {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* @wmsの項目 | Watermelon Script */
 .drag-list-item-wms {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* ラベルの項目 | Label */
 .drag-list-item-label {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	background: white;
 }
 
 /* コメントの項目 | Comment (item) */
 .drag-list-item-comment {
-	font-style: italic;
-	color: gray;
-	background: white;
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
+	text-decoration: none;
 }
 
 /* 終了マーカー項目 | End marker */
 .drag-list-item-end {
+	background-color: var(--pastel-red);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
 	text-decoration: none;
-	font-weight: bold;
-	color: white;
-	background-image: linear-gradient(#fed6e3 0%, #ffaaaa 100%);
 }
 
 /* その他の項目(未対応のコマンド) | Other (unsupported commands) */
@@ -619,24 +683,26 @@ input[name="tab-btn"] {
 	width: 5px;
 }
 .prop-container::-webkit-scrollbar-thumb {
-	background: rgba(0, 0, 0, 0.3);
+	background: var(--pastel-green);
 }
 .prop-container::-webkit-scrollbar-track {
-	background: rgba(0, 0, 0, 0.1);
+	background: var(--white-colour);
 }
 
 /* プロパティペイン | Properties panel (2) */
 .prop-pane {
 	width: calc(100% - 15px);
 	height: calc(100% - 10px);
-	font-size: 12px;
+	font-size: 16px;
 	padding: 5px;
 	display: none;
 }
 
 /* テキストエリア(複数行) | Text-area – multi-line */
 .prop-textmulti {
-	padding: 0;
+	background: var(--pastel-green);
+	color: var(--white-colour);
+	padding: 0.25em;
 	width: calc(100% - 10px);
 	height: 5em;
 	resize: none;
@@ -645,9 +711,19 @@ input[name="tab-btn"] {
 
 /* テキストエリア(単一行) | Text-area – singular line */
 .prop-textsingle {
+	background: var(--pastel-green);
+	color: var(--white-colour);
+	padding: 0.25em;
 	width: calc(100% - 10px);
 }
-
+.prop-select {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	font-size: 16px;
+	padding: 1em;
+	text-decoration: none;
+	border: none;
+}
 /*
  * サムネイル | Thumbnail image
  */

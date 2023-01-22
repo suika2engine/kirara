@@ -139,7 +139,7 @@
 							<input id="prop-bg-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-bg-duration-num"></span><br>
 							<br>
 							エフェクト:<br>
-							<select id="prop-bg-effect" name="effect">
+							<select id="prop-bg-effect" class="prop-select" name="effect">
 								<option value="normal">標準</option>
 								<option value="curtain-right">右カーテン</option>
 								<option value="curtain-left">左カーテン</option>
@@ -153,7 +153,7 @@
 							<input id="prop-ch-file" type="text" readonly class="prop-textsingle"><br>
 							<br>
 							位置:<br>
-							<select id="prop-ch-position" name="position">
+							<select id="prop-ch-position" class="prop-select" name="position">
 								<option value="center">中央</option>
 								<option value="right">右</option>
 								<option value="left">左</option>
@@ -165,7 +165,7 @@
 							<input id="prop-ch-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-ch-duration-num"></span><br>
 							<br>
 							エフェクト:<br>
-							<select id="prop-ch-effect" name="effect">
+							<select id="prop-ch-effect" nclass="prop-select" ame="effect">
 								<option value="normal">標準</option>
 								<option value="curtain-right">右カーテン</option>
 								<option value="curtain-left">左カーテン</option>
@@ -204,7 +204,7 @@
 						<div id="prop-vol" class="prop-pane">
 							<h3>音量</h3>
 							トラック:<br>
-							<select id="prop-vol-track" name="track">
+							<select id="prop-vol-track" class="prop-select" name="track">
 								<option value="bgm">音楽</option>
 								<option value="voice">声</option>
 								<option value="se">効果音</option>
@@ -253,7 +253,7 @@
 						<div id="prop-cha" class="prop-pane">
 							<h3>キャラ移動</h3>
 							位置:<br>
-							<select id="prop-cha-position" name="position">
+							<select id="prop-cha-position" class="prop-select" name="position">
 								<option value="center">中央</option>
 								<option value="right">右</option>
 								<option value="left">左</option>
@@ -265,7 +265,7 @@
 							<input id="prop-cha-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-cha-duration-num"></span><br>
 							<br>
 							加速:<br>
-							<select id="prop-cha-acceleration" name="position">
+							<select id="prop-cha-acceleration" class="prop-select" name="position">
 								<option value="move">なし</option>
 								<option value="accel">あり</option>
 								<option value="brake">減速</option>
@@ -286,7 +286,7 @@
 							<input id="prop-chs-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-chs-duration-num"></span><br>
 							<br>
 							エフェクト:<br>
-							<select id="prop-chs-effect" name="effect">
+							<select id="prop-chs-effect" class="prop-select" name="effect">
 								<option value="normal">標準</option>
 								<option value="curtain-right">右カーテン</option>
 								<option value="curtain-left">左カーテン</option>
@@ -295,29 +295,29 @@
 							</select><br>
 							<br>
 							中央キャラ:<br>
-							<select id="prop-chs-center" name="center">
+							<select id="prop-chs-center" class="prop-select" name="center">
 							</select><br>
 							<br>
 							右キャラ:<br>
-							<select id="prop-chs-right" name="right">
+							<select id="prop-chs-right" class="prop-select" name="right">
 							</select><br>
 							<br>
 							左キャラ:<br>
-							<select id="prop-chs-left" name="left">
+							<select id="prop-chs-left" class="prop-select" name="left">
 							</select><br>
 							<br>
 							中央背面キャラ:<br>
-							<select id="prop-chs-back" name="back">
+							<select id="prop-chs-back" class="prop-select" name="back">
 							</select><br>
 							<br>
 							背景:<br>
-							<select id="prop-chs-background" name="background">
+							<select id="prop-chs-background" class="prop-select" name="background">
 							</select>
 						</div>
 						<div id="prop-shake" class="prop-pane">
 							<h3>画面を揺らす</h3>
 							方向:<br>
-							<select id="prop-shake-direction" name="direction">
+							<select id="prop-shake-direction" class="prop-select" name="direction">
 								<option value="horizontal">横方向</option>
 								<option value="vertical">縦方向</option>
 							</select><br>
@@ -344,7 +344,7 @@
 						<div id="prop-goto" class="prop-pane">
 							<h3>目印にジャンプ</h3>
 							行き先の目印:<br>
-							<select id="prop-goto-label" name="label">
+							<select id="prop-goto-label" class="prop-select" name="label">
  							</select>
 						</div>
 						<div id="prop-set" class="prop-pane">
@@ -353,7 +353,7 @@
 							<input id="prop-set-variable" type="text" class="prop-textsingle"><br>
 							<br>
 							フラグセットの種類:<br>
-							<select id="prop-set-operator" name="operator">
+							<select id="prop-set-operator" class="prop-select" name="operator">
 								<option value="=">セット</option>
 								<option value="+=">足し算</option>
 								<option value="-=">引き算</option>
@@ -371,7 +371,7 @@
 							<input id="prop-if-variable" type="text" class="prop-textsingle"><br>
 							<br>
 							フラグ判定の種類:<br>
-							<select id="prop-if-operator" name="operator">
+							<select id="prop-if-operator" class="prop-select" name="operator">
 								<option value="==">セットされているか</option>
 								<option value="!=">セットされていないか</option>
 								<option value=">">大きいか</option>
@@ -384,7 +384,7 @@
 							<input id="prop-if-value" type="text" class="prop-textsingle"><br>
 							<br>
 							行き先の目印:<br>
-							<select id="prop-if-label" name="label">
+							<select id="prop-if-label" class="prop-select" name="label">
  							</select>
 						</div>
 						<div id="prop-load" class="prop-pane">

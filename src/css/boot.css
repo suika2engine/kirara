@@ -1,12 +1,14 @@
 :root {
-	--bg-colour: #13161C;
-	--white-colour: #E7E5DE;
-	--hover-colour: #1F456E;
+	--bg-colour: #FEF6E8; /* or: #13161C */
+	--text: black;
+	--pastel-green: #ACD489;
+	--pastel-orange: #FFDBA3;
+	--pastel-red: #F27B6F;
 }
 
 body {
 	background-color: var(--bg-colour);
-	color: var(--white-colour);
+	color: var(--text);
 	font-family: sans-serif;
 	margin: 5em;
 	padding: 0;
@@ -17,7 +19,7 @@ body {
 #game-name {
 	background-color: transparent;
 	border: 1px solid grey;
-	color: var(--white-colour);
+	color: var(--text);
 	font-size: 16px;
 	padding: 1em;
 	width: 15em;
@@ -25,7 +27,7 @@ body {
 #new-game {
 	background-color: transparent;
 	border: 1px solid grey;
-	color: var(--white-colour);
+	color: var(--text);
 	cursor: pointer;
 	font-size: 16px;
 	padding: 1em;
@@ -33,7 +35,7 @@ body {
 	width: 6em;
 }
 #new-game:hover {
-	background: var(--hover-colour);
+	background: var(--pastel-orange);
 }
 #game-list {
 	padding: 0;
@@ -51,5 +53,5 @@ body {
 	width: 15em;
 }
 .game-list-item:hover {
-	background: var(--hover-colour);
+	background: var(--pastel-orange);
 }

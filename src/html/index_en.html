@@ -139,7 +139,7 @@
 							<input id="prop-bg-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-bg-duration-num"></span><br>
 							<br>
 							Effect:<br>
-							<select id="prop-bg-effect" name="effect">
+							<select id="prop-bg-effect" class="prop-select" name="effect">
 								<option value="normal">Normal</option>
 								<option value="curtain-right">Right curtain</option>
 								<option value="curtain-left">Left curtain</option>
@@ -153,7 +153,7 @@
 							<input id="prop-ch-file" type="text" readonly class="prop-textsingle"><br>
 							<br>
 							Position:<br>
-							<select id="prop-ch-position" name="position">
+							<select id="prop-ch-position" class="prop-select" name="position">
 								<option value="center">    Center</option>
 								<option value="right">               Right</option>
 								<option value="left">Left</option>
@@ -165,7 +165,7 @@
 							<input id="prop-ch-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-ch-duration-num"></span><br>
 							<br>
 							Effect:<br>
-							<select id="prop-ch-effect" name="effect">
+							<select id="prop-ch-effect" class="prop-select" name="effect">
 								<option value="normal">Normal</option>
 								<option value="curtain-right">Right curtain</option>
 								<option value="curtain-left">Left curtain</option>
@@ -204,7 +204,7 @@
 						<div id="prop-vol" class="prop-pane">
 							<h3>Sound Volume</h3>
 							Track:<br>
-							<select id="prop-vol-track" name="track">
+							<select id="prop-vol-track" class="prop-select" name="track">
 								<option value="bgm">Music</option>
 								<option value="voice">Voice</option>
 								<option value="se">Sound Effect</option>
@@ -253,7 +253,7 @@
 						<div id="prop-cha" class="prop-pane">
 							<h3>Character Move</h3>
 							Position位置:<br>
-							<select id="prop-ch-position" name="position">
+							<select id="prop-ch-position" class="prop-select" name="position">
 								<option value="center">    Center</option>
 								<option value="right">               Right</option>
 								<option value="left">Left</option>
@@ -265,7 +265,7 @@
 							<input id="prop-cha-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-cha-duration-num"></span><br>
 							<br>
 							Acceleration:<br>
-							<select id="prop-cha-acceleration" name="position">
+							<select id="prop-cha-acceleration" class="prop-select" name="position">
 								<option value="move">No</option>
 								<option value="accel">Accelerate</option>
 								<option value="brake">Decelerate</option>
@@ -286,7 +286,7 @@
 							<input id="prop-chs-duration" type="range" name="duration" min="0" max="10" step="0.1"><span id="prop-chs-duration-num"></span><br>
 							<br>
 							Effect:<br>
-							<select id="prop-chs-effect" name="effect">
+							<select id="prop-chs-effect" class="prop-select" name="effect">
 								<option value="normal">Normal</option>
 								<option value="curtain-right">Right curtain</option>
 								<option value="curtain-left">Left curtain</option>
@@ -295,29 +295,29 @@
 							</select><br>
 							<br>
 							Center Character:<br>
-							<select id="prop-chs-center" name="center">
+							<select id="prop-chs-center" class="prop-select" name="center">
 							</select><br>
 							<br>
 							Right Character:<br>
-							<select id="prop-chs-right" name="right">
+							<select id="prop-chs-right" class="prop-select" name="right">
 							</select><br>
 							<br>
 							Left Character:<br>
-							<select id="prop-chs-left" name="left">
+							<select id="prop-chs-left" class="prop-select" name="left">
 							</select><br>
 							<br>
 							Back Character:<br>
-							<select id="prop-chs-back" name="back">
+							<select id="prop-chs-back" class="prop-select" name="back">
 							</select><br>
 							<br>
 							Background:<br>
-							<select id="prop-chs-background" name="background">
+							<select id="prop-chs-background" class="prop-select" name="background">
 							</select>
 						</div>
 						<div id="prop-shake" class="prop-pane">
 							<h3>Shake the Screen</h3>
 							Direction:<br>
-							<select id="prop-shake-direction" name="direction">
+							<select id="prop-shake-direction" class="prop-select" name="direction">
 								<option value="horizontal">Horizontal</option>
 								<option value="vertical">Vertical</option>
 							</select><br>
@@ -344,7 +344,7 @@
 						<div id="prop-goto" class="prop-pane">
 							<h3>Jump to a Bookmark</h3>
 							Destination Bookmark:<br>
-							<select id="prop-goto-label" name="label">
+							<select id="prop-goto-label" class="prop-select" name="label">
  							</select>
 						</div>
 						<div id="prop-set" class="prop-pane">
@@ -353,7 +353,7 @@
 							<input id="prop-set-variable" type="text" class="prop-textsingle"><br>
 							<br>
 							Assignment Type:<br>
-							<select id="prop-set-operator" name="operator">
+							<select id="prop-set-operator" class="prop-select" name="operator">
 								<option value="=">Set</option>
 								<option value="+=">Add</option>
 								<option value="-=">Sub</option>
@@ -371,7 +371,7 @@
 							<input id="prop-if-variable" type="text" class="prop-textsingle"><br>
 							<br>
 							Check Type:<br>
-							<select id="prop-if-operator" name="operator">
+							<select id="prop-if-operator" class="prop-select" name="operator">
 								<option value="==">Flag is set</option>
 								<option value="!=">Flag is not set</option>
 								<option value=">">Greater than</option>
@@ -384,7 +384,7 @@
 							<input id="prop-if-value" type="text" class="prop-textsingle"><br>
 							<br>
 							Destination Bookmark:<br>
-							<select id="prop-if-label" name="label">
+							<select id="prop-if-label" class="prop-select" name="label">
  							</select>
 						</div>
 						<div id="prop-load" class="prop-pane">

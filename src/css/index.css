@@ -1,3 +1,9 @@
+:root {
+	--bg-colour: #13161C;
+	--white-colour: #E7E5DE;
+	--hover-colour: #1F456E;
+}
+
 body {
 	padding: 0;
 	margin: 0;
@@ -124,7 +130,7 @@ body {
 	height: 100%;
 }
 
-/* grid4-headerの中の左右 | Grid4 Left and Right */
+/* grid4-headerの中の左右 | Grid4 Header */
 .grid5-area {
 	display: grid;
 	height: 100%;
@@ -207,25 +213,25 @@ body {
 
 @keyframes right-move {
 	0% {
-		transform: translate(5px, 0px);
+		transform: translate(0px, 0px);
 	}
 	5% {
-		transform: translate(10px, 0px);
+		transform: translate(5px, 0px);
 	}
 	10% {
-		transform: translate(15px, 0px);
+		transform: translate(10px, 0px);
 	}
 	15% {
-		transform: translate(20px, 0px);
+		transform: translate(15px, 0px);
 	}
 	20% {
-		transform: translate(25px, 0px);
+		transform: translate(20px, 0px);
 	}
 	25% {
-		transform: translate(30px, 0px);
+		transform: translate(25px, 0px);
 	}
 	30% {
-		transform: translate(35px, 0px);
+		transform: translate(30px, 0px);
 	}
 }
 

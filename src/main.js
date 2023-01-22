@@ -49,6 +49,7 @@ class Model {
     static bgm = [];
     static se = [];
     static mov = [];
+    static flags = {};
     static scenarioFile = "";
     static scenarioData = [""];
 }
@@ -137,6 +138,7 @@ ipcMain.handle('openGame', (event, dir) => {
     refreshFiles("ch", Model.ch, ['.png', '.jpg', '.jpeg']);
     refreshFiles("bgm", Model.bgm, ['.ogg']);
     refreshFiles("se", Model.se, ['.ogg']);
+    loadFlags();
 })
 
 function refreshFiles(subDir, list, allowExts) {
@@ -573,6 +575,54 @@ ipcMain.handle('storeConfig', (event, config) => {
     }
     fs.writeFileSync(Model.dir + "/conf/config.txt", outputString, "utf8");
 })
+
+//
+// フラグ
+//
+
+ipcMain.handle('getFlagList', (event) => {
+    return Model.flags;
+})
+
+ipcMain.handle('addFlag', (event, name, index) => {
+    Model.flags[index] = name;
+    storeFlags();
+})
+
+ipcMain.handle('removeFlag', (event, name) => {
+    if(Model.flags.hasOwnProperty(name)) {
+        delete Model.flags['lastName'];
+    }
+    storeFlags();
+})
+
+function loadFlags() {
+    var filePath = Model.dir + "/flags.txt";
+    if(!fs.existsSync(filePath)) {
+        return;
+    }
+
+    flags.length = 0;
+    var lines = fs.readFileSync(Model.dir + "/flags.txt", "utf8").replace(/\r/g, "").split("\n");
+    for(let line of lines) {
+        // Split line before and after the first "=".
+        var [index, ...name] = line.split("=");
+
+        // Add to the dictionary.
+        flags[index] = name.join("=");
+    }
+    return flags;
+}
+
+function storeFlags() {
+    var outputString = "";
+    for(let index of Object.keys(Model.flags)) {
+        outputString = outputString + index + "=" + Model.flags[index] + "\n";
+    }
+
+    var filePath = Model.dir + "/flags.txt";
+    fs.writeFileSync(filePath, outputString, "utf8");
+}
 
 //
 // その他

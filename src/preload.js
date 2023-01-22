@@ -41,5 +41,8 @@ contextBridge.exposeInMainWorld('api', {
     getLocale: async () => await ipcRenderer.invoke('getLocale'),
     openURL: async (url) => await ipcRenderer.invoke('openURL', url),
     loadConfig: async () => await ipcRenderer.invoke('loadConfig'),
-    storeConfig: async (config) => await ipcRenderer.invoke('storeConfig', config)
+    storeConfig: async (config) => await ipcRenderer.invoke('storeConfig', config),
+    getFlagList: async () => await ipcRenderer.invoke('getFlagList'),
+    addFlag: async (name, index) => await ipcRenderer.invoke('addFlag', name, index),
+    removeFlag: async (name) => await ipcRenderer.invoke('removeFlag')
 })

@@ -1,16 +1,23 @@
+:root {
+	--bg-colour: #13161C;
+	--white-colour: #E7E5DE;
+	--hover-colour: #1F456E;
+}
+
 body {
-	background-color: #13161C;
-	color: #E7E5DE;
+	background-color: var(--bg-colour);
+	color: var(--white-colour);
 	font-family: sans-serif;
 	margin: 5em;
 	padding: 0;
 	user-select: none;
 }
 
+/* Search box, create button, etc. */
 #game-name {
 	background-color: transparent;
 	border: 1px solid grey;
-	color: #E7E5DE;
+	color: var(--white-colour);
 	font-size: 16px;
 	padding: 1em;
 	width: 15em;
@@ -18,7 +25,7 @@ body {
 #new-game {
 	background-color: transparent;
 	border: 1px solid grey;
-	color: #E7E5DE;
+	color: var(--white-colour);
 	cursor: pointer;
 	font-size: 16px;
 	padding: 1em;
@@ -26,12 +33,13 @@ body {
 	width: 6em;
 }
 #new-game:hover {
-	background: #1F456E;
+	background: var(--hover-colour);
 }
 #game-list {
 	padding: 0;
 }
 
+/* Existing project list items */
 .game-list-item {
 	border: 1px solid grey;
 	cursor: pointer;
@@ -43,9 +51,5 @@ body {
 	width: 15em;
 }
 .game-list-item:hover {
-	background: #1F456E;
-}
-
-.cols {
-	columns: 2;
+	background: var(--hover-colour);
 }

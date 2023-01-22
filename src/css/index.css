@@ -6,10 +6,10 @@ body {
 }
 
 /*
- * 分割
+ * 分割 | Columns
  */
 
-/* 縦の左中右 */
+/* 縦の左中右 | Verticle: Left/Middle/Right */
 .grid1-area {
 	display: grid;
 	height: 100vh;
@@ -38,7 +38,7 @@ body {
 	height: 100%;
 }
 
-/* 左段の上中下 */
+/* 左段の上中下 | Left-hand side: Top, Middle, Bottom */
 .grid2-area {
 	display: grid;
 	height: 100vh;
@@ -80,7 +80,7 @@ body {
 	height: 100%;
 }
 
-/* 右段の上下 */
+/* 右段の上下 | Right-hand side: Top and Bottom */
 .grid3-area {
 	display: grid;
 	height: 100vh;
@@ -102,7 +102,7 @@ body {
 	height: 100%;
 }
 
-/* 中央段の上下 */
+/* 中央段の上下 | Centre: Top and Bottom */
 .grid4-area {
 	display: grid;
 	height: 100vh;
@@ -124,7 +124,7 @@ body {
 	height: 100%;
 }
 
-/* grid4-headerの中の左右 */
+/* grid4-headerの中の左右 | Grid4 Left and Right */
 .grid5-area {
 	display: grid;
 	height: 100%;
@@ -147,7 +147,7 @@ body {
 }
 
 /*
- * パレット
+ * パレット | Pallete
  */
 
 .palette-panel {
@@ -230,10 +230,10 @@ body {
 }
 
 /*
- * 素材
+ * 素材 | Materials
  */
 
-/* タブ切り替え */
+/* タブ切り替え | Tabs and tab-switching */
 
 .tab-wrap {
 	width: 100%;
@@ -306,7 +306,7 @@ input[name="tab-btn"] {
 #tab-mov:checked ~ .tab-area .tab-mov-label {background:#fff; color:#000; }
 #tab-mov:checked ~ .tab-panel-area #tab-panel-mov { display:block; }
 
-/* タブの中身 */
+/* タブの中身 | Tab contents */
 
 .tab-list-holder {
 	width: calc(100% - 35px);
@@ -354,7 +354,7 @@ input[name="tab-btn"] {
 }
 
 /*
- * シナリオビュー
+ * シナリオビュー | Scenario Area
  */
 
 .scenario-header {
@@ -372,14 +372,14 @@ input[name="tab-btn"] {
 	opacity: 0.3;
 }
 
-/* メインリストのコンテナ */
+/* メインリストのコンテナ | Centre scenario container */
 .scenario-container {
 	width: calc(100% - 5px);
 	height: calc(100vh - 32px);
 	padding-left: 5px;
 }
 
-/* メインリスト */
+/* メインリスト | Scenario view */
 .scenario-list {
 	height: calc(100vh - 32px);
 	overflow-y: scroll;
@@ -397,7 +397,7 @@ input[name="tab-btn"] {
 	background: rgba(0, 0, 0, 0.1);
 }
 
-/* ドラッグ可能なリスト項目 */
+/* ドラッグ可能なリスト項目 | List of draggable items */
 .drag-list-item {
 	line-height: 3em;
 	border: 1px solid #cccccc;
@@ -414,12 +414,12 @@ input[name="tab-btn"] {
 	background: #2d8fdd;
 }
 
-/* 選択中の項目 */
+/* 選択中の項目 | Selected item */
 .drag-list-item-sel {
 	border: 3px solid black;
 }
 
-/* メッセージの項目 */
+/* メッセージの項目 | Message */
 .drag-list-item-msg {
 	text-decoration: none;
 	font-weight: bold;
@@ -427,7 +427,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* セリフの項目 */
+/* セリフの項目 | Serif */
 .drag-list-item-serif {
 	text-decoration: none;
 	font-weight: bold;
@@ -435,14 +435,14 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @bgの項目 */
+/* @bgの項目 | Background (item) */
 .drag-list-item-bg {
 	text-decoration: none;
 	font-weight: bold;
 	color: black;
 }
 
-/* @bgmの項目 */
+/* @bgmの項目 | Background music */
 .drag-list-item-bgm {
 	text-decoration: none;
 	font-weight: bold;
@@ -450,7 +450,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @seの項目 */
+/* @seの項目 | Sound effect */
 .drag-list-item-se {
 	text-decoration: none;
 	font-weight: bold;
@@ -458,7 +458,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @volの項目 */
+/* @volの項目 | Volume */
 .drag-list-item-vol {
 	text-decoration: none;
 	font-weight: bold;
@@ -466,7 +466,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @chooseの項目 */
+/* @chooseの項目 | Options */
 .drag-list-item-choose {
 	text-decoration: none;
 	font-weight: bold;
@@ -474,7 +474,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @chaの項目 */
+/* @chaの項目 | CHA */
 .drag-list-item-cha {
 	text-decoration: none;
 	font-weight: bold;
@@ -482,7 +482,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @chsの項目 */
+/* @chsの項目 | CHS */
 .drag-list-item-chs {
 	text-decoration: none;
 	font-weight: bold;
@@ -490,7 +490,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @shakeの項目 */
+/* @shakeの項目 | Screen shake */
 .drag-list-item-shake {
 	text-decoration: none;
 	font-weight: bold;
@@ -498,7 +498,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @clickの項目 */
+/* @clickの項目 | Click wait */
 .drag-list-item-click {
 	text-decoration: none;
 	font-weight: bold;
@@ -506,7 +506,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @waitの項目 */
+/* @waitの項目 | Timed Wait */
 .drag-list-item-wait {
 	text-decoration: none;
 	font-weight: bold;
@@ -514,7 +514,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @skipの項目 */
+/* @skipの項目 | Skip (item) */
 .drag-list-item-skip {
 	text-decoration: none;
 	font-weight: bold;
@@ -522,7 +522,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @gotoの項目 */
+/* @gotoの項目 | Goto-jump*/
 .drag-list-item-goto {
 	text-decoration: none;
 	font-weight: bold;
@@ -530,7 +530,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @setの項目 */
+/* @setの項目 | Set (item) */
 .drag-list-item-set {
 	text-decoration: none;
 	font-weight: bold;
@@ -538,7 +538,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @ifの項目 */
+/* @ifの項目 | if (item) */
 .drag-list-item-if {
 	text-decoration: none;
 	font-weight: bold;
@@ -546,7 +546,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @loadの項目 */
+/* @loadの項目 | load (item) */
 .drag-list-item-load {
 	text-decoration: none;
 	font-weight: bold;
@@ -554,7 +554,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @chapterの項目 */
+/* @chapterの項目 | Chapter */
 .drag-list-item-chapter {
 	text-decoration: none;
 	font-weight: bold;
@@ -562,7 +562,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* @wmsの項目 */
+/* @wmsの項目 | Watermelon Script */
 .drag-list-item-wms {
 	text-decoration: none;
 	font-weight: bold;
@@ -570,7 +570,7 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* ラベルの項目 */
+/* ラベルの項目 | Label */
 .drag-list-item-label {
 	text-decoration: none;
 	font-weight: bold;
@@ -578,14 +578,14 @@ input[name="tab-btn"] {
 	background: white;
 }
 
-/* コメントの項目 */
+/* コメントの項目 | Comment (item) */
 .drag-list-item-comment {
 	font-style: italic;
 	color: gray;
 	background: white;
 }
 
-/* 終了マーカー項目 */
+/* 終了マーカー項目 | End marker */
 .drag-list-item-end {
 	text-decoration: none;
 	font-weight: bold;
@@ -593,17 +593,17 @@ input[name="tab-btn"] {
 	background-image: linear-gradient(#fed6e3 0%, #ffaaaa 100%);
 }
 
-/* その他の項目(未対応のコマンド) */
+/* その他の項目(未対応のコマンド) | Other (unsupported commands) */
 .drag-list-item-etc {
 	border-left: 10px solid gray;
 	padding-left: 10px;
 }
 
 /*
- * プロパティ
+ * プロパティ | Properties
  */
 
-/* プロパティペイン */
+/* プロパティペイン | Properties panel */
 .prop-container {
 	width: 100%;
 	height: 100%;
@@ -619,7 +619,7 @@ input[name="tab-btn"] {
 	background: rgba(0, 0, 0, 0.1);
 }
 
-/* プロパティペイン */
+/* プロパティペイン | Properties panel (2) */
 .prop-pane {
 	width: calc(100% - 15px);
 	height: calc(100% - 10px);
@@ -628,7 +628,7 @@ input[name="tab-btn"] {
 	display: none;
 }
 
-/* テキストエリア(複数行) */
+/* テキストエリア(複数行) | Text-area – multi-line */
 .prop-textmulti {
 	padding: 0;
 	width: calc(100% - 10px);
@@ -637,13 +637,13 @@ input[name="tab-btn"] {
 	font-family: inherit;
 }
 
-/* テキストエリア(単一行) */
+/* テキストエリア(単一行) | Text-area – singular line */
 .prop-textsingle {
 	width: calc(100% - 10px);
 }
 
 /*
- * サムネイル
+ * サムネイル | Thumbnail image
  */
 
 .thumbnail-holder {

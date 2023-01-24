@@ -1,7 +1,7 @@
 {
     "name": "Kirara",
     "version": "1.0.0",
-    "description": "Suika2 Kirara is a visual editor for Suika2 Visual Novel Engine.",
+    "description": "Suika2 Kirara is a visual editor for the Suika2 Visual Novel Engine.",
     "main": "src/main.js",
     "scripts": {
         "start": "electron .",

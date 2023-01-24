@@ -3,6 +3,7 @@
 const {app, dialog, shell, BrowserWindow, ipcMain} = require("electron");
 
 let mainWindow;
+let splash;
 
 function createWindow () {
     mainWindow = new BrowserWindow({width: 1280, height: 720, webPreferences: {
@@ -12,6 +13,24 @@ function createWindow () {
     }});
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL('file://' + __dirname + (getLocale() == "ja" ? '/html/boot.html' : '/html/boot_en.html'));
+
+    splash = new BrowserWindow({
+      width: 640,
+      height: 360,
+      transparent: true,
+      frame: false,
+      resizable: false,
+      movable: false, // doesn't seem to work, still show the 'magnifying glass' and allows users to drag the image into files
+      alwaysOnTop: true
+    });
+
+    splash.setMenuBarVisibility(false);
+    splash.loadURL('file://' + __dirname + '/img/splash.png');
+    setTimeout(function () {
+      splash.close();
+      mainWindow.center();
+      mainWindow.show();
+    }, 2500);
 }
 
 function getLocale() {
@@ -264,7 +283,7 @@ function copyAsset(srcFilePath, allowExts, subDir) {
     if(!allowExts.includes(path.extname(srcFilePath).toLowerCase())) {
         return false;
     }
-      
+
     var srcFileName = path.basename(srcFilePath);
     var dstFileName = srcFileName.replace(/[^\x00-\x7F]/g, "_").replace(/ /g, "_");
     var dstDir = Model.dir + "/" + subDir;

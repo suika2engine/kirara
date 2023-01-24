@@ -4,8 +4,11 @@ var locale = "ja";
  * ゲームの構成
  */
 
-// ベースのURL (末尾に"/"を含む)
+// Base URL of the game. (includes "/" at the tails)
 var baseUrl;
+
+// List of the flags.
+var flagList;
 
 /*
  * シナリオビュー
@@ -475,6 +478,7 @@ function showProps() {
         document.getElementById("prop-set").style.display = "block";
     } else if(cmd.startsWith("@if ") || cmd.startsWith("@フラグでジャンプ ")) {
         // 選択肢を作成する
+        createFlagOptions("prop-if-variable");
         createLabelOptions("prop-if-label");
 
         // @if編集開始
@@ -582,14 +586,13 @@ async function createFlagOptions(selectId) {
     }
 
     // フラグをoptionにする
-    var flagList = await window.api.getFlagList();
     for(let index of Object.keys(flagList)) {
         if(index === "" || index === "length" || flagList[index] === "") {
             continue;
         }
 
         var option = document.createElement("option");
-        option.value = index;
+        option.value = "$" + index;
         option.textContent = flagList[index];
         parent.appendChild(option);
     }
@@ -602,19 +605,19 @@ async function createChsChList(id) {
     }
 
     var stayElem = document.createElement('option');
-	stayElem.value = "stay";
+    stayElem.value = "stay";
     stayElem.textContent = translate("変更なし");
     parentElem.appendChild(stayElem);
 
     var noneElem = document.createElement('option');
-	noneElem.value = "none";
+    noneElem.value = "none";
     noneElem.textContent = translate("消去");
     parentElem.appendChild(noneElem);
 
     var ch = await window.api.getChList();
     ch.forEach(function(file) {
         var fileElem = document.createElement('option');
-	    fileElem.value = file;
+        fileElem.value = file;
         fileElem.textContent = file;
         parentElem.appendChild(fileElem);
     });
@@ -627,14 +630,14 @@ async function createChsBgList(id) {
     }
 
     var stayElem = document.createElement('option');
-	stayElem.value = "stay";
+    stayElem.value = "stay";
     stayElem.textContent = translate("変更なし");
     parentElem.appendChild(stayElem);
 
     var bg = await window.api.getBgList();
     bg.forEach(function(file) {
         var fileElem = document.createElement('option');
-	    fileElem.value = file;
+        fileElem.value = file;
         fileElem.textContent = file;
         parentElem.appendChild(fileElem);
     });
@@ -760,6 +763,7 @@ function commitProps() {
         var operator = document.getElementById("prop-if-operator").value;
         var value = document.getElementById("prop-if-value").value;
         var label = document.getElementById("prop-if-label").value;
+        label = label === "" ? "ジャンプ先の目印を指定してください" : label;
         elementInEdit.cmd = "@if " + variable + " " + operator + " " + value + " " + quote(label);
     } else if(cmd.startsWith("@load ") || cmd.startsWith("@シナリオ ")) {
         // @load保存
@@ -1654,7 +1658,7 @@ function normalizeBgm(command) {
     var file = "";
     var opt = "";
 
-	// トークナイズする
+    // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
@@ -1665,7 +1669,7 @@ function normalizeBgm(command) {
         }
     }
 
-	// バリデーションする
+    // バリデーションする
     if(file === "") {
         file = translate(MSG_SPECIFY_FILE);
     }
@@ -1679,7 +1683,7 @@ function normalizeSe(command) {
     var file = "";
     var opt = "";
 
-	// トークナイズする
+    // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         file = normalizeParameter(tokens[1], ["file=", "ファイル="], MSG_SPECIFY_FILE);
@@ -1688,11 +1692,11 @@ function normalizeSe(command) {
         if(tokens[2] === "voice") {
             opt = "voice";
         } else if(tokens[2] === "loop") {
-			opt = "loop";
-		}
+            opt = "loop";
+        }
     }
 
-	// バリデーションする
+    // バリデーションする
     if(file === "") {
         file = translate(MSG_SPECIFY_FILE);
     }
@@ -1724,7 +1728,7 @@ function normalizeVol(command) {
         duration = normalizeParameter(tokens[3], ["duration=", "秒="], "0.0");
     }
 
-	// バリデーションする
+    // バリデーションする
     if(track === "") {
         track = "bgm";
     }
@@ -1783,7 +1787,7 @@ function normalizeCha(command) {
     var yoffset = "";
     var alpha = "";
 
-	// トークナイズする
+    // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         position = normalizeParameter(tokens[1], ["position=", "位置="], "center");
@@ -1807,7 +1811,7 @@ function normalizeCha(command) {
         alpha = normalizeChAlpha(alpha);
     }
 
-	// バリデーションする
+    // バリデーションする
     if(position === "") {
         position = "center";
     }
@@ -1855,7 +1859,7 @@ function normalizeChs(command) {
     var background = "";
     var effect = "";
 
-	// トークナイズする
+    // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         center = normalizeParameter(tokens[1], ["center=", "中央="], MSG_SPECIFY_FILE);
@@ -1885,7 +1889,7 @@ function normalizeChs(command) {
         effect = normalizeBgEffect(effect);
     }
 
-	// バリデーション
+    // バリデーション
     if(center === "") {
         center = "stay";
     }
@@ -1938,12 +1942,12 @@ function normalizeChsBackground(file) {
 // @shake
 function normalizeShake(command) {
     var op = "@shake";
-	var direction = "";
-	var duration = "";
-	var times = "";
-	var amplitude = "";
+    var direction = "";
+    var duration = "";
+    var times = "";
+    var amplitude = "";
 
-	// トークナイズ
+    // トークナイズ
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
         direction = normalizeParameter(tokens[1], ["direction=", "方向="], "horizontal");
@@ -1959,41 +1963,41 @@ function normalizeShake(command) {
         amplitude = normalizeParameter(tokens[4], ["amplitude=", "大きさ="], "100");
     }
 
-	// バリデーション
+    // バリデーション
     if(direction === "") {
         direction = "horizontal";
     }
     if(duration === "") {
-		dration = "1.0";
-	}
+        dration = "1.0";
+    }
     if(times === "") {
-		times = "1";
-	}
+        times = "1";
+    }
     if(amplitude === "") {
-		amplitude = "100";
-	}
+        amplitude = "100";
+    }
 
-	return [op, direction, duration, times, amplitude];
+    return [op, direction, duration, times, amplitude];
 }
 
 function normalizeShakeDirection(dir) {
-	switch(dir) {
-	case "horizontal":  return "horizontal";
-	case "h":           return "horizontal";
-	case "横":          return "horizontal";
-	case "vertical":    return "vertical";
-	case "v":           return "vertical";
-	case "縦":          return "vertical";
-	default:
+    switch(dir) {
+    case "horizontal":  return "horizontal";
+    case "h":           return "horizontal";
+    case "横":          return "horizontal";
+    case "vertical":    return "vertical";
+    case "v":           return "vertical";
+    case "縦":          return "vertical";
+    default:
         break;
-	}
-	return "horizontal";
+    }
+    return "horizontal";
 }
 
 // @wait
 function normalizeWait(command) {
     var op = "@wait";
-	var duration = "";
+    var duration = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2002,17 +2006,17 @@ function normalizeWait(command) {
     }
 
     // バリデーションする
-	if(duration === "") {
-		duration = "1.0";
-	}
+    if(duration === "") {
+        duration = "1.0";
+    }
 
-	return [op, duration];
+    return [op, duration];
 }
 
 // @skip
 function normalizeSkip(command) {
-	var op = "@skip";
-	var opt = "";
+    var op = "@skip";
+    var opt = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2020,18 +2024,18 @@ function normalizeSkip(command) {
         if(tokens[1] === "enable" || tokens[1] === "許可") {
             opt = "enable";
         } else if(tokens[1] === "disable" || tokens[1] === "不許可") {
-			opt = "disable";
+            opt = "disable";
         } else {
-			opt = "enable";
+            opt = "enable";
         }
-	}
+    }
 
     // バリデーションする
     if(opt === "") {
         opt = "enable";
     }
 
-	return [op, opt];
+    return [op, opt];
 }
 
 // @goto
@@ -2050,33 +2054,33 @@ function normalizeGoto(command) {
         destination = translate(MSG_SPECIFY_LABEL);
     }
 
-	return [op, destination];
+    return [op, destination];
 }
 
 // @set
 function normalizeSet(command) {
-	var op = "@set";
-	var variable = "";
-	var operator = "";
-	var value = "";
+    var op = "@set";
+    var variable = "";
+    var operator = "";
+    var value = "";
 
     // トークナイズする (引数名はない)
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
-		if(tokens[1].startsWith("$") && !isNaN(tokens[1].substring(1))) {
-			variable = tokens[1];
-		}
-	}
+        if(tokens[1].startsWith("$") && !isNaN(tokens[1].substring(1))) {
+            variable = tokens[1];
+        }
+    }
     if(tokens.length >= 3) {
-		if(tokens[2] === "=" || tokens[2] === "+=" || tokens[2] === "-=" || tokens[2] === "*=" || tokens[2] === "/=" || tokens[2] === "%=") {
-			operator = tokens[2];
-		}
-	}
+        if(tokens[2] === "=" || tokens[2] === "+=" || tokens[2] === "-=" || tokens[2] === "*=" || tokens[2] === "/=" || tokens[2] === "%=") {
+            operator = tokens[2];
+        }
+    }
     if(tokens.length >= 4) {
-		if(!isNaN(tokens[3])) {
-			value = tokens[3];
-		}
-	}
+        if(!isNaN(tokens[3])) {
+            value = tokens[3];
+        }
+    }
 
     // バリデーションする
     if(variable === "") {
@@ -2089,37 +2093,37 @@ function normalizeSet(command) {
         value = "0";
     }
 
-	return [op, variable, operator, value];
+    return [op, variable, operator, value];
 }
 
 // @if
 function normalizeIf(command) {
-	var op = "@if";
-	var variable = "";
-	var operator = "";
-	var value = "";
-	var label = "";
+    var op = "@if";
+    var variable = "";
+    var operator = "";
+    var value = "";
+    var label = "";
 
     // トークナイズする (引数名はない)
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
     if(tokens.length >= 2) {
-		if(variable.startsWith("$") && !isNaN(variable.substring(1))) {
-			variable = tokens[1];
-		}
-	}
+        if(tokens[1].startsWith("$") && !isNaN(tokens[1].substring(1))) {
+            variable = tokens[1];
+        }
+    }
     if(tokens.length >= 3) {
-		if(operator === "==" || operator === "!=" || operator === ">" || operator === ">=" || operator === "<" || operator === "<=") {
-			operator = tokens[2];
-		}
-	}
+        if(tokens[2] === "==" || tokens[2] === "!=" || tokens[2] === ">" || tokens[2] === ">=" || tokens[2] === "<" || tokens[2] === "<=") {
+            operator = tokens[2];
+        }
+    }
     if(tokens.length >= 4) {
-		if(!isNaN(tokens[3])) {
-			value = tokens[3];
-		}
-	}
+        if(!isNaN(tokens[3])) {
+            value = tokens[3];
+        }
+    }
     if(tokens.length >= 5) {
-		label = tokens[4];
-	}
+        label = tokens[4];
+    }
 
     // バリデーションする
     if(variable === "") {
@@ -2135,13 +2139,13 @@ function normalizeIf(command) {
         label = translate(MSG_SPECIFY_LABEL);
     }
 
-	return [op, variable, operator, value, label];
+    return [op, variable, operator, value, label];
 }
 
 // @load
 function normalizeLoad(command) {
-	var op = "@load";
-	var file = "";
+    var op = "@load";
+    var file = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2150,17 +2154,17 @@ function normalizeLoad(command) {
     }
 
     // バリデーションする
-	if(file === "") {
-		file = translate(MSG_SPECIFY_FILE);
-	}
+    if(file === "") {
+        file = translate(MSG_SPECIFY_FILE);
+    }
 
-	return [op, file];
+    return [op, file];
 }
 
 // @chapter
 function normalizeChapter(command) {
-	var op = "@chapter";
-	var title = "";
+    var op = "@chapter";
+    var title = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2175,8 +2179,8 @@ function normalizeChapter(command) {
 
 // @gui
 function normalizeGui(command) {
-	var op = "@gui";
-	var file = "";
+    var op = "@gui";
+    var file = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2194,8 +2198,8 @@ function normalizeGui(command) {
 
 // @video
 function normalizeVideo(command) {
-	var op = "@video";
-	var file = "";
+    var op = "@video";
+    var file = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2213,8 +2217,8 @@ function normalizeVideo(command) {
 
 // @wms
 function normalizeWms(command) {
-	var op = "@wms";
-	var file = "";
+    var op = "@wms";
+    var file = "";
 
     // トークナイズする
     var tokens = command.match(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g);
@@ -2403,6 +2407,9 @@ window.addEventListener("load", async() => {
 
     // ゲームのベースURLを取得する
     baseUrl = await window.api.getBaseUrl();
+
+    // Get the flag list.
+    flagList = await window.api.getFlagList();
 
     // パレットの要素をセットアップする
     setupPalette();

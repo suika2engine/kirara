@@ -8,18 +8,21 @@ async function onAddButton() {
     var index = -1;
     if(!isGlobal) {
         for(var i = 0; i <= 9999; i++) {
-            if(!flags.hasOwnProperty(index)) {
+            if(!flags.hasOwnProperty(i)) {
                 index = i;
                 break;
             }
         }
     } else {
         for(var i = 10000; i <= 10999; i++) {
-            if(!flags.hasOwnProperty(index)) {
+            if(!flags.hasOwnProperty(i)) {
                 index = i;
                 break;
             }
         }
+    }
+    if(index === -1) {
+        return;
     }
 
     // Add a flag.
@@ -35,12 +38,15 @@ window.addEventListener("load", async () => {
     flags = await window.api.getFlagList();
 
     // Get "flag-list" element.
-    var flagList = document.getElementById("flag-list");
+    var parent = document.getElementById("flag-list");
     for(let index of Object.keys(flags)) {
+        if(index === "length" || index === "") {
+            continue;
+        }
         var elem = document.createElement("li");
         elem.classList.add("flag-list-item");
         elem.textContent = "$" + index + ": " + flags[index];
-        flagList.appendChild(elem);
+        parent.appendChild(elem);
     }
 
     // Add button listener for "Add flag".

@@ -621,16 +621,16 @@ function loadFlags() {
         return;
     }
 
-    flags.length = 0;
+    Model.flags.length = 0;
     var lines = fs.readFileSync(Model.dir + "/flags.txt", "utf8").replace(/\r/g, "").split("\n");
     for(let line of lines) {
         // Split line before and after the first "=".
         var [index, ...name] = line.split("=");
 
         // Add to the dictionary.
-        flags[index] = name.join("=");
+        Model.flags[index] = name.join("=");
     }
-    return flags;
+    return Model.flags;
 }
 
 function storeFlags() {

@@ -464,6 +464,9 @@ function showProps() {
         document.getElementById("prop-goto-label").value = unquote(cl[1]);
         document.getElementById("prop-goto").style.display = "block";
     } else if(cmd.startsWith("@set ") || cmd.startsWith("@フラグをセット ")) {
+        // 選択肢を作成する
+        createFlagOptions("prop-set-variable");
+
         // @set編集開始
         var cl = normalizeSet(cmd);
         document.getElementById("prop-set-variable").value = cl[1];
@@ -569,6 +572,27 @@ function createLabelOptions(selectId) {
             document.getElementById(selectId).appendChild(option);
         }
     });
+}
+
+async function createFlagOptions(selectId) {
+    // 一度子要素を削除する
+    var parent = document.getElementById(selectId);
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+
+    // フラグをoptionにする
+    var flagList = await window.api.getFlagList();
+    for(let index of Object.keys(flagList)) {
+        if(index === "" || index === "length" || flagList[index] === "") {
+            continue;
+        }
+
+        var option = document.createElement("option");
+        option.value = index;
+        option.textContent = flagList[index];
+        parent.appendChild(option);
+    }
 }
 
 async function createChsChList(id) {
@@ -2423,6 +2447,13 @@ window.addEventListener("load", async() => {
         await window.api.playGame();
     });
     
+    // フラグ管理ボタンをセットアップする
+    document.getElementById("flags").addEventListener("click", async () => {
+        commitProps();
+        await saveScenario();
+        window.location.href = locale === "ja" ? "flags.html" : "flags_en.html";
+    });
+
     // コンフィグボタンをセットアップする
     document.getElementById("config").addEventListener("click", async () => {
         commitProps();

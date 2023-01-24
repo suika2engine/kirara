@@ -141,7 +141,7 @@ body {
 	display: grid;
 	height: 100%;
 	grid-template-rows: 100%;
-	grid-template-columns: calc(100% - 128px - 30px);
+	grid-template-columns: calc(100% - 160px - 30px);
 }
 
 .grid5-left {
@@ -466,6 +466,16 @@ input[name="tab-btn"] {
 
 /* @bgの項目 | Background (item) */
 .drag-list-item-bg {
+	background-color: var(--pastel-green);
+	color: var(--white-colour);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 1em;
+	text-decoration: none;
+}
+
+/* @chの項目 | Character */
+.drag-list-item-ch {
 	background-color: var(--pastel-green);
 	color: var(--white-colour);
 	cursor: pointer;

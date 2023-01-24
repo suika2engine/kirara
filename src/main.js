@@ -20,12 +20,12 @@ function createWindow () {
       transparent: true,
       frame: false,
       resizable: false,
-      movable: false, // doesn't seem to work, still show the 'magnifying glass' and allows users to drag the image into files
+      movable: false, // doesn't seem to work, uses the CSS 'pointer-events' modifier instead.
       alwaysOnTop: true
     });
 
     splash.setMenuBarVisibility(false);
-    splash.loadURL('file://' + __dirname + '/img/splash.png');
+    splash.loadURL('file://' + __dirname + '/html/splash.html');
     setTimeout(function () {
       splash.close();
       mainWindow.center();

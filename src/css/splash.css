@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* スプラッシュ画面イメージ | Splash screen image  */
+.splash-image {
+  background-image: url("../img/splash.png");
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}

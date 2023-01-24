@@ -1,2 +1,13 @@
-はじめまして、Suika2 Kiraraです。
-みどり「こんにちは。Suika2を使ってくれてありがとう！」
+@bg menu-idle.png 1.0
+:MENU
+@gui menu.txt
+:START
+@load start.txt
+:LOAD
+@goto $LOAD
+@goto MENU
+:CONFIG
+@gui config.txt cancel
+@goto MENU
+:QUIT
+@bg #ffffff 1.0

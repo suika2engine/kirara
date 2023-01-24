@@ -8,12 +8,17 @@
 </head>
 <body>
 
+  <div class="navigation">
+    <a role="button" id="scenario-header" class="file"></a>
+    <a role="button" href="config.html" id="config">設定</a>
+    <a role="button" id="play" class="play">テスト</a>
+    <a role="button" href="export.html" id="export">Export</a>
+    <a role="button" href="help.html" id="help">ヘルプ</a>
+  </div>
+
 	<div class="grid1-area">
 		<div class="grid1-left">
 			<div class="grid2-area">
-				<div class="grid2-pallete-header">
-					パレット
-				</div>
 				<div class="grid2-palette">
 					<div class="palette-panel">
 						<ul id="palette" class="palette-list-holder">
@@ -88,25 +93,9 @@
 		</div>
 		<div class="grid1-scenario">
 			<div class="grid4-area">
-				<div class="grid4-header">
-					<div class="grid5-area">
-						<div class="grid5-left">
-							<div id="scenario-header" class="scenario-header">
-							</div>
-						</div>
-						<div class="grid5-right">
-							<img src="../img/play.png" id="play" class="scenario-header-img">
-							<img src="../img/flag.png" id="flags" class="scenario-header-img">
-							<img src="../img/config.png" id="config" class="scenario-header-img">
-							<img src="../img/export.png" id="export" class="scenario-header-img">
-							<img src="../img/help.png" id="help" class="scenario-header-img">
-						</div>
-					</div>
-				</div>
 				<div class="grid4-scenario">
 					<div class="scenario-container">
-						<ul id="scenario" class="scenario-list">
-						</ul>
+						<ul id="scenario" class="scenario-list"></ul>
 					</div>
 				</div>
 			</div>

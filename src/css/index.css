@@ -17,13 +17,50 @@ body {
 }
 
 /*
+* 上ブロック | Upper block
+*/
+
+/* ナビゲーション | Navigation */
+.navigation {
+	min-height: 25%;
+	max-height: 25%;
+  overflow: scroll;
+  background-color: #333;
+}
+.navigation a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 16px;
+	transition: 0.5s;
+	min-height: 100%;
+	max-height: 100%;
+}
+.navigation a:hover {
+  background-color: var(--pastel-orange);
+  color: black;
+}
+.navigation a.file {
+  background-color: var(--pastel-green);
+  color: var(--black-colour);
+	cursor: default;
+}
+.navigation a.play {
+	cursor: pointer;
+}
+
+/*
  * 分割 | Columns
  */
 
 /* 縦の左中右 | Controls the entire page */
 .grid1-area {
 	display: grid;
-	height: 100vh;
+	overflow: hidden;
+	height: 90vh;
 	grid-template-rows: 100%;
 	grid-template-columns: 240px calc(100% - 480px) 240px;
 }
@@ -52,19 +89,9 @@ body {
 /* 左段の上中下 | Left-hand side */
 .grid2-area {
 	display: grid;
-	height: 100vh;
+	height: 75%;
 	grid-template-rows: 32px calc(50% - 32px) 32px calc(50% - 32px);
 	grid-template-columns: 100%;
-}
-
-.grid2-pallete-header {
-	margin: auto;
-	grid-row: 1;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
-	padding: 0px;
-	margin-left: 1em;
 }
 
 .grid2-palette {
@@ -94,7 +121,7 @@ body {
 /* 右段の上下 | Right-hand side */
 .grid3-area {
 	display: grid;
-	height: 100vh;
+	height: 75%;
 	grid-template-rows: 70% 30%;
 	grid-template-columns: 100%;
 	border-left: 1px solid var(--white-colour);
@@ -117,7 +144,7 @@ body {
 /* 中央段の上下 | Centre Body */
 .grid4-area {
 	display: grid;
-	height: 100vh;
+	height: 75%;
 	grid-template-rows: 32px calc(100% - 32px);
 	grid-template-columns: 100%;
 }
@@ -136,28 +163,6 @@ body {
 	height: 100%;
 }
 
-/* grid4-headerの中の左右 | Centre Header */
-.grid5-area {
-	display: grid;
-	height: 100%;
-	grid-template-rows: 100%;
-	grid-template-columns: calc(100% - 160px - 30px);
-}
-
-.grid5-left {
-	grid-row: 1;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
-}
-
-.grid5-right {
-	grid-row: 1;
-	grid-column: 2;
-	width: 100%;
-	height: 100%;
-}
-
 /*
  * パレット | Pallete
  */
@@ -168,7 +173,7 @@ body {
 	overflow-y: scroll;
 }
 .palette-panel::-webkit-scrollbar {
-	width: 5px;
+	width: 1px;
 }
 .palette-panel::-webkit-scrollbar-thumb {
 	background: var(--pastel-green);
@@ -308,7 +313,7 @@ input[name="tab-btn"] {
 	overflow-y: scroll;
 }
 .tab-panel::-webkit-scrollbar {
-	width: 5px;
+	width: 1px;
 }
 .tab-panel::-webkit-scrollbar-thumb {
 	background: var(--pastel-green);
@@ -381,32 +386,16 @@ input[name="tab-btn"] {
  * シナリオビュー | Scenario Area
  */
 
-.scenario-header {
-	width: calc(100% - 25px - 25px - 25px);
-	height: calc(100vh - 32px);
-	margin: auto;
-}
-
-.scenario-header-img {
-	object-fit: contain;
-	width: 32px;
-	height: 32px;
-	transition: .5s;
-}
-.scenario-header-img:hover {
-	opacity: 0.3;
-}
-
 /* メインリストのコンテナ | Centre scenario container */
 .scenario-container {
 	width: calc(100% - 30px);
-	height: calc(100vh - 32px);
+	height: 90vh;
 }
 
 /* メインリスト | Scenario view */
 .scenario-list {
-	width: 100%;    
-	height: calc(100vh - 32px);
+	width: 100%;
+	height: 90vh;
 	overflow-y: scroll;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -414,15 +403,6 @@ input[name="tab-btn"] {
 	padding-bottom: 0px;
 	margin-block-start: 0em;
 	margin-block-end: 0em;
-}
-.scenario-list::-webkit-scrollbar {
-	width: 5px;
-}
-.scenario-list::-webkit-scrollbar-thumb {
-	background: var(--pastel-green);
-}
-.scenario-list::-webkit-scrollbar-track {
-	background: var(--white-colour);
 }
 
 /* ドラッグ可能なリスト項目 | List of draggable items */
@@ -691,7 +671,7 @@ input[name="tab-btn"] {
 	overflow-y: scroll;
 }
 .prop-container::-webkit-scrollbar {
-	width: 5px;
+	width: 1px;
 }
 .prop-container::-webkit-scrollbar-thumb {
 	background: var(--pastel-green);

@@ -1,4 +1,3 @@
-@bg menu-idle.png 1.0
 :MENU
 @gui menu.txt
 :START
@@ -10,4 +9,3 @@
 @gui config.txt cancel
 @goto MENU
 :QUIT
-@bg #ffffff 1.0

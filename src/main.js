@@ -6,7 +6,7 @@ let mainWindow;
 let splash;
 
 function createWindow () {
-    mainWindow = new BrowserWindow({width: 1280, height: 720, webPreferences: {
+    mainWindow = new BrowserWindow({width: 1280, height: 720, show: false, webPreferences: {
         nodeIntegration: false,
 	    contextIsolation: true,
 	    preload: __dirname + '/preload.js'

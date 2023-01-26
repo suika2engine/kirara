@@ -1,7 +1,6 @@
 /* TODO:
 * General code clean-up (remove unused selectors/arguments)
 * Bring character portrait closer to code-block text
-* Fix navigation bar text alignment issues (text should be centred vertically)
 * Figure out a method (drop-down?) for the materials selection area
 * Tidy up properties pane (currently, using smaller width to mitigate x-scroll)
 */
@@ -47,7 +46,9 @@ body {
   text-decoration: none;
   font-size: 16px;
 	transition: 0.5s;
-	height: 100%;
+	width: 10em;
+	line-height: 10vh;
+	vertical-align: center;
 }
 .navigation a:hover {
   background-color: var(--pastel-orange);
@@ -696,12 +697,15 @@ input[name="tab-btn"] {
 /* プロパティペイン | Properties panel (2) */
 .prop-pane {
 	color: white;
-	width: 100%;
-	height: 100%;
+	width: calc(100% - 1em);
+	height: calc(100% - 1em);
 	font-size: 16px;
+	padding-left: 1em;
+	padding-bottom: 1em;
 	display: none;
 	margin: 0;
 	overflow-y: scroll;
+	overflow: hidden;
 }
 
 /* テキストエリア(複数行) | Text-area – multi-line */
@@ -710,9 +714,13 @@ input[name="tab-btn"] {
 	background: var(--pastel-green);
 	color: var(--black-colour);
 	padding: 0.25em;
-	width: 75%;
+	width: 50%;
+	min-width: 50%;
+	max-width: 75%;
 	height: 5em;
-	resize: none;
+	min-height: 5em;
+	max-height: 10em;
+	resize: both;
 	margin: 0;
 	font-family: inherit;
 }
@@ -723,7 +731,8 @@ input[name="tab-btn"] {
 	display: block;
 	background: var(--pastel-green);
 	color: var(--black-colour);
-	width: 75%;
+	width: 50%;
+	border: none;
 }
 .prop-select {
 	background-color: var(--pastel-green);
@@ -731,7 +740,7 @@ input[name="tab-btn"] {
 	font-size: 16px;
 	text-decoration: none;
 	border: none;
-	width: 75%;
+	width: 50%;
 	display: block;
 }
 /*
@@ -749,6 +758,7 @@ input[name="tab-btn"] {
 					  linear-gradient(45deg, transparent 75%, #9E9E9E 0);
 	background-size: 30px 30px;
 	background-position: 0 0, 15px 15px, 15px 15px, 30px 30px;
+	cursor: crosshair;
 }
 
 .thumbnail-picture {

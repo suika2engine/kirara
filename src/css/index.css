@@ -282,7 +282,7 @@ input[name="tab-btn"] {
 
 .tab-area {
 	text-align: center; /* Centres material-type images */
-	padding: 0 1em;
+	padding: 0.5em 0 1em;
 	max-width: calc(100% - 1em);
 	margin: auto;
 }

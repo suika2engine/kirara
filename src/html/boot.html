@@ -9,18 +9,19 @@
 <body>
 	<h1>Suika2 Kiraraへようこそ</h1>
   <p>編集を始めるには以下のオプションを選択してください。</p>
+  <div class="content">
+    <div class="left">
+      <h2>新規ゲームを作成する</h2>
+      <input id="game-name" type="text" placeholder="ゲーム名...">
+      <button id="new-game">作成</button><br>
+      <p id="error-msg"></p>
+    </div>
 
-	<div>
-		<h2>新規ゲームを作成する</h2>
-		<input id="game-name" type="text" placeholder="ゲーム名...">
-		<button id="new-game">作成</button><br>
-		<p id="error-msg"></p>
-	</div>
-
-	<div>
-		<h2>作成中のゲームを編集する</h2>
-		<ul id="game-list"></ul>
-	</div>
+    <div class="right">
+      <h2>作成中のゲームを編集する</h2>
+      <ul id="game-list"></ul>
+    </div>
+  </div>
 
   <script src="../js/boot.js"></script>
 </body>

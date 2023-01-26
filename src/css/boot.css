@@ -1,6 +1,7 @@
 :root {
-	--bg-colour: #FEF6E8; /* or: #13161C */
-	--text: black;
+	--bg-colour: #FEF6E8;
+	--black-colour: black;
+	--ui-bg-colour: #333;
 	--pastel-green: #ACD489;
 	--pastel-orange: #FFDBA3;
 	--pastel-red: #F27B6F;
@@ -8,35 +9,37 @@
 
 body {
 	background-color: var(--bg-colour);
-	color: var(--text);
-	font-family: sans-serif;
+	color: var(--black-colour);
+	font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
 	margin: 5em;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
 	padding: 0;
 	user-select: none;
 }
 
-/* Splash Screen */
-.logo-splash {
-	width: 100%;
-  /*height: auto;
-	object-fit: cover;*/
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 99;
-	animation: fadeout 2.5s forwards;
-	animation-delay: 1s;
-}
-@keyframes fadein {
-	from { opacity: 0; }
-	to { opacity: 1; }
-}
-@keyframes fadeout {
-	from { opacity: 1; background-color: white;}
-	to { opacity: 0; background-color: var(--bg-colour);}
+.content {
+	display: grid;
+	overflow: hidden;
+	height: 100vh;
+	grid-template-rows: 100%;
+	grid-template-columns: 50vw 50vw;
 }
 
-/* Search box, create button, etc. */
+/* 左/右 | Left/right */
+.left {
+	grid-row: 1;
+	grid-column: 1;
+	width: 50vw;
+}
+.right {
+	grid-row: 1;
+	grid-column: 2;
+	width: 50vw;
+}
+
+/* 検索ボックスと作成ボタン | Search box, create button, etc. */
 #game-name {
 	background-color: transparent;
 	border: 1px solid grey;
@@ -58,11 +61,13 @@ body {
 #new-game:hover {
 	background: var(--pastel-orange);
 }
+
+/* プロジェクト一覧 | Existing project list items */
 #game-list {
 	padding: 0;
+	overflow-y: scroll;
+	height: 50vh;
 }
-
-/* Existing project list items */
 .game-list-item {
 	border: 1px solid grey;
 	cursor: pointer;

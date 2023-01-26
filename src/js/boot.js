@@ -23,7 +23,7 @@ window.addEventListener("load", async () => {
         e.classList.add("game-list-item");
         e.addEventListener("click", async () => {
             await window.api.openGame(event.srcElement.textContent);
-            await window.api.openScenario("init.txt");
+            await window.api.openScenario("story001.txt");
             window.location.href = locale === "ja" ? "index.html" : "index_en.html";
         });
         document.getElementById("game-list").appendChild(e);
@@ -49,7 +49,7 @@ window.addEventListener("load", async () => {
         }
 
         await window.api.openGame(gameName);
-        await window.api.openScenario("init.txt");
+        await window.api.openScenario("story001.txt");
         window.location.href = locale === "ja" ? "index.html" : "index_en.html";
     });
 });

@@ -181,6 +181,10 @@ function refreshFiles(subDir, list, allowExts) {
 //
 ipcMain.handle('openScenario', (event, file) => {
     var filePath = Model.dir + "/txt/" + file;
+    if(!fs.existsSync(filePath)) {
+        return;
+    }
+
     var rawData = fs.readFileSync(filePath, { encoding: 'utf8' });
 
     Model.scenarioFile = file;

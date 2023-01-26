@@ -30,15 +30,15 @@ function createWindow () {
         splash.close();
         mainWindow.center();
         mainWindow.show();
-    }, 1);
-//    }, 2500);
+    }, 2500);
+//    }, 1);
 }
 
 function getLocale() {
     var code = app.getLocale();
     if(code === "ja") {
         return "ja";
-        //return "en";
+//        return "en";
     }
     return "en";
 }

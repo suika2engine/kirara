@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="../css/flags.css">
 </head>
 <body>
-	<h1>Flag Management</h1>
-	<a href="index.html">Return to the editor</a><br>
-	<br>
+  <ul class="navigation">
+    <li><a role="button" class="file">Flag Management</a></li>
+    <li><a role="button" href="index_en.html">Back to the Editor</a></li>
+  </ul>
 
+  <div class="content">
 	<h2>List of Flags</h2>
 	<ul id="flag-list" class="flag-list">
 	</ul>
@@ -20,6 +22,7 @@
 	<input id="flag-name" type="text"><br>
 	<input id="flag-global" type="checkbox"><span>Common to all save data</span><br>
 	<button id="add">Add</button>
+  </div>
 
   <script src="../js/flags.js"></script>
 </body>

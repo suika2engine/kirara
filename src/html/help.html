@@ -4,10 +4,41 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <title>Suika2 Kirara</title>
-  <link rel="stylesheet" href="../css/doc.css">
+  <link rel="stylesheet" href="../css/help.css">
 </head>
 <body>
-	<h1>Documentation</h1>
-	<a href="index.html">Return to the editor</a>
+
+  <!-- ナビゲーション | Navigation -->
+  <ul class="navigation">
+    <li><a role="button" class="file">Documentation</a></li>
+    <li><a role="button" href="index.html">Back to the Editor</a></li>
+    <li><a role="button" href="#page1">About Kirara</a></li>
+    <li class="dropdown">
+      <a role="button" class="dropbtn">Commands &#9661;</a>
+      <div class="dropdown-content">
+        <a href="#">Message</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        <a href="#">Link 4</a>
+        <a href="#">Link 5</a>
+        <a href="#">Link 6</a>
+        <a href="#">Link 7</a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="content">
+    <div id="page1" class="page">
+      <h2>This is a test!</h2>
+    </div>
+
+    <div id="pagew" class="page">
+      <h1>Welcome – Suika2 Kirara Help</h1>
+      <p>This page is a work in progress, please check back in a future update for more information.</p>
+      <p>In the meantime, please feel free to read the <a id="web-docs">General Suika2 Documentation</a>.</p>
+    </div>
+  </div>
+
+<script src="../js/help.js"></script>
 </body>
 </html>

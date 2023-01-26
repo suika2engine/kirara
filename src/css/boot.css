@@ -12,31 +12,8 @@ body {
 	color: var(--black-colour);
 	font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
 	margin: 5em;
-	height: 100vh;
-	width: 100vw;
-	overflow: hidden;
 	padding: 0;
 	user-select: none;
-}
-
-.content {
-	display: grid;
-	overflow: hidden;
-	height: 100vh;
-	grid-template-rows: 100%;
-	grid-template-columns: 50vw 50vw;
-}
-
-/* 左/右 | Left/right */
-.left {
-	grid-row: 1;
-	grid-column: 1;
-	width: 50vw;
-}
-.right {
-	grid-row: 1;
-	grid-column: 2;
-	width: 50vw;
 }
 
 /* 検索ボックスと作成ボタン | Search box, create button, etc. */
@@ -66,7 +43,6 @@ body {
 #game-list {
 	padding: 0;
 	overflow-y: scroll;
-	height: 50vh;
 }
 .game-list-item {
 	border: 1px solid grey;

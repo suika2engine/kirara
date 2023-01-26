@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="../css/flags.css">
 </head>
 <body>
-	<h1>フラグ管理</h1>
-	<a href="index.html">編集に戻る</a><br>
-	<br>
-
+  <ul class="navigation">
+    <li><a role="button" class="file">フラグ管理</a></li>
+    <li><a role="button" href="index.html">編集に戻る</a></li>
+  </ul>
+  
+  <div class="content">
 	<h2>フラグ一覧</h2>
 	<ul id="flag-list" class="flag-list">
 	</ul>
@@ -20,6 +22,7 @@
 	<input id="flag-name" type="text"><br>
 	<input id="flag-global" type="checkbox"><span>全セーブデータで共通</span><br>
 	<button id="add">追加</button>
+  </div>
 
   <script src="../js/flags.js"></script>
 </body>

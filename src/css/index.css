@@ -1,7 +1,6 @@
 /* TODO:
 * General code clean-up (remove unused selectors/arguments)
 * Bring character portrait closer to code-block text
-* Figure out a method (drop-down?) for the materials selection area
 * Tidy up properties pane (currently, using smaller width to mitigate x-scroll)
 */
 
@@ -9,6 +8,7 @@
 :root {
 	--bg-colour: #FEF6E8;
 	--black-colour: black;
+	--ui-bg-colour: #333;
 	--pastel-green: #ACD489;
 	--pastel-orange: #FFDBA3;
 	--pastel-red: #F27B6F;
@@ -35,7 +35,7 @@ body {
 	height: 10vh;
 	min-height: 10vh;
 	max-height: 10vh;
-  background-color: #333;
+  background-color: var(--ui-bg-colour);
 }
 .navigation a {
   float: left;
@@ -112,6 +112,8 @@ body {
 }
 
 .grid2-files-header {
+	text-align: center;
+	margin-top: 0.5em;
 	grid-row: 3;
 	grid-column: 1;
 	width: 100%;
@@ -127,7 +129,7 @@ body {
 
 /* 右段の上下 | Right-hand side */
 .grid3-area {
-	background-color: #333;
+	background-color: var(--ui-bg-colour);
 	display: grid;
 	height: 100%;
 	min-height: 100%;
@@ -279,34 +281,36 @@ input[name="tab-btn"] {
 }
 
 .tab-area {
-	background: var(--pastel-green);
-	width: 100%;
+	text-align: center; /* Centres material-type images */
+	padding: 0 1em;
+	max-width: calc(100% - 1em);
+	margin: auto;
 }
 
 .tab-area label {
 	width: 32px;
 	height: 32px;
-	margin: 0;
+	margin: 0 0.025em;
 	display: inline-block;
-	padding: 2px 0;
+	padding: 0 0;
 	cursor: pointer;
-	transition: ease 0.5s opacity;
+	transition: ease 0.5s;
 }
 
 .tab-area label:hover {
-	opacity: 0.5;
+	background-color: var(--pastel-orange);
 }
 
 .tab-img {
 	object-fit: contain;
 	width: 32px;
 	height: 32px;
-	margin: auto;
 }
 
 .tab-panel-area {
 	overflow-y: scroll;
-	padding: 5px;
+	padding-top: 1em;
+	margin: auto;
 	width: 100%;
 	height: 50%;
 }
@@ -328,17 +332,17 @@ input[name="tab-btn"] {
 	background: var(--black-colour);
 }
 
-#tab-txt:checked ~ .tab-area .tab-txt-label {background:#fff; color:#000; }
+#tab-txt:checked ~ .tab-area .tab-txt-label {background:var(--pastel-orange); color:#000; }
 #tab-txt:checked ~ .tab-panel-area #tab-panel-txt { display:block; }
-#tab-bg:checked ~ .tab-area .tab-bg-label {background:#fff; color:#000; }
+#tab-bg:checked ~ .tab-area .tab-bg-label {background:var(--pastel-orange); color:#000; }
 #tab-bg:checked ~ .tab-panel-area #tab-panel-bg { display:block; }
-#tab-ch:checked ~ .tab-area .tab-ch-label {background:#fff; color:#000; }
+#tab-ch:checked ~ .tab-area .tab-ch-label {background:var(--pastel-orange); color:#000; }
 #tab-ch:checked ~ .tab-panel-area #tab-panel-ch { display:block; }
-#tab-bgm:checked ~ .tab-area .tab-bgm-label {background:#fff; color:#000; }
+#tab-bgm:checked ~ .tab-area .tab-bgm-label {background:var(--pastel-orange); color:#000; }
 #tab-bgm:checked ~ .tab-panel-area #tab-panel-bgm { display:block; }
-#tab-se:checked ~ .tab-area .tab-se-label {background:#fff; color:#000; }
+#tab-se:checked ~ .tab-area .tab-se-label {background:var(--pastel-orange); color:#000; }
 #tab-se:checked ~ .tab-panel-area #tab-panel-se { display:block; }
-#tab-mov:checked ~ .tab-area .tab-mov-label {background:#fff; color:#000; }
+#tab-mov:checked ~ .tab-area .tab-mov-label {background:var(--pastel-orange); color:#000; }
 #tab-mov:checked ~ .tab-panel-area #tab-panel-mov { display:block; }
 
 /* タブの中身 | Tab contents */
@@ -743,6 +747,7 @@ input[name="tab-btn"] {
 	width: 50%;
 	display: block;
 }
+
 /*
  * サムネイル | Thumbnail image
  */

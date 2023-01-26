@@ -6,58 +6,79 @@
 
 
 :root {
-	--bg-colour: #FEF6E8;
-	--black-colour: black;
-	--ui-bg-colour: #333;
-	--pastel-green: #ACD489;
-	--pastel-orange: #FFDBA3;
-	--pastel-red: #F27B6F;
+    --bg-colour: #FEF6E8;
+    --black-colour: black;
+    --ui-bg-colour: #333;
+    --pastel-green: #ACD489;
+    --pastel-orange: #FFDBA3;
+    --pastel-red: #F27B6F;
 }
 
 body {
-	min-height: 100vh;
-	max-height: 100vh;
-	font-weight: bold;
-	color: var(--black-colour);
-	background: var(--bg-colour);
-	padding: 0;
-	margin: 0;
-	font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
-	user-select: none;
+    min-height: 100vh;
+    max-height: 100vh;
+    font-weight: bold;
+    color: var(--black-colour);
+    background: var(--bg-colour);
+    padding: 0;
+    margin: 0;
+    font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
+    user-select: none;
 }
 
 /*
-* 上ブロック | Upper block
-*/
+ * 上ブロック | Upper block
+ */
+
+.grid0-area {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 48px calc(100vh - 48px);
+    grid-template-columns: 100%;
+}
+
+.grid0-up {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.grid0-bottom {
+    grid-row: 2;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
+}
 
 /* ナビゲーション | Navigation */
 .navigation {
-	height: 10vh;
-	min-height: 10vh;
-	max-height: 10vh;
-  background-color: var(--ui-bg-colour);
+    width: 100%;
+    height: 100%;
+    background-color: var(--ui-bg-colour);
 }
 .navigation a {
-  float: left;
-  color: white;
-	cursor: pointer;
-  text-align: center;
-  padding: 0 1em;
-  text-decoration: none;
-  font-size: 16px;
-	transition: 0.5s;
-	width: 10em;
-	line-height: 10vh;
-	vertical-align: center;
+    float: left;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    padding: 0 1em;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.5s;
+    width: 10em;
+    line-height: 48px;
+    vertical-align: center;
 }
 .navigation a:hover {
-  background-color: var(--pastel-orange);
-  color: black;
+    background-color: var(--pastel-orange);
+    color: black;
 }
 .navigation a.file {
-  background-color: var(--pastel-green);
-  color: var(--black-colour);
-	cursor: default;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: default;
 }
 
 /*
@@ -66,108 +87,78 @@ body {
 
 /* 縦の左中右 | Controls the entire page */
 .grid1-area {
-	display: grid;
-	overflow: hidden;
-	height: calc(100vh - 10vh);
-	grid-template-rows: 100%;
-	grid-template-columns: 20vw 60vw 20vw;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 100%;
+    grid-template-columns: 240px calc(100% - 480px) 240px;
 }
 
 .grid1-left {
-	grid-row: 1;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
 }
 
 .grid1-scenario {
-	grid-row: 1;
-	grid-column: 2;
-	width: 100%;
-	height: 100%;
+    grid-row: 1;
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
 }
 
 .grid1-right {
-	grid-row: 1;
-	grid-column: 3;
-	width: 100%;
-	height: 100%;
+    grid-row: 1;
+    grid-column: 3;
+    width: 100%;
+    height: 100%;
 }
 
 /* 左段の上中下 | Left-hand side */
 .grid2-area {
-	display: grid;
-	height: 100%;
-	grid-template-rows: 30px calc(50vh - 10px) calc(5vh - 10px) calc(35vh - 10px); /* 32px acts as margin */
-	grid-template-columns: 100%;
+    display: grid;
+    height: 100%;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 100%;
 }
-
-/* '32px spacer' */
 
 .grid2-palette {
-	grid-row: 2;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
-}
-
-.grid2-files-header {
-	text-align: center;
-	margin-top: 0.5em;
-	grid-row: 3;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
 }
 
 .grid2-files {
-	grid-row: 4;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
+    grid-row: 2;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
 }
 
 /* 右段の上下 | Right-hand side */
 .grid3-area {
-	background-color: var(--ui-bg-colour);
-	display: grid;
-	height: 100%;
-	min-height: 100%;
-	max-height: 100%;
-	grid-template-rows: 30px calc(70% - 15px) calc(30% - 15px); /* 32px acts as margin */
-	grid-template-columns: 100%;
+    background-color: var(--ui-bg-colour);
+    display: grid;
+    height: 100%;
+    grid-template-rows: 70% 30%;
+    grid-template-columns: 100%;
 }
 
-/* '32px spacer' */
-
 .grid3-prop {
-	overflow-y: scroll;
-	grid-row: 2;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
+    overflow-y: scroll;
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
 }
 
 .grid3-thumbnail {
-	grid-row: 3;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
-}
-
-/* 中央段の上下 | Centre Body */
-.grid4-area {
-	display: grid;
-	height: 100%;
-	grid-template-rows: 30px calc(100% - 30px);
-	grid-template-columns: 100%;
-}
-
-.grid4-scenario {
-	grid-row: 2;
-	grid-column: 1;
-	width: 100%;
-	height: 100%;
+    grid-row: 2;
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
 }
 
 /*
@@ -175,93 +166,93 @@ body {
  */
 
 .palette-panel {
-	width: 100%;
-	height: 100%;
-	overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
 }
 .palette-panel::-webkit-scrollbar {
-	width: 1px;
+    width: 1px;
 }
 .palette-panel::-webkit-scrollbar-thumb {
-	background: var(--pastel-green);
+    background: var(--pastel-green);
 }
 .palette-panel::-webkit-scrollbar-track {
-	background: var(--black-colour);
+    background: var(--black-colour);
 }
 
 .palette-list-holder {
-	padding: 5px;
-	padding-top: 0px;
-	width: calc(100% - 35px - 10px);
-	position: relative;
-	margin-block-start: 0em;
-	margin-block-end: 0em;
+    padding: 5px;
+    padding-top: 0px;
+    width: calc(100% - 35px - 10px);
+    position: relative;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }
 
 .palette-list-item {
-	width: 100%;
-	font-size: 16px;
-	margin-bottom: 10px;
-	padding: 1em;
-	list-style-type: none!important;
-	cursor: pointer;
-	text-align: center;
-	transition: .5s;
-	background: var(--pastel-green);
-	color: var(--black-colour);
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 1em;
+    list-style-type: none!important;
+    cursor: pointer;
+    text-align: center;
+    transition: .5s;
+    background: var(--pastel-green);
+    color: var(--black-colour);
 }
 .palette-list-item:hover {
-	background: var(--pastel-orange);
+    background: var(--pastel-orange);
 }
 
 .palette-list-item-sel {
-	width: 100%;
-	font-size: 16px;
-	margin-bottom: 10px;
-	padding: 1em;
-	list-style-type: none!important;
-	cursor: pointer;
-	text-align: center;
-	transition: .5s;
-	background: var(--pastel-green);
-	color: var(--black-colour);
-	animation: glisten 2.5s infinite;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 1em;
+    list-style-type: none!important;
+    cursor: pointer;
+    text-align: center;
+    transition: .5s;
+    background: var(--pastel-green);
+    color: var(--black-colour);
+    animation: glisten 2.5s infinite;
 }
 
 @keyframes glisten {
-	0% {
-		filter: brightness(100%);
-	}
-	5% {
-		filter: brightness(95%);
-	}
-	10% {
-		filter: brightness(90%);
-	}
-	15% {
-		filter: brightness(85%);
-	}
-	20% {
-		filter: brightness(80%);
-	}
-	25% {
-		filter: brightness(75%);
-	}
-	30% {
-		filter: brightness(70%);
-	}
-	35% {
-		filter: brightness(65%);
-	}
-	40% {
-		filter: brightness(60%);
-	}
-	45% {
-		filter: brightness(55%);
-	}
-	50% {
-		filter: brightness(50%);
-	}
+    0% {
+	filter: brightness(100%);
+    }
+    5% {
+	filter: brightness(95%);
+    }
+    10% {
+	filter: brightness(90%);
+    }
+    15% {
+	filter: brightness(85%);
+    }
+    20% {
+	filter: brightness(80%);
+    }
+    25% {
+	filter: brightness(75%);
+    }
+    30% {
+	filter: brightness(70%);
+    }
+    35% {
+	filter: brightness(65%);
+    }
+    40% {
+	filter: brightness(60%);
+    }
+    45% {
+	filter: brightness(55%);
+    }
+    50% {
+	filter: brightness(50%);
+    }
 }
 
 /*
@@ -271,65 +262,60 @@ body {
 /* タブ切り替え | Tabs and tab-switching */
 
 .tab-wrap {
-	width: 100%;
-	height: 100%;
-	margin: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 input[name="tab-btn"] {
-	display:none;
+    display:none;
 }
 
 .tab-area {
-	text-align: center; /* Centres material-type images */
-	padding: 0.5em 0 1em;
-	max-width: calc(100% - 1em);
-	margin: auto;
+    height: 32px;
+    text-align: center; /* Centres material-type images */
+    overflow-y: none;
 }
 
 .tab-area label {
-	width: 32px;
-	height: 32px;
-	margin: 0 0.025em;
-	display: inline-block;
-	padding: 0 0;
-	cursor: pointer;
-	transition: ease 0.5s;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    padding: 0 0;
+    cursor: pointer;
+    transition: ease 0.5s;
 }
 
 .tab-area label:hover {
-	background-color: var(--pastel-orange);
+    background-color: var(--pastel-orange);
 }
 
 .tab-img {
-	object-fit: contain;
-	width: 32px;
-	height: 32px;
+    object-fit: contain;
+    width: 32px;
+    height: 32px;
 }
 
 .tab-panel-area {
-	overflow-y: scroll;
-	padding-top: 1em;
-	margin: auto;
-	width: 100%;
-	height: 50%;
+    width: 100%;
+    height: calc(100% - 32px);
 }
 
 .tab-panel {
-	padding: 0;
-	display: none;
-	width: 100%;
-	height: 100%;
-	overflow-y: scroll;
+    padding: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
 }
 .tab-panel::-webkit-scrollbar {
-	width: 1px;
+    width: 1px;
 }
 .tab-panel::-webkit-scrollbar-thumb {
-	background: var(--pastel-green);
+    background: var(--pastel-green);
 }
 .tab-panel::-webkit-scrollbar-track {
-	background: var(--black-colour);
+    background: var(--black-colour);
 }
 
 #tab-txt:checked ~ .tab-area .tab-txt-label {background:var(--pastel-orange); color:#000; }
@@ -348,49 +334,49 @@ input[name="tab-btn"] {
 /* タブの中身 | Tab contents */
 
 .tab-list-holder {
-	height: 100%;
-	padding: 5px;
-	padding-top: 0px;
-	width: calc(100% - 35px - 10px);
-	position: relative;
-	margin-block-start: 0em;
-	margin-block-end: 0em;
+    height: 100%;
+    padding: 5px;
+    padding-top: 0px;
+    width: calc(100% - 35px - 10px);
+    position: relative;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }
 
 .tab-list-item {
-	width: 100%;
-	font-size: 16px;
-	margin-bottom: 10px;
-	padding: 1em;
-	list-style-type: none!important;
-	cursor: pointer;
-	text-align: center;
-	transition: .5s;
-	background: var(--pastel-green);
-	color: var(--black-colour);
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 1em;
+    list-style-type: none!important;
+    cursor: pointer;
+    text-align: center;
+    transition: .5s;
+    background: var(--pastel-green);
+    color: var(--black-colour);
 }
 .tab-list-item:hover {
-	color: var(--black-colour);
-	background: var(--pastel-orange);
+    color: var(--black-colour);
+    background: var(--pastel-orange);
 }
 
 .tab-list-item-sel {
-	width: 100%;
-	font-size: 16px;
-	margin-bottom: 10px;
-	padding: 1em;
-	list-style-type: none!important;
-	cursor: pointer;
-	text-align: center;
-	transition: .5s;
-	background: var(--pastel-green);
-	color: var(--black-colour);
-	animation: glisten 2.5s infinite;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 1em;
+    list-style-type: none!important;
+    cursor: pointer;
+    text-align: center;
+    transition: .5s;
+    background: var(--pastel-green);
+    color: var(--black-colour);
+    animation: glisten 2.5s infinite;
 }
 
 .dragover {
-	border: 4px dash #ccc;
-	background: rgba(240, 240, 240, 0.6);
+    border: 4px dash #ccc;
+    background: rgba(240, 240, 240, 0.6);
 }
 
 /*
@@ -399,280 +385,280 @@ input[name="tab-btn"] {
 
 /* メインリストのコンテナ | Centre scenario container */
 .scenario-container {
-	width: calc(100% - 30px);
-	height: 90vh;
+    width: 100%;
+    height: 100%;
 }
 
 /* メインリスト | Scenario view */
 .scenario-list {
-	width: 100%;
-	height: 90vh;
-	overflow-y: scroll;
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-block-start: 0em;
-	margin-block-end: 0em;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }
 
 /* ドラッグ可能なリスト項目 | List of draggable items */
 .drag-list-item {
-	color: blue;
-	margin-bottom: 10px;
-	cursor: pointer;
-	list-style-type: none!important;
-	text-align: center;
-	transition: .5s;
+    color: blue;
+    margin-bottom: 10px;
+    cursor: pointer;
+    list-style-type: none!important;
+    text-align: center;
+    transition: .5s;
 }
 .drag-list-item:hover {
-	color: var(--black-colour);
-	background: var(--pastel-orange);
+    color: var(--black-colour);
+    background: var(--pastel-orange);
 }
 
 /* 選択中の項目 | Selected item */
 .drag-list-item-sel:not(:first-of-type) {
-	margin: 25px 25px;
-	border: 3px solid var(--black-colour);
+    margin: 25px 25px;
+    border: 3px solid var(--black-colour);
 }
 .drag-list-item-sel:first-child {
-	border: 3px solid var(--black-colour);
+    border: 3px solid var(--black-colour);
 }
 
 /* メッセージの項目 | Message */
 .drag-list-item-msg {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* セリフの項目 | Serif */
 .drag-list-item-serif {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @bgの項目 | Background (item) */
 .drag-list-item-bg {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @chの項目 | Character */
 .drag-list-item-ch {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @bgmの項目 | Background music */
 .drag-list-item-bgm {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @seの項目 | Sound effect */
 .drag-list-item-se {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @volの項目 | Volume */
 .drag-list-item-vol {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @chooseの項目 | Options */
 .drag-list-item-choose {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @chaの項目 | CHA */
 .drag-list-item-cha {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @chsの項目 | CHS */
 .drag-list-item-chs {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @shakeの項目 | Screen shake */
 .drag-list-item-shake {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @clickの項目 | Click wait */
 .drag-list-item-click {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @waitの項目 | Timed Wait */
 .drag-list-item-wait {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @skipの項目 | Skip (item) */
 .drag-list-item-skip {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @gotoの項目 | Goto-jump*/
 .drag-list-item-goto {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @setの項目 | Set (item) */
 .drag-list-item-set {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @ifの項目 | if (item) */
 .drag-list-item-if {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @loadの項目 | load (item) */
 .drag-list-item-load {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @chapterの項目 | Chapter */
 .drag-list-item-chapter {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* @wmsの項目 | Watermelon Script */
 .drag-list-item-wms {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* ラベルの項目 | Label */
 .drag-list-item-label {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* コメントの項目 | Comment (item) */
 .drag-list-item-comment {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* 終了マーカー項目 | End marker */
 .drag-list-item-end {
-	background-color: var(--pastel-red);
-	color: var(--black-colour);
-	cursor: pointer;
-	font-size: 16px;
-	padding: 1em;
-	text-decoration: none;
+    background-color: var(--pastel-red);
+    color: var(--black-colour);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1em;
+    text-decoration: none;
 }
 
 /* その他の項目(未対応のコマンド) | Other (unsupported commands) */
 .drag-list-item-etc {
-	border-left: 10px solid gray;
-	padding-left: 10px;
+    border-left: 10px solid gray;
+    padding-left: 10px;
 }
 
 /*
@@ -681,71 +667,70 @@ input[name="tab-btn"] {
 
 /* プロパティペイン | Properties panel */
 .prop-container {
-	padding-top: 0;
-	width: 100%;
-	height: 100%;
+    padding-top: 0;
+    width: 100%;
+    height: 100%;
 }
 .prop-pane h3 {
-	margin-top: 0;
+    margin-top: 0;
 }
 .prop-container::-webkit-scrollbar {
-	width: 1px;
+    width: 1px;
 }
 .prop-container::-webkit-scrollbar-thumb {
-	background: var(--pastel-green);
+    background: var(--pastel-green);
 }
 .prop-container::-webkit-scrollbar-track {
-	background: var(--black-colour);
+    background: var(--black-colour);
 }
 
 /* プロパティペイン | Properties panel (2) */
 .prop-pane {
-	color: white;
-	width: calc(100% - 1em);
-	height: calc(100% - 1em);
-	font-size: 16px;
-	padding-left: 1em;
-	padding-bottom: 1em;
-	display: none;
-	margin: 0;
-	overflow-y: scroll;
-	overflow: hidden;
+    color: white;
+    width: calc(100% - 1em);
+    height: calc(100% - 1em);
+    font-size: 16px;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    display: none;
+    margin: 0;
+    overflow-y: scroll;
 }
 
 /* テキストエリア(複数行) | Text-area – multi-line */
 .prop-textmulti {
-	display: block;
-	background: var(--pastel-green);
-	color: var(--black-colour);
-	padding: 0.25em;
-	width: 50%;
-	min-width: 50%;
-	max-width: 75%;
-	height: 5em;
-	min-height: 5em;
-	max-height: 10em;
-	resize: both;
-	margin: 0;
-	font-family: inherit;
+    display: block;
+    background: var(--pastel-green);
+    color: var(--black-colour);
+    padding: 0.25em;
+    width: 50%;
+    min-width: 50%;
+    max-width: 75%;
+    height: 5em;
+    min-height: 5em;
+    max-height: 10em;
+    resize: both;
+    margin: 0;
+    font-family: inherit;
 }
 
 /* テキストエリア(単一行) | Text-area – singular line */
 .prop-textsingle {
-	margin: 0;
-	display: block;
-	background: var(--pastel-green);
-	color: var(--black-colour);
-	width: 50%;
-	border: none;
+    margin: 0;
+    display: block;
+    background: var(--pastel-green);
+    color: var(--black-colour);
+    width: 50%;
+    border: none;
 }
 .prop-select {
-	background-color: var(--pastel-green);
-	color: var(--black-colour);
-	font-size: 16px;
-	text-decoration: none;
-	border: none;
-	width: 50%;
-	display: block;
+    background-color: var(--pastel-green);
+    color: var(--black-colour);
+    font-size: 16px;
+    text-decoration: none;
+    border: none;
+    width: 50%;
+    display: block;
 }
 
 /*
@@ -753,27 +738,27 @@ input[name="tab-btn"] {
  */
 
 .thumbnail-holder {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	background: #e0e0e0;
-	background-image: linear-gradient(45deg, #9e9e9e 25%, transparent 0),
-					  linear-gradient(45deg, transparent 75%, #9E9E9E 0),
-					  linear-gradient(45deg, #9e9e9e 25%, transparent 0),
-					  linear-gradient(45deg, transparent 75%, #9E9E9E 0);
-	background-size: 30px 30px;
-	background-position: 0 0, 15px 15px, 15px 15px, 30px 30px;
-	cursor: crosshair;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #e0e0e0;
+    background-image: linear-gradient(45deg, #9e9e9e 25%, transparent 0),
+		      linear-gradient(45deg, transparent 75%, #9E9E9E 0),
+		      linear-gradient(45deg, #9e9e9e 25%, transparent 0),
+		      linear-gradient(45deg, transparent 75%, #9E9E9E 0);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px, 15px 15px, 30px 30px;
+    cursor: crosshair;
 }
 
 .thumbnail-picture {
-	width: auto;
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translateY(-50%) translateX(-50%);
-	-webkit-transform: translateY(-50%) translateX(-50%);
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    -webkit-transform: translateY(-50%) translateX(-50%);
 }

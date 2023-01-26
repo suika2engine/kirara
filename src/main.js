@@ -30,7 +30,8 @@ function createWindow () {
         splash.close();
         mainWindow.center();
         mainWindow.show();
-    }, 2500);
+    }, 1);
+//    }, 2500);
 }
 
 function getLocale() {
@@ -180,7 +181,7 @@ function refreshFiles(subDir, list, allowExts) {
 // シナリオを開く
 //
 ipcMain.handle('openScenario', (event, file) => {
-    var filePath = Model.dir + "/txt/" + file;
+    var filePath = path.normalize(Model.dir + "/txt/" + file);
     if(!fs.existsSync(filePath)) {
         return;
     }
@@ -217,8 +218,8 @@ ipcMain.handle('getScenarioData', (event) => {
 ipcMain.handle('setScenarioData', (event, data) => {
     Model.scenarioData = data;
 
-    var filePath = Model.dir + "/txt/" + Model.scenarioFile;
-    fs.writeFileSync(filePath, data.join("\n"));
+    var filePath = path.normalize(Model.dir + "/txt/" + Model.scenarioFile);
+    fs.writeFileSync(filePath, data.join("\n"), "utf8");
 })
 
 //

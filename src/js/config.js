@@ -535,26 +535,26 @@ window.addEventListener("beforeunload", async () => {
     config["msgbox.show.on.bg"] = boolToInt(document.getElementById("msgbox-show-on-bg").checked);
 
     // Validate properties.
-    config["sound.character.name1"] = config["sound.character.name1"] === "" ? " " : config["sound.character.name1"];
-    config["sound.character.name2"] = config["sound.character.name2"] === "" ? " " : config["sound.character.name2"];
-    config["sound.character.name3"] = config["sound.character.name3"] === "" ? " " : config["sound.character.name3"];
-    config["sound.character.name4"] = config["sound.character.name4"] === "" ? " " : config["sound.character.name4"];
-    config["sound.character.name5"] = config["sound.character.name5"] === "" ? " " : config["sound.character.name5"];
-    config["sound.character.name6"] = config["sound.character.name6"] === "" ? " " : config["sound.character.name6"];
-    config["sound.character.name7"] = config["sound.character.name7"] === "" ? " " : config["sound.character.name7"];
-    config["sound.character.name8"] = config["sound.character.name8"] === "" ? " " : config["sound.character.name8"];
-    config["sound.character.name9"] = config["sound.character.name9"] === "" ? " " : config["sound.character.name9"];
-    config["sound.character.name10"] = config["sound.character.name10"] === "" ? " " : config["sound.character.name10"];
-    config["sound.character.name11"] = config["sound.character.name11"] === "" ? " " : config["sound.character.name11"];
-    config["sound.character.name12"] = config["sound.character.name12"] === "" ? " " : config["sound.character.name12"];
-    config["sound.character.name13"] = config["sound.character.name13"] === "" ? " " : config["sound.character.name13"];
-    config["sound.character.name14"] = config["sound.character.name14"] === "" ? " " : config["sound.character.name14"];
-    config["sound.character.name15"] = config["sound.character.name15"] === "" ? " " : config["sound.character.name15"];
-    config["serif.color1.name"] = config["serif.color1.name"] === "" ? " " : config["serif.color1.name"];
-    config["serif.color2.name"] = config["serif.color1.name"] === "" ? " " : config["serif.color2.name"];
-    config["serif.color3.name"] = config["serif.color1.name"] === "" ? " " : config["serif.color3.name"];
-    config["serif.color4.name"] = config["serif.color1.name"] === "" ? " " : config["serif.color4.name"];
-    config["serif.color5.name"] = config["serif.color1.name"] === "" ? " " : config["serif.color5.name"];
+    config["sound.character.name1"] = config["sound.character.name1"] === "" ? "_" : config["sound.character.name1"];
+    config["sound.character.name2"] = config["sound.character.name2"] === "" ? "_" : config["sound.character.name2"];
+    config["sound.character.name3"] = config["sound.character.name3"] === "" ? "_" : config["sound.character.name3"];
+    config["sound.character.name4"] = config["sound.character.name4"] === "" ? "_" : config["sound.character.name4"];
+    config["sound.character.name5"] = config["sound.character.name5"] === "" ? "_" : config["sound.character.name5"];
+    config["sound.character.name6"] = config["sound.character.name6"] === "" ? "_" : config["sound.character.name6"];
+    config["sound.character.name7"] = config["sound.character.name7"] === "" ? "_" : config["sound.character.name7"];
+    config["sound.character.name8"] = config["sound.character.name8"] === "" ? "_" : config["sound.character.name8"];
+    config["sound.character.name9"] = config["sound.character.name9"] === "" ? "_" : config["sound.character.name9"];
+    config["sound.character.name10"] = config["sound.character.name10"] === "" ? "_" : config["sound.character.name10"];
+    config["sound.character.name11"] = config["sound.character.name11"] === "" ? "_" : config["sound.character.name11"];
+    config["sound.character.name12"] = config["sound.character.name12"] === "" ? "_" : config["sound.character.name12"];
+    config["sound.character.name13"] = config["sound.character.name13"] === "" ? "_" : config["sound.character.name13"];
+    config["sound.character.name14"] = config["sound.character.name14"] === "" ? "_" : config["sound.character.name14"];
+    config["sound.character.name15"] = config["sound.character.name15"] === "" ? "_" : config["sound.character.name15"];
+    config["serif.color1.name"] = config["serif.color1.name"] === "" ? "_" : config["serif.color1.name"];
+    config["serif.color2.name"] = config["serif.color2.name"] === "" ? "_" : config["serif.color2.name"];
+    config["serif.color3.name"] = config["serif.color3.name"] === "" ? "_" : config["serif.color3.name"];
+    config["serif.color4.name"] = config["serif.color4.name"] === "" ? "_" : config["serif.color4.name"];
+    config["serif.color5.name"] = config["serif.color5.name"] === "" ? "-" : config["serif.color5.name"];
 
     // Store to config.txt.
     await window.api.storeConfig(config);    

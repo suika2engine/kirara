@@ -42,7 +42,6 @@ body {
 /* プロジェクト一覧 | Existing project list items */
 #game-list {
 	padding: 0;
-	overflow-y: scroll;
 }
 .game-list-item {
 	border: 1px solid grey;

@@ -1,25 +1,21 @@
-/* TODO:
-* General code clean-up (remove unused selectors/arguments)
-* Bring character portrait closer to code-block text
-* Tidy up properties pane (currently, using smaller width to mitigate x-scroll)
-*/
-
-
 :root {
-    --bg-colour: #FEF6E8;
-    --black-colour: black;
-    --ui-bg-colour: #333;
-    --pastel-green: #ACD489;
-    --pastel-orange: #FFDBA3;
-    --pastel-red: #F27B6F;
+    --white: white;
+    --black: black;
+    --red: #F27B6F;
+
+    --accent1: #eff3fc;
+    --accent2: #ccd4e1;
+
+    --scrollbar-thumb: gray;
+    --scrollbar-track: #eff3fc;
 }
 
 body {
     min-height: 100vh;
     max-height: 100vh;
     font-weight: bold;
-    color: var(--black-colour);
-    background: var(--bg-colour);
+    color: var(--black);
+    background: var(--white);
     padding: 0;
     margin: 0;
     font-family: "游ゴシック", "ヒラギノ角ゴ ProN", sans-serif;
@@ -56,11 +52,10 @@ body {
 .navigation {
     width: 100%;
     height: 100%;
-    background-color: var(--ui-bg-colour);
+    background-color: var(--white);
 }
 .navigation a {
     float: left;
-    color: white;
     cursor: pointer;
     text-align: center;
     padding: 0 1em;
@@ -72,13 +67,7 @@ body {
     vertical-align: center;
 }
 .navigation a:hover {
-    background-color: var(--pastel-orange);
-    color: black;
-}
-.navigation a.file {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
-    cursor: default;
+    background-color: var(--accent2);
 }
 
 /*
@@ -139,7 +128,7 @@ body {
 
 /* 右段の上下 | Right-hand side */
 .grid3-area {
-    background-color: var(--ui-bg-colour);
+    background-color: var(--white);
     display: grid;
     height: 100%;
     grid-template-rows: 70% 30%;
@@ -170,20 +159,21 @@ body {
     overflow-y: scroll;
 }
 .palette-panel::-webkit-scrollbar {
-    width: 1px;
+    width: 5px;
 }
 .palette-panel::-webkit-scrollbar-thumb {
-    background: var(--pastel-green);
+    background: var(--scrollbar-thumb);
 }
 .palette-panel::-webkit-scrollbar-track {
-    background: var(--black-colour);
+    background: var(--scrollbar-track);
 }
 
 .palette-list-holder {
     padding: 5px;
     padding-top: 0px;
     width: calc(100% - 35px - 10px);
-    position: relative;
+    height: 100%;
+    margin-right: 0px;
     margin-block-start: 0em;
     margin-block-end: 0em;
 }
@@ -197,11 +187,11 @@ body {
     cursor: pointer;
     text-align: center;
     transition: .5s;
-    background: var(--pastel-green);
-    color: var(--black-colour);
+    background: var(--accent1);
+    color: var(--black);
 }
 .palette-list-item:hover {
-    background: var(--pastel-orange);
+    background: var(--accent2);
 }
 
 .palette-list-item-sel {
@@ -213,8 +203,8 @@ body {
     cursor: pointer;
     text-align: center;
     transition: .5s;
-    background: var(--pastel-green);
-    color: var(--black-colour);
+    background: var(--accent1);
+    color: var(--black);
     animation: glisten 2.5s infinite;
 }
 
@@ -286,7 +276,7 @@ input[name="tab-btn"] {
 }
 
 .tab-area label:hover {
-    background-color: var(--pastel-orange);
+    background-color: var(--accent2);
 }
 
 .tab-img {
@@ -308,26 +298,26 @@ input[name="tab-btn"] {
     overflow-y: scroll;
 }
 .tab-panel::-webkit-scrollbar {
-    width: 1px;
+    width: 5px;
 }
 .tab-panel::-webkit-scrollbar-thumb {
-    background: var(--pastel-green);
+    background: var(--scrollbar-thumb);
 }
 .tab-panel::-webkit-scrollbar-track {
-    background: var(--black-colour);
+    background: var(--scrollbar-track);
 }
 
-#tab-txt:checked ~ .tab-area .tab-txt-label {background:var(--pastel-orange); color:#000; }
+#tab-txt:checked ~ .tab-area .tab-txt-label {background:var(--accent2); color:#000; }
 #tab-txt:checked ~ .tab-panel-area #tab-panel-txt { display:block; }
-#tab-bg:checked ~ .tab-area .tab-bg-label {background:var(--pastel-orange); color:#000; }
+#tab-bg:checked ~ .tab-area .tab-bg-label {background:var(--accent2); color:#000; }
 #tab-bg:checked ~ .tab-panel-area #tab-panel-bg { display:block; }
-#tab-ch:checked ~ .tab-area .tab-ch-label {background:var(--pastel-orange); color:#000; }
+#tab-ch:checked ~ .tab-area .tab-ch-label {background:var(--accent2); color:#000; }
 #tab-ch:checked ~ .tab-panel-area #tab-panel-ch { display:block; }
-#tab-bgm:checked ~ .tab-area .tab-bgm-label {background:var(--pastel-orange); color:#000; }
+#tab-bgm:checked ~ .tab-area .tab-bgm-label {background:var(--accent2); color:#000; }
 #tab-bgm:checked ~ .tab-panel-area #tab-panel-bgm { display:block; }
-#tab-se:checked ~ .tab-area .tab-se-label {background:var(--pastel-orange); color:#000; }
+#tab-se:checked ~ .tab-area .tab-se-label {background:var(--accent2); color:#000; }
 #tab-se:checked ~ .tab-panel-area #tab-panel-se { display:block; }
-#tab-mov:checked ~ .tab-area .tab-mov-label {background:var(--pastel-orange); color:#000; }
+#tab-mov:checked ~ .tab-area .tab-mov-label {background:var(--accent2); color:#000; }
 #tab-mov:checked ~ .tab-panel-area #tab-panel-mov { display:block; }
 
 /* タブの中身 | Tab contents */
@@ -351,12 +341,12 @@ input[name="tab-btn"] {
     cursor: pointer;
     text-align: center;
     transition: .5s;
-    background: var(--pastel-green);
-    color: var(--black-colour);
+    background: var(--accent1);
+    color: var(--black);
 }
 .tab-list-item:hover {
-    color: var(--black-colour);
-    background: var(--pastel-orange);
+    color: var(--black);
+    background: var(--accent2);
 }
 
 .tab-list-item-sel {
@@ -368,8 +358,8 @@ input[name="tab-btn"] {
     cursor: pointer;
     text-align: center;
     transition: .5s;
-    background: var(--pastel-green);
-    color: var(--black-colour);
+    background: var(--accent1);
+    color: var(--black);
     animation: glisten 2.5s infinite;
 }
 
@@ -386,17 +376,27 @@ input[name="tab-btn"] {
 .scenario-container {
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+}
+.scenario-container::-webkit-scrollbar {
+    width: 5px;
+}
+.scenario-container::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+}
+.scenario-container::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
 }
 
 /* メインリスト | Scenario view */
 .scenario-list {
-    width: 100%;
+    width: calc(100% - 30px);
     height: 100%;
-    overflow-y: scroll;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 0px;
     padding-bottom: 0px;
+    margin: 0;
     margin-block-start: 0em;
     margin-block-end: 0em;
 }
@@ -411,23 +411,19 @@ input[name="tab-btn"] {
     transition: .5s;
 }
 .drag-list-item:hover {
-    color: var(--black-colour);
-    background: var(--pastel-orange);
+    color: var(--black);
+    background: var(--accent2);
 }
 
 /* 選択中の項目 | Selected item */
-.drag-list-item-sel:not(:first-of-type) {
-    margin: 25px 25px;
-    border: 3px solid var(--black-colour);
-}
-.drag-list-item-sel:first-child {
-    border: 3px solid var(--black-colour);
+.drag-list-item-sel {
+    border: 3px solid var(--black);
 }
 
 /* メッセージの項目 | Message */
 .drag-list-item-msg {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -436,8 +432,8 @@ input[name="tab-btn"] {
 
 /* セリフの項目 | Serif */
 .drag-list-item-serif {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -446,8 +442,8 @@ input[name="tab-btn"] {
 
 /* @bgの項目 | Background (item) */
 .drag-list-item-bg {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -456,8 +452,8 @@ input[name="tab-btn"] {
 
 /* @chの項目 | Character */
 .drag-list-item-ch {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -466,8 +462,8 @@ input[name="tab-btn"] {
 
 /* @bgmの項目 | Background music */
 .drag-list-item-bgm {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -476,8 +472,8 @@ input[name="tab-btn"] {
 
 /* @seの項目 | Sound effect */
 .drag-list-item-se {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -486,8 +482,8 @@ input[name="tab-btn"] {
 
 /* @volの項目 | Volume */
 .drag-list-item-vol {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -496,8 +492,8 @@ input[name="tab-btn"] {
 
 /* @chooseの項目 | Options */
 .drag-list-item-choose {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -506,8 +502,8 @@ input[name="tab-btn"] {
 
 /* @chaの項目 | CHA */
 .drag-list-item-cha {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -516,8 +512,8 @@ input[name="tab-btn"] {
 
 /* @chsの項目 | CHS */
 .drag-list-item-chs {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -526,8 +522,8 @@ input[name="tab-btn"] {
 
 /* @shakeの項目 | Screen shake */
 .drag-list-item-shake {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -536,8 +532,8 @@ input[name="tab-btn"] {
 
 /* @clickの項目 | Click wait */
 .drag-list-item-click {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -546,8 +542,8 @@ input[name="tab-btn"] {
 
 /* @waitの項目 | Timed Wait */
 .drag-list-item-wait {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -556,8 +552,8 @@ input[name="tab-btn"] {
 
 /* @skipの項目 | Skip (item) */
 .drag-list-item-skip {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -566,8 +562,8 @@ input[name="tab-btn"] {
 
 /* @gotoの項目 | Goto-jump*/
 .drag-list-item-goto {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -576,8 +572,8 @@ input[name="tab-btn"] {
 
 /* @setの項目 | Set (item) */
 .drag-list-item-set {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -586,8 +582,8 @@ input[name="tab-btn"] {
 
 /* @ifの項目 | if (item) */
 .drag-list-item-if {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -596,8 +592,8 @@ input[name="tab-btn"] {
 
 /* @loadの項目 | load (item) */
 .drag-list-item-load {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -606,8 +602,8 @@ input[name="tab-btn"] {
 
 /* @chapterの項目 | Chapter */
 .drag-list-item-chapter {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -616,8 +612,8 @@ input[name="tab-btn"] {
 
 /* @wmsの項目 | Watermelon Script */
 .drag-list-item-wms {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -626,8 +622,8 @@ input[name="tab-btn"] {
 
 /* ラベルの項目 | Label */
 .drag-list-item-label {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -636,8 +632,8 @@ input[name="tab-btn"] {
 
 /* コメントの項目 | Comment (item) */
 .drag-list-item-comment {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -646,8 +642,8 @@ input[name="tab-btn"] {
 
 /* 終了マーカー項目 | End marker */
 .drag-list-item-end {
-    background-color: var(--pastel-red);
-    color: var(--black-colour);
+    background-color: var(--red);
+    color: var(--black);
     cursor: pointer;
     font-size: 16px;
     padding: 1em;
@@ -672,18 +668,17 @@ input[name="tab-btn"] {
     overflow-y: scroll;
 }
 .prop-container::-webkit-scrollbar {
-    width: 1px;
+    width: 5px;
 }
 .prop-container::-webkit-scrollbar-thumb {
-    background: var(--pastel-green);
+    background: var(--scrollbar-thumb);
 }
 .prop-container::-webkit-scrollbar-track {
-    background: var(--black-colour);
+    background: var(--scrollbar-track);
 }
 
 /* プロパティペイン | Properties panel (2) */
 .prop-pane {
-    color: white;
     width: calc(100% - 1em);
     height: calc(100% - 2em);
     font-size: 16px;
@@ -699,8 +694,8 @@ input[name="tab-btn"] {
 /* テキストエリア(複数行) | Text-area – multi-line */
 .prop-textmulti {
     display: block;
-    background: var(--pastel-green);
-    color: var(--black-colour);
+    background: var(--accent1);
+    color: var(--black);
     padding: 0.25em;
     width: 80%;
     height: 5em;
@@ -712,15 +707,15 @@ input[name="tab-btn"] {
 .prop-textsingle {
     margin: 0;
     display: block;
-    background: var(--pastel-green);
-    color: var(--black-colour);
+    background: var(--accent1);
+    color: var(--black);
     width: 80%;
     border: none;
 }
 
 .prop-select {
-    background-color: var(--pastel-green);
-    color: var(--black-colour);
+    background-color: var(--accent1);
+    color: var(--black);
     font-size: 16px;
     text-decoration: none;
     border: none;

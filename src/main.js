@@ -13,25 +13,8 @@ function createWindow () {
     }});
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL('file://' + __dirname + (getLocale() == "ja" ? '/html/boot.html' : '/html/boot_en.html'));
-
-    splash = new BrowserWindow({
-        width: 640,
-        height: 360,
-        transparent: true,
-        frame: false,
-        resizable: false,
-        movable: false, // doesn't seem to work, uses the CSS 'pointer-events' modifier instead.
-        alwaysOnTop: true
-    });
-
-    splash.setMenuBarVisibility(false);
-    splash.loadURL('file://' + __dirname + '/html/splash.html');
-    setTimeout(function () {
-        splash.close();
-        mainWindow.center();
-        mainWindow.show();
-    }, 2500);
-//    }, 1);
+    mainWindow.center();
+    mainWindow.show();
 }
 
 function getLocale() {

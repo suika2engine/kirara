@@ -2474,13 +2474,6 @@ window.addEventListener("load", async() => {
         await saveScenario();
         window.location.href = locale === "ja" ? "export.html" : "export_en.html";
     });
-
-    // ヘルプボタンをセットアップする
-    document.getElementById("help").addEventListener("click", async () => {
-        commitProps();
-        await saveScenario();
-        window.location.href = locale === "ja" ? "help.html" : "help_en.html";
-    });
 })
 
 window.addEventListener("beforeunload", async () => {

@@ -1,12 +1,13 @@
 body {
   margin: 0;
   padding: 0;
+  overflow: none;
 }
 
 /* スプラッシュ画面イメージ | Splash screen image  */
 .splash-image {
-  background-image: url("../img/splash.png");
   width: 100%;
+  height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

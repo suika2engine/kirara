@@ -13,15 +13,31 @@ function createWindow () {
     }});
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL('file://' + __dirname + (getLocale() == "ja" ? '/html/boot.html' : '/html/boot_en.html'));
-    mainWindow.center();
-    mainWindow.show();
+
+    splash = new BrowserWindow({
+        width: 640,
+        height: 380,
+        transparent: true,
+        frame: false,
+        resizable: false,
+        movable: false, // doesn't seem to work, uses the CSS 'pointer-events' modifier instead.
+        alwaysOnTop: true
+    });
+
+    splash.setMenuBarVisibility(false);
+    splash.loadURL('file://' + __dirname + '/html/splash.html');
+    setTimeout(function () {
+        splash.close();
+        mainWindow.center();
+        mainWindow.show();
+    }, 1000);
 }
 
 function getLocale() {
     var code = app.getLocale();
     if(code === "ja") {
         return "ja";
-//        return "en";
+//      return "en";
     }
     return "en";
 }
@@ -30,7 +46,7 @@ app.on('ready', function() {
     createWindow();
 
     // デバッグウィンドウ
-    mainWindow.webContents.openDevTools();
+//  mainWindow.webContents.openDevTools();
 });
 
 app.on('window-all-closed', () => {

@@ -1,7 +1,8 @@
 :MENU
 @gui menu.txt
 :START
-@load start.txt
+@bg #ffffff 1.0
+@load story001.txt
 :LOAD
 @goto $LOAD
 @goto MENU

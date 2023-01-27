@@ -104,6 +104,7 @@
 									<h3>文章</h3>
 									テキスト:<br>
 									<textarea id="prop-msg-text" class="prop-textmulti"></textarea>
+									<br>
 								</div>
 								<div id="prop-serif" class="prop-pane">
 									<h3>セリフ</h3>
@@ -115,6 +116,7 @@
 									<br>
 									音声ファイル(オプション):<br>
 									<input id="prop-serif-voice" type="text" class="prop-textsingle" size="10">
+									<br>
 								</div>
 								<div id="prop-bg" class="prop-pane">
 									<h3>背景</h3>
@@ -132,6 +134,7 @@
 										<option value="curtain-up">上カーテン</option>
 										<option value="curtain-down">下カーテン</option>
 									</select>
+									<br>
 								</div>
 								<div id="prop-ch" class="prop-pane">
 									<h3>キャラ</h3>
@@ -167,6 +170,7 @@
 									<br>
 									アルファ(不透明度):<br>
 									<input id="prop-ch-alpha" type="range" name="alpha" min="0" max="255" step="1"><span id="prop-ch-alpha-num"></span><br>
+									<br>
 								</div>
 								<div id="prop-bgm" class="prop-pane">
 									<h3>音楽</h3>
@@ -175,6 +179,7 @@
 									<br>
 									繰り返さない:<br>
 									<input id="prop-bgm-once" type="checkbox">
+									<br>
 								</div>
 								<div id="prop-se" class="prop-pane">
 									<h3>効果音</h3>
@@ -186,6 +191,7 @@
 									<br>
 									ボイスにする:<br>
 									<input id="prop-se-voice" type="checkbox"><br>
+									<br>
 								</div>
 								<div id="prop-vol" class="prop-pane">
 									<h3>音量</h3>
@@ -204,6 +210,7 @@
 									<br>
 									秒:<br>
 									<input id="prop-vol-duration" type="range" name="duration" min="0.0" max="10.0" step="0.2"><span id="prop-vol-duration-num"></span>
+									<br>
 								</div>
 								<div id="prop-choose" class="prop-pane">
 									<h3>選択肢</h3>
@@ -230,11 +237,13 @@
 									<br>
 									選択肢8:<input id="prop-choose-text8" type="text" class="prop-textsingle"><br>
 									行き先8:<input id="prop-choose-label8" type="text" class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-label" class="prop-pane">
 									<h3>目印</h3>
 									名前:<br>
 									<input id="prop-label-name" type="text" class="prop-textsingle"><br>
+									<br>
 								</div>
 								<div id="prop-cha" class="prop-pane">
 									<h3>キャラ移動</h3>
@@ -265,6 +274,7 @@
 									<br>
 									アルファ(不透明度):<br>
 									<input id="prop-cha-alpha" type="range" name="duration" min="0" max="255" step="1"><span id="prop-cha-alpha-num"></span><br>
+									<br>
 								</div>
 								<div id="prop-chs" class="prop-pane">
 									<h3>場面転換</h3>
@@ -299,6 +309,7 @@
 									背景:<br>
 									<select id="prop-chs-background" class="prop-select" name="background">
 									</select>
+									<br>
 								</div>
 								<div id="prop-shake" class="prop-pane">
 									<h3>画面を揺らす</h3>
@@ -316,22 +327,26 @@
 									<br>
 									大きさ:<br>
 									<input id="prop-shake-amplitude" type="range" name="amplitude" min="0" max="1280" step="1"><span id="prop-shake-amplitude-num"></span>
+									<br>
 								</div>
 								<div id="prop-wait" class="prop-pane">
 									<h3>時間待ち</h3>
 									秒:<br>
 									<input id="prop-wait-duration" type="range" name="duration" min="0" max="30" step="0.2"><span id="prop-wait-duration-num"></span>
+									<br>
 								</div>
 								<div id="prop-skip" class="prop-pane">
 									<h3>スキップの許可</h3>
 									禁止する:<br>
 									<input id="prop-skip-opt" type="checkbox">
+									<br>
 								</div>
 								<div id="prop-goto" class="prop-pane">
 									<h3>目印にジャンプ</h3>
 									行き先の目印:<br>
 									<select id="prop-goto-label" class="prop-select" name="label">
  									</select>
+									<br>
 								</div>
 								<div id="prop-set" class="prop-pane">
 									<h3>フラグを立てる</h3>
@@ -351,6 +366,7 @@
 									<br>
 									セットする数値:<br>
 									<input id="prop-set-value" type="text" class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-if" class="prop-pane">
 									<h3>フラグでジャンプ</h3>
@@ -374,41 +390,49 @@
 									行き先の目印:<br>
 									<select id="prop-if-label" class="prop-select" name="label">
  									</select>
+									<br>
 								</div>
 								<div id="prop-load" class="prop-pane">
 									<h3>シナリオへジャンプ</h3>
 									シナリオファイル:<br>
 									<input id="prop-load-file" type="text" readonly class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-chapter" class="prop-pane">
 									<h3>章タイトル</h3>
 									名前:<br>
 									<input id="prop-chapter-title" type="text" class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-wms" class="prop-pane">
 									<h3>高機能スクリプト</h3>
 									WMSファイル:<br>
 									<input id="prop-wms-file" type="text" class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-gui" class="prop-pane">
 									<h3>高機能メニュー</h3>
 									GUIファイル:<br>
 									<input id="prop-gui-file" type="text" class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-video" class="prop-pane">
 									<h3>動画</h3>
 									ファイル: (Windowsでは.wmv、それ以外では.mp4)<br>
 									<input id="prop-video-file" type="text" readonly class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-label" class="prop-pane">
 									<h3>目印</h3>
 									名前:<br>
 									<input id="prop-label-name" type="text" class="prop-textsingle">
+									<br>
 								</div>
 								<div id="prop-comment" class="prop-pane">
 									<h3>コメント</h3>
 									自由記入:<br>
 									<input id="prop-comment-text" type="text" class="prop-textsingle">
+									<br>
 								</div>
 							</div>
 						</div>
